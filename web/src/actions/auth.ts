@@ -6,6 +6,7 @@ import { startElevePaddleCheckout } from "@/actions/eleve-inscription-paddle";
 import { startEleveStripeCheckout } from "@/actions/eleve-inscription-stripe";
 import { prisma } from "@/lib/prisma";
 import { getPaddle } from "@/lib/paddle-server";
+import type { ElevePaddlePlan } from "@/lib/paddle-server";
 import { getStripe } from "@/lib/stripe-server";
 
 const registerSchema = z
@@ -68,14 +69,15 @@ export async function registerAction(
     return { error: first };
   }
 
-  const existing = await prisma.user.findUnique({
-    where: { email: parsed.data.email },
-  });
-  if (existing) {
-    return { error: "Cet e-mail est déjà utilisé." };
-  }
+  try {
+    const existing = await prisma.user.findUnique({
+      where: { email: parsed.data.email },
+    });
+    if (existing) {
+      return { error: "Cet e-mail est déjà utilisé." };
+    }
 
-  if (parsed.data.role === "ELEVE") {
+    if (parsed.data.role === "ELEVE") {
     const devBypass =
       process.env.NODE_ENV === "development" &&
       process.env.STRIPE_BYPASS_IN_DEV?.trim() === "true";
@@ -106,6 +108,13 @@ export async function registerAction(
         };
       }
       const locale = String(formData.get("locale") || "fr");
+      const rawPlan = formData.get("elevePlan");
+      const paddlePlan: ElevePaddlePlan =
+        rawPlan === "bacplus"
+          ? "bacplus"
+          : rawPlan === "family"
+            ? "family"
+            : "essential";
       const checkout = await startElevePaddleCheckout(
         {
           name: parsed.data.name,
@@ -113,6 +122,7 @@ export async function registerAction(
           password: parsed.data.password,
           groupe: parsed.data.groupe!.trim(),
           anneeScolaire: parsed.data.anneeScolaire!.trim(),
+          paddlePlan,
         },
         locale,
       );
@@ -145,19 +155,26 @@ export async function registerAction(
       return { error: checkout.error };
     }
     return { checkoutUrl: checkout.checkoutUrl };
+    }
+
+    await prisma.user.create({
+      data: {
+        name: parsed.data.name,
+        email: parsed.data.email,
+        passwordHash: await bcrypt.hash(parsed.data.password, 10),
+        role: parsed.data.role,
+        groupe: null,
+        anneeScolaire: null,
+      },
+    });
+
+    return { ok: true };
+  } catch (e) {
+    console.error("[registerAction]", e);
+    return {
+      error:
+        "Erreur serveur lors de l'inscription. Vérifiez DATABASE_URL sur Vercel, que la base de données est accessible, et les logs du déploiement. Si vous utilisez Paddle, vérifiez aussi PADDLE_API_KEY et les IDs de prix (pri_…).",
+    };
   }
-
-  await prisma.user.create({
-    data: {
-      name: parsed.data.name,
-      email: parsed.data.email,
-      passwordHash: await bcrypt.hash(parsed.data.password, 10),
-      role: parsed.data.role,
-      groupe: null,
-      anneeScolaire: null,
-    },
-  });
-
-  return { ok: true };
 }
 

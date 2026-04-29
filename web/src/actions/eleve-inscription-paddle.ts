@@ -7,7 +7,8 @@ import {
   getPaddle,
   getPaddleCheckoutCurrency,
   getPaddleEleveUnitAmountMinor,
-  getPaddlePriceIdEleve,
+  getPaddlePriceIdForElevePlan,
+  type ElevePaddlePlan,
 } from "@/lib/paddle-server";
 import { getAppBaseUrl } from "@/lib/stripe-server";
 
@@ -21,6 +22,8 @@ type EleveRegisterInput = {
   password: string;
   groupe: string;
   anneeScolaire: string;
+  /** Formule Paddle (trois `pri_` distincts dans l’env ou un seul `PADDLE_PRICE_ID_ELEVE_INSCRIPTION`). */
+  paddlePlan?: ElevePaddlePlan;
 };
 
 export async function startElevePaddleCheckout(
@@ -62,7 +65,8 @@ export async function startElevePaddleCheckout(
   const loc = locale === "ar" ? "ar" : "fr";
   const successUrl = `${base}/${loc}/inscription/succes`;
 
-  const priceId = getPaddlePriceIdEleve();
+  const plan = input.paddlePlan ?? "essential";
+  const priceId = getPaddlePriceIdForElevePlan(plan);
   const currencyCode = getPaddleCheckoutCurrency();
 
   let txn: Transaction;

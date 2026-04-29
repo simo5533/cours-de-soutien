@@ -19,10 +19,24 @@ export function getPaddle(): Paddle | null {
   return paddle;
 }
 
-/** Prix catalogue Paddle (`pri_…`) ; recommandé en production. */
+/** Prix catalogue Paddle (`pri_…`) ; recommandé en production (identique pour toutes les formules si utilisé seul). */
 export function getPaddlePriceIdEleve(): string | null {
   const id = process.env.PADDLE_PRICE_ID_ELEVE_INSCRIPTION?.trim();
   return id || null;
+}
+
+export type ElevePaddlePlan = "essential" | "bacplus" | "family";
+
+/** `pri_…` pour la formule choisie, sinon repli sur `PADDLE_PRICE_ID_ELEVE_INSCRIPTION`. */
+export function getPaddlePriceIdForElevePlan(plan: ElevePaddlePlan): string | null {
+  const specific =
+    plan === "essential"
+      ? process.env.PADDLE_PRICE_ID_ELEVE_ESSENTIAL?.trim()
+      : plan === "bacplus"
+        ? process.env.PADDLE_PRICE_ID_ELEVE_BAC_PLUS?.trim()
+        : process.env.PADDLE_PRICE_ID_ELEVE_FAMILY?.trim();
+  if (specific) return specific;
+  return getPaddlePriceIdEleve();
 }
 
 /**

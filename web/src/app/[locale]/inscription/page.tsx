@@ -4,6 +4,9 @@ import { SiteHeader } from "@/components/site-header";
 import { Suspense } from "react";
 
 export default function InscriptionPage() {
+  const paymentProvider =
+    process.env.PAYMENT_PROVIDER?.trim().toLowerCase() || "stripe";
+
   return (
     <>
       <SiteHeader />
@@ -14,7 +17,7 @@ export default function InscriptionPage() {
           </div>
         }
       >
-        <InscriptionForm />
+        <InscriptionForm paymentProvider={paymentProvider} />
       </Suspense>
       <p className="pb-10 text-center text-sm">
         <Link

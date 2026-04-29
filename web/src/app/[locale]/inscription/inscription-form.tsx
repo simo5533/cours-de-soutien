@@ -1,7 +1,7 @@
 "use client";
 
 import { Link } from "@/i18n/navigation";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useActionState, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { registerAction, type RegisterState } from "@/actions/auth";
@@ -12,8 +12,14 @@ const roles = [
   { value: "PROFESSEUR", label: "Professeur" },
 ] as const;
 
-export function InscriptionForm() {
+export function InscriptionForm({
+  paymentProvider = "stripe",
+}: {
+  paymentProvider?: string;
+}) {
   const locale = useLocale();
+  const tHome = useTranslations("HomePage");
+  const paddlePayment = paymentProvider === "paddle";
   const payCancel = useSearchParams().get("pay") === "cancel";
   const [role, setRole] = useState<string>("ELEVE");
   const [state, formAction, pending] = useActionState(
@@ -219,6 +225,29 @@ export function InscriptionForm() {
           </label>
           {role === "ELEVE" ? (
             <>
+              {paddlePayment ? (
+                <label className="flex flex-col gap-2 text-sm">
+                  <span className="font-medium text-slate-700 dark:text-slate-300">
+                    Formule
+                  </span>
+                  <select
+                    name="elevePlan"
+                    required
+                    defaultValue="essential"
+                    className="input-field"
+                  >
+                    <option value="essential">
+                      {tHome("planEssentialName")} — {tHome("planEssentialPrice")}
+                    </option>
+                    <option value="bacplus">
+                      {tHome("planBacPlusName")} — {tHome("planBacPlusPrice")}
+                    </option>
+                    <option value="family">
+                      {tHome("planFamilyName")} — {tHome("planFamilyPrice")}
+                    </option>
+                  </select>
+                </label>
+              ) : null}
               <label className="flex flex-col gap-2 text-sm">
                 <span className="font-medium text-slate-700 dark:text-slate-300">
                   Groupe / classe
