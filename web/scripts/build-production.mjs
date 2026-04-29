@@ -1,6 +1,8 @@
 /**
  * Build Vercel / prod : migrations + comptes démo si base vide + next build.
  * SKIP_DB_ON_BUILD=1 → next build uniquement (ex. CI sans Postgres).
+ * Sur Neon : si migrate deploy échoue avec le pooler, définir DIRECT_URL (connexion
+ * sans pooler du dashboard Neon) ; seule l’étape migrate utilisera cette URL.
  */
 import { spawnSync } from "node:child_process";
 import path from "node:path";
@@ -17,7 +19,7 @@ function run(label, cmd, args, opts = {}) {
   console.log(`[build-production] ${label}…`);
   const r = spawnSync(cmd, args, {
     stdio: "inherit",
-    env: process.env,
+    env: opts.env ?? process.env,
     cwd: opts.cwd ?? webRoot,
     shell,
   });
@@ -37,7 +39,16 @@ if (!process.env.DATABASE_URL?.trim()) {
   process.exit(run("next build", "npx", ["next", "build"]));
 }
 
-let code = run("prisma migrate deploy", "npx", ["prisma", "migrate", "deploy"]);
+const migrateDbUrl =
+  process.env.DIRECT_URL?.trim() || process.env.DATABASE_URL?.trim();
+if (process.env.DIRECT_URL?.trim()) {
+  console.log(
+    "[build-production] migrations : DIRECT_URL → utilisé pour prisma migrate deploy (Neon sans pooler).",
+  );
+}
+let code = run("prisma migrate deploy", "npx", ["prisma", "migrate", "deploy"], {
+  env: { ...process.env, DATABASE_URL: migrateDbUrl },
+});
 if (code !== 0) process.exit(code);
 
 code = run(
