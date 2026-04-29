@@ -1,9 +1,9 @@
 "use client";
 
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { Link } from "@/i18n/navigation";
 import { useSearchParams, useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 /** next-intl impose /fr/… ou /ar/… — un chemin sans locale renvoie 404 en prod. */
 function resolveCallbackUrl(raw: string | null, locale: string): string {
@@ -60,6 +60,16 @@ function pathnameOnly(raw: string): string {
   return t.split("?")[0] ?? "";
 }
 
+/** Évite callbackUrl=/connexion… qui provoque une boucle ERR_TOO_MANY_REDIRECTS avec apres-connexion. */
+function sanitizeCallbackAwayFromConnexion(resolved: string, locale: string): string {
+  const path = pathnameOnly(resolved).toLowerCase();
+  const segments = path.split("/").filter(Boolean);
+  if (segments.includes("connexion")) {
+    return `/${locale}/apres-connexion`;
+  }
+  return resolved;
+}
+
 /** Connexion réelle (/…/connexion), pas « apres-connexion » (substring « connexion »). */
 function looksLikeLoginRedirect(raw: string): boolean {
   const path = pathnameOnly(raw).toLowerCase();
@@ -88,20 +98,12 @@ export function ConnexionForm() {
   const searchParams = useSearchParams();
   const params = useParams();
   const locale = typeof params.locale === "string" ? params.locale : "fr";
-  const callbackUrl = resolveCallbackUrl(searchParams.get("callbackUrl"), locale);
-  const { status } = useSession();
+  const callbackUrl = sanitizeCallbackAwayFromConnexion(
+    resolveCallbackUrl(searchParams.get("callbackUrl"), locale),
+    locale,
+  );
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
-
-  /** Session client après signIn ou JWT présent alors que la page était encore « déconnectée » (hydratation). */
-  useEffect(() => {
-    if (status !== "authenticated") return;
-    window.location.replace(
-      callbackUrl.startsWith("http")
-        ? callbackUrl
-        : `${window.location.origin}${callbackUrl.startsWith("/") ? callbackUrl : `/${callbackUrl}`}`,
-    );
-  }, [status, callbackUrl]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
