@@ -14,19 +14,32 @@ import { getAppBaseUrl } from "@/lib/stripe-server";
 
 /** Détail Paddle + pistes correctives (voir erreurs officielles transactions). */
 function paddleTransactionErrorHint(error: unknown): string {
-  const raw =
-    error instanceof Error
-      ? error.message
-      : typeof error === "object" &&
-          error !== null &&
-          "message" in error &&
-          typeof (error as { message: unknown }).message === "string"
-        ? String((error as { message: unknown }).message)
-        : "";
+  let raw = "";
+  let paddleCode = "";
+
+  if (typeof error === "object" && error !== null) {
+    const o = error as Record<string, unknown>;
+    if (typeof o.detail === "string" && o.detail.trim()) {
+      raw = o.detail.trim();
+    }
+    if (typeof o.code === "string") paddleCode = o.code;
+  }
+  if (!raw && error instanceof Error) {
+    raw = error.message;
+  }
 
   const lower = raw.toLowerCase();
 
   const lines: string[] = [];
+
+  if (paddleCode === "forbidden" || lower.includes("not permitted")) {
+    lines.push(
+      "Erreur Paddle 403 (forbidden) : la clé API est acceptée mais ne peut pas créer de transaction/checkout — vérifiez les permissions de la clé (droits Transaction / écriture), ou créez une nouvelle clé « Standard » avec accès transactions ; sinon contactez sellers@paddle.com avec le request_id du log.",
+    );
+    lines.push(
+      "Référence : developer.paddle.com/errors/shared/forbidden",
+    );
+  }
 
   if (
     lower.includes("default payment link") ||
@@ -77,7 +90,9 @@ function paddleTransactionErrorHint(error: unknown): string {
   const tail =
     lines.length > 0
       ? lines.join(" ")
-      : "Vérifiez PADDLE_API_KEY, PADDLE_ENVIRONMENT, les pri_ et la devise ; consultez les logs Vercel pour le message Paddle exact.";
+      : raw.length > 0
+        ? "Voir aussi developer.paddle.com/errors/shared/forbidden si le message mentionne une permission."
+        : "Vérifiez PADDLE_API_KEY, PADDLE_ENVIRONMENT, les pri_ et la devise ; consultez les logs Vercel pour le message Paddle exact.";
 
   const prefix =
     raw.length > 0 && raw.length < 500
