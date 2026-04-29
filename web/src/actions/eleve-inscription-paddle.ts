@@ -12,6 +12,71 @@ import {
 } from "@/lib/paddle-server";
 import { getAppBaseUrl } from "@/lib/stripe-server";
 
+/** Détail Paddle + pistes correctives (voir erreurs officielles transactions). */
+function paddleTransactionErrorHint(error: unknown): string {
+  const raw =
+    error instanceof Error
+      ? error.message
+      : typeof error === "object" &&
+          error !== null &&
+          "message" in error &&
+          typeof (error as { message: unknown }).message === "string"
+        ? String((error as { message: unknown }).message)
+        : "";
+
+  const lower = raw.toLowerCase();
+
+  const lines: string[] = [];
+
+  if (
+    lower.includes("default payment link") ||
+    lower.includes("transaction_default_checkout_url_not_set")
+  ) {
+    lines.push(
+      "Dans Paddle : Checkout settings → définir un lien / URL de paiement par défaut (sandbox : sandbox-vendors.paddle.com/checkout-settings ; prod : vendors.paddle.com/checkout-settings).",
+    );
+  }
+
+  if (
+    lower.includes("domain") &&
+    (lower.includes("approved") || lower.includes("transaction_checkout_url_domain"))
+  ) {
+    lines.push(
+      "Ajoutez le domaine de votre site (ex. cours-de-soutien-mu.vercel.app) dans les domaines approuvés Paddle pour les URLs de checkout.",
+    );
+  }
+
+  if (
+    lower.includes("price") &&
+    (lower.includes("not found") || lower.includes("transaction_price_not_found"))
+  ) {
+    lines.push(
+      "Les prix pri_ dans Vercel doivent exister dans le même environnement Paddle que la clé API (sandbox vs production selon PADDLE_ENVIRONMENT).",
+    );
+  }
+
+  if (
+    lower.includes("checkout") &&
+    lower.includes("not enabled")
+  ) {
+    lines.push(
+      "Activez Paddle Checkout dans les réglages du compte Paddle si cette erreur est indiquée.",
+    );
+  }
+
+  const tail =
+    lines.length > 0
+      ? lines.join(" ")
+      : "Vérifiez PADDLE_API_KEY, PADDLE_ENVIRONMENT, les pri_ et la devise ; consultez les logs Vercel pour le message Paddle exact.";
+
+  const prefix =
+    raw.length > 0 && raw.length < 500
+      ? `${raw.trim()} — `
+      : "";
+
+  return `${prefix}${tail}`;
+}
+
 export type ElevePaddleCheckoutState =
   | { error: string }
   | { checkoutUrl: string };
@@ -113,8 +178,7 @@ export async function startElevePaddleCheckout(
       .delete({ where: { id: pending.id } })
       .catch(() => {});
     return {
-      error:
-        "Impossible d'ouvrir la page de paiement. Vérifiez la configuration Paddle (prix, devise, clé API).",
+      error: `Impossible d'ouvrir la page de paiement. ${paddleTransactionErrorHint(e)}`,
     };
   }
 
