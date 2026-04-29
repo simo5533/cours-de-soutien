@@ -109,7 +109,9 @@
     "logout": "Deconnexion",
     "login": "Connexion",
     "signup": "Inscription",
-    "brandSubtitle": "Soutien scolaire & IA"
+    "brandSubtitle": "Soutien scolaire & IA",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu"
   },
   "Connexion": {
     "title": "Connexion",
