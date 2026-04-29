@@ -1,11 +1,12 @@
+import { auth } from "@/auth";
 import { routing } from "@/i18n/routing";
-import { getToken } from "next-auth/jwt";
 import createMiddleware from "next-intl/middleware";
-import { NextRequest, NextResponse } from "next/server";
+import type { NextAuthRequest } from "next-auth";
+import { NextResponse } from "next/server";
 
 const intlMiddleware = createMiddleware(routing);
 
-function homeForRole(role: string) {
+function homeForRole(role: string | undefined) {
   switch (role) {
     case "ELEVE":
       return "/eleve";
@@ -24,9 +25,11 @@ const protectedPrefixes = [
   { prefix: "/admin", role: "ADMIN" as const },
 ];
 
-const AUTH_SECRET = process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET;
-
-export default async function middleware(request: NextRequest) {
+/**
+ * Utiliser `auth()` (session Auth.js) au lieu de `getToken()` :
+ * `role` et les claims customs sont alignés avec `auth()` / SiteHeader — évite « connecté » dans le header mais pas sur /eleve.
+ */
+export default auth(async function middleware(request: NextAuthRequest) {
   const pathname = request.nextUrl.pathname;
 
   /** Routes App Router sous `[locale]` : sans `/fr|ar/` → 404 */
@@ -44,15 +47,16 @@ export default async function middleware(request: NextRequest) {
   }
 
   const intlResponse = intlMiddleware(request);
-  // Redirections i18n (locale manquante, etc.) — ne pas s’appuyer uniquement sur l’en-tête Location.
   if (intlResponse.status >= 300 && intlResponse.status < 400) {
     return intlResponse;
   }
 
+  const session = request.auth;
+  const role = session?.user?.role;
+
   const pathWithoutLocale =
     pathname.replace(/^\/(fr|ar)(?=\/|$)/, "") || "/";
 
-  /** Sans slash final pour comparer chemins (/connexion vs /connexion/). */
   const pathClean =
     pathWithoutLocale.replace(/\/$/, "") || "/";
 
@@ -64,49 +68,32 @@ export default async function middleware(request: NextRequest) {
       pathWithoutLocale.startsWith(`${p.prefix}/`),
   );
 
-  /**
-   * Connexion / apres-connexion : même JWT que les routes protégées (Edge).
-   * Évite ERR_TOO_MANY_REDIRECTS quand auth() (RSC) et getToken (middleware) diverge.
-   */
-  const authGatePaths =
-    pathClean === "/connexion" ||
-    pathClean === "/apres-connexion" ||
-    !!rule;
-
-  let token: Awaited<ReturnType<typeof getToken>> = null;
-  if (authGatePaths) {
-    token = await getToken({
-      req: request,
-      secret: AUTH_SECRET,
-    });
-  }
-
-  if (pathClean === "/connexion" && token) {
+  if (pathClean === "/connexion" && session?.user) {
     return NextResponse.redirect(
       new URL(`/${locale}/apres-connexion`, request.url),
     );
   }
 
-  if (pathClean === "/apres-connexion" && !token) {
+  if (pathClean === "/apres-connexion" && !session?.user) {
     return NextResponse.redirect(new URL(`/${locale}/connexion`, request.url));
   }
 
   if (rule) {
-    if (!token) {
+    if (!session?.user) {
       const u = new URL(`/${locale}/connexion`, request.url);
       u.searchParams.set("callbackUrl", pathname);
       return NextResponse.redirect(u);
     }
 
-    if (token.role !== rule.role) {
+    if (role !== rule.role) {
       return NextResponse.redirect(
-        new URL(`/${locale}${homeForRole(String(token.role))}`, request.url),
+        new URL(`/${locale}${homeForRole(role)}`, request.url),
       );
     }
   }
 
   return intlResponse;
-}
+});
 
 export const config = {
   matcher: ["/((?!api|_next|_vercel|.*\\..*).*)"],
