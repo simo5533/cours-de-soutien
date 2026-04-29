@@ -1,8 +1,8 @@
 /**
  * Aide aux devoirs — toutes matières scolaires (programme marocain) : OpenAI ou Ollama local.
  *
- * Par défaut : si OPENAI_API_KEY est définie → OpenAI, sinon → Ollama.
- * Forcer Ollama : MATHS_AI_PROVIDER=ollama (nom historique ; couvre toutes matières).
+ * Par défaut : si OPENAI_API_KEY est définie → OpenAI (prioritaire même si MATHS_AI_PROVIDER=ollama).
+ * Forcer uniquement Ollama sans clé : MATHS_AI_PROVIDER=ollama et pas de OPENAI_API_KEY.
  * Forcer OpenAI : MATHS_AI_PROVIDER=openai (exige OPENAI_API_KEY)
  */
 
@@ -29,12 +29,14 @@ function preferOpenAi(): boolean {
   const explicit = process.env.MATHS_AI_PROVIDER?.trim().toLowerCase();
   const hasKey = !!process.env.OPENAI_API_KEY?.trim();
 
-  if (explicit === "ollama") return false;
   if (explicit === "openai") {
     if (!hasKey) throw new Error(OPENAI_KEY_MANQUANTE);
     return true;
   }
-  return hasKey;
+  /* Une clé OpenAI prime sur MATHS_AI_PROVIDER=ollama (nom historique souvent laissé activé par erreur). */
+  if (hasKey) return true;
+  if (explicit === "ollama") return false;
+  return false;
 }
 
 function ollamaChatUrl(): string {
@@ -125,9 +127,11 @@ async function callOllama(truncated: string): Promise<string> {
     });
   } catch (e) {
     const hint =
-      "Ollama ne répond pas. Installez https://ollama.com , exécutez : ollama pull " +
+      "Ollama ne répond pas. Si vous utilisez OpenAI : mettez OPENAI_API_KEY dans web/.env.local ou web/.env " +
+      "(Next.js ne lit pas automatiquement un .env à la racine du dépôt ; cette app fusionne désormais la racine si la clé manque dans web/). " +
+      "Retirez MATHS_AI_PROVIDER=ollama pour utiliser OpenAI quand une clé est présente. Sinon installez https://ollama.com et : ollama pull " +
       model +
-      " , ou ajoutez OPENAI_API_KEY dans web/.env pour utiliser OpenAI.";
+      " .";
     if (e instanceof Error && e.name === "AbortError") {
       throw new Error(
         "Délai dépassé (Ollama). Réessayez ou configurez OPENAI_API_KEY pour OpenAI.",
