@@ -48,6 +48,28 @@ function finalizeLoginHref(
   return resolveCallbackUrl(merged, locale);
 }
 
+function pathnameOnly(raw: string): string {
+  const t = raw.trim();
+  if (t.startsWith("http://") || t.startsWith("https://")) {
+    try {
+      return new URL(t).pathname;
+    } catch {
+      return t.split("?")[0] ?? "";
+    }
+  }
+  return t.split("?")[0] ?? "";
+}
+
+/** Connexion réelle (/…/connexion), pas « apres-connexion » (substring « connexion »). */
+function looksLikeLoginRedirect(raw: string): boolean {
+  const path = pathnameOnly(raw).toLowerCase();
+  const segments = path.split("/").filter(Boolean);
+  if (segments.includes("connexion")) return true;
+  return (
+    path.includes("/api/auth/signin") || path.includes("/api/auth/error")
+  );
+}
+
 /** Si Auth renvoie une URL qui ramène au login, ignorer et utiliser la destination prévue. */
 function redirectHrefAfterCredentials(
   authUrl: string | null | undefined,
@@ -56,12 +78,7 @@ function redirectHrefAfterCredentials(
 ): string {
   const raw = authUrl?.trim();
   if (!raw) return fallbackResolved;
-  const lower = raw.toLowerCase();
-  if (
-    lower.includes("/connexion") ||
-    lower.includes("/api/auth/signin") ||
-    lower.includes("/api/auth/error")
-  ) {
+  if (looksLikeLoginRedirect(raw)) {
     return fallbackResolved;
   }
   return finalizeLoginHref(raw, fallbackResolved, locale);
@@ -92,18 +109,23 @@ export function ConnexionForm() {
         redirectTo: callbackUrl,
       });
 
-      if (!res || res.error || res.ok === false) {
-        setError(
-          res?.error ?? "Connexion impossible. Vérifiez vos identifiants.",
+      // Ne pas utiliser res.ok === false : Auth.js peut renvoyer des codes ambiguës alors que la session est créée.
+      if (!res) {
+        setError("Connexion impossible. Réessayez.");
+        return;
+      }
+      if (!res.error) {
+        const href = redirectHrefAfterCredentials(res.url, callbackUrl, locale);
+        window.location.assign(
+          href.startsWith("http")
+            ? href
+            : `${window.location.origin}${href.startsWith("/") ? href : `/${href}`}`,
         );
         return;
       }
 
-      const href = redirectHrefAfterCredentials(res.url, callbackUrl, locale);
-      window.location.assign(
-        href.startsWith("http")
-          ? href
-          : `${window.location.origin}${href.startsWith("/") ? href : `/${href}`}`,
+      setError(
+        res.error ?? "Connexion impossible. Vérifiez vos identifiants.",
       );
     } catch {
       setError("Erreur réseau ou serveur. Réessayez.");

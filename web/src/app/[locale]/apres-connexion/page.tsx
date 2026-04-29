@@ -8,14 +8,15 @@ export default async function ApresConnexionPage() {
     return;
   }
 
-  switch (session.user.role) {
-    case "ELEVE":
-      await redirectTo("/eleve");
-    case "PROFESSEUR":
-      await redirectTo("/professeur");
-    case "ADMIN":
-      await redirectTo("/admin");
-    default:
-      await redirectTo("/");
+  const role = session.user.role;
+
+  if (role === "ELEVE") {
+    await redirectTo("/eleve");
+  } else if (role === "PROFESSEUR") {
+    await redirectTo("/professeur");
+  } else if (role === "ADMIN") {
+    await redirectTo("/admin");
+  } else {
+    await redirectTo("/");
   }
 }
