@@ -64,6 +64,16 @@ function paddleTransactionErrorHint(error: unknown): string {
     );
   }
 
+  if (
+    lower.includes("incorrectly formatted") ||
+    lower.includes("authentication_malformed") ||
+    lower.includes("authentication header")
+  ) {
+    lines.push(
+      "Collez uniquement la clé API serveur Paddle Billing (elle commence par pdl_), sans le mot Bearer ni de guillemets. Sandbox : clé avec sdbx + PADDLE_ENVIRONMENT différent de production ; prod : clé live + PADDLE_ENVIRONMENT=production.",
+    );
+  }
+
   const tail =
     lines.length > 0
       ? lines.join(" ")

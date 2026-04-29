@@ -3,11 +3,40 @@ import type { CurrencyCode } from "@paddle/paddle-node-sdk";
 
 let paddle: Paddle | null | undefined;
 
+/**
+ * Paddle attend uniquement la valeur du jeton (`pdl_sdbx_apikey_…` / `pdl_live_apikey_…`).
+ * Copier « Bearer … », des guillemets ou une ligne complète casse le header Authorization.
+ * @see https://developer.paddle.com/errors/shared/authentication_malformed
+ */
+function sanitizePaddleApiKey(raw: string): string {
+  let k = raw.trim();
+  if (/^bearer\s+/i.test(k)) {
+    k = k.replace(/^bearer\s+/i, "").trim();
+  }
+  if (
+    (k.startsWith('"') && k.endsWith('"')) ||
+    (k.startsWith("'") && k.endsWith("'"))
+  ) {
+    k = k.slice(1, -1).trim();
+  }
+  return k.trim();
+}
+
 export function getPaddle(): Paddle | null {
-  const key = process.env.PADDLE_API_KEY?.trim();
+  const raw = process.env.PADDLE_API_KEY?.trim();
+  if (!raw) {
+    paddle = null;
+    return null;
+  }
+  const key = sanitizePaddleApiKey(raw);
   if (!key) {
     paddle = null;
     return null;
+  }
+  if (!key.startsWith("pdl_")) {
+    console.warn(
+      "[paddle] PADDLE_API_KEY doit commencer par pdl_ (clé API Billing — pas le secret webhook ni une client-side token).",
+    );
   }
   if (paddle === undefined) {
     const sandbox =
