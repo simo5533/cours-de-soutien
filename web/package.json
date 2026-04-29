@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "postinstall": "prisma generate",
     "dev": "next dev",
     "dev:webpack": "next dev --webpack",
     "build": "next build",
@@ -30,7 +31,11 @@
     "react-dom": "19.2.4",
     "stripe": "^22.0.2",
     "unpdf": "^1.6.0",
-    "zod": "^4.3.6"
+    "zod": "^4.3.6",
+    "prisma": "^6.19.3"
+  },
+  "engines": {
+    "node": ">=20"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -40,7 +45,6 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.2",
-    "prisma": "^6.19.3",
     "tailwindcss": "^4",
     "tsx": "^4.21.0",
     "typescript": "^5"
