@@ -1,9 +1,9 @@
 "use client";
 
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { Link } from "@/i18n/navigation";
 import { useSearchParams, useParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 /** next-intl impose /fr/… ou /ar/… — un chemin sans locale renvoie 404 en prod. */
 function resolveCallbackUrl(raw: string | null, locale: string): string {
@@ -89,8 +89,19 @@ export function ConnexionForm() {
   const params = useParams();
   const locale = typeof params.locale === "string" ? params.locale : "fr";
   const callbackUrl = resolveCallbackUrl(searchParams.get("callbackUrl"), locale);
+  const { status } = useSession();
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
+
+  /** Session client après signIn ou JWT présent alors que la page était encore « déconnectée » (hydratation). */
+  useEffect(() => {
+    if (status !== "authenticated") return;
+    window.location.replace(
+      callbackUrl.startsWith("http")
+        ? callbackUrl
+        : `${window.location.origin}${callbackUrl.startsWith("/") ? callbackUrl : `/${callbackUrl}`}`,
+    );
+  }, [status, callbackUrl]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
