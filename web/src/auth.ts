@@ -24,21 +24,26 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const parsed = schema.safeParse(credentials);
         if (!parsed.success) return null;
 
-        const { prisma } = await import("@/lib/prisma");
-        const user = await prisma.user.findUnique({
-          where: { email: parsed.data.email },
-        });
-        if (!user) return null;
+        try {
+          const { prisma } = await import("@/lib/prisma");
+          const user = await prisma.user.findUnique({
+            where: { email: parsed.data.email },
+          });
+          if (!user) return null;
 
-        const ok = await bcrypt.compare(parsed.data.password, user.passwordHash);
-        if (!ok) return null;
+          const ok = await bcrypt.compare(parsed.data.password, user.passwordHash);
+          if (!ok) return null;
 
-        return {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-          role: user.role as Role,
-        };
+          return {
+            id: user.id,
+            email: user.email,
+            name: user.name,
+            role: user.role as Role,
+          };
+        } catch (e) {
+          console.error("[auth] credentials authorize:", e);
+          return null;
+        }
       },
     }),
   ],

@@ -94,15 +94,34 @@ function redirectHrefAfterCredentials(
   return finalizeLoginHref(raw, fallbackResolved, locale);
 }
 
+/** Auth.js renvoie des codes techniques ; « Configuration » = souvent AUTH_SECRET absent ou crash serveur. */
+function friendlyCredentialsError(code: string | undefined): string {
+  switch (code) {
+    case "Configuration":
+      return "Impossible de finaliser la connexion (erreur serveur). Si vous déployez sur Vercel : vérifiez que AUTH_SECRET est défini et que DATABASE_URL permet d’atteindre la base (Neon). Sinon réessayez dans quelques minutes.";
+    case "CredentialsSignin":
+      return "E-mail ou mot de passe incorrect.";
+    case "AccessDenied":
+      return "Accès refusé.";
+    default:
+      return code?.trim()
+        ? code
+        : "Connexion impossible. Vérifiez vos identifiants ou réessayez.";
+  }
+}
+
 export function ConnexionForm() {
   const searchParams = useSearchParams();
   const params = useParams();
   const locale = typeof params.locale === "string" ? params.locale : "fr";
+  const errParam = searchParams.get("error");
   const callbackUrl = sanitizeCallbackAwayFromConnexion(
     resolveCallbackUrl(searchParams.get("callbackUrl"), locale),
     locale,
   );
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(() =>
+    errParam ? friendlyCredentialsError(errParam) : null,
+  );
   const [pending, setPending] = useState(false);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -137,9 +156,7 @@ export function ConnexionForm() {
         return;
       }
 
-      setError(
-        res.error ?? "Connexion impossible. Vérifiez vos identifiants.",
-      );
+      setError(friendlyCredentialsError(res.error));
     } catch {
       setError("Erreur réseau ou serveur. Réessayez.");
     } finally {
