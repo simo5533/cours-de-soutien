@@ -1,13 +1,13 @@
 /**
- * Si la table User est vide (ex. Neon après migrate), crée les mêmes comptes démo que prisma/seed.ts
- * pour que la connexion fonctionne comme en local. Ne fait rien si au moins un utilisateur existe.
+ * Si la table User est vide (Neon après migrate), crée les comptes démo.
+ * Version .mjs pour Vercel — pas besoin de tsx pendant `npm run build`.
  */
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
-function hash(password: string) {
+function hash(password) {
   return bcrypt.hashSync(password, 10);
 }
 
@@ -72,7 +72,7 @@ async function main() {
     },
   });
 
-  console.log("[ensure-demo-users] OK : admin@demo.fr, prof@demo.fr, eleve@demo.fr (mots de passe inchangés vs seed).");
+  console.log("[ensure-demo-users] OK : admin@demo.fr, prof@demo.fr, eleve@demo.fr.");
 }
 
 main()
