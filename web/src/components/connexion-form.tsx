@@ -2,13 +2,35 @@
 
 import { signIn } from "next-auth/react";
 import { Link } from "@/i18n/navigation";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useParams } from "next/navigation";
 import { useState } from "react";
+
+/** next-intl impose /fr/… ou /ar/… — un chemin sans locale renvoie 404 en prod. */
+function resolveCallbackUrl(raw: string | null, locale: string): string {
+  const fallback = `/${locale}/apres-connexion`;
+  if (!raw?.trim()) return fallback;
+  const t = raw.trim();
+  if (t.startsWith("http://") || t.startsWith("https://")) {
+    try {
+      const u = new URL(t);
+      if (typeof window !== "undefined" && u.origin !== window.location.origin) {
+        return fallback;
+      }
+      return resolveCallbackUrl(u.pathname + u.search, locale);
+    } catch {
+      return fallback;
+    }
+  }
+  if (/^\/(fr|ar)(\/|$)/.test(t)) return t;
+  if (t.startsWith("/")) return `/${locale}${t}`;
+  return fallback;
+}
 
 export function ConnexionForm() {
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") ?? "/apres-connexion";
-  const [error, setError] = useState<string | null>(null);
+  const params = useParams();
+  const locale = typeof params.locale === "string" ? params.locale : "fr";
+  const callbackUrl = resolveCallbackUrl(searchParams.get("callbackUrl"), locale);  const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
