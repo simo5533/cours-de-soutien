@@ -12,6 +12,23 @@ const nextConfig: NextConfig = {
       bodySizeLimit: "15mb",
     },
   },
+  async redirects() {
+    return [
+      {
+        source: "/:locale/eleve/aide-maths",
+        destination: "/:locale/eleve/aide-scolaire",
+        permanent: true,
+      },
+    ];
+  },
+  async rewrites() {
+    return [
+      {
+        source: "/api/eleve/aide-maths-fichier",
+        destination: "/api/eleve/aide-scolaire-fichier",
+      },
+    ];
+  },
 };
 
 export default withNextIntl(nextConfig);

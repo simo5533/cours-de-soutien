@@ -7,7 +7,7 @@ const nav = [
   { href: "/eleve/cours", label: "Mes cours" },
   { href: "/eleve/favoris", label: "Mes favoris" },
   { href: "/eleve/exercices", label: "Exercices & QCM" },
-  { href: "/eleve/aide-maths", label: "Aide IA — devoir (fichier)" },
+  { href: "/eleve/aide-scolaire", label: "Aide IA — toutes matières" },
   { href: "/eleve/notes", label: "Mes notes" },
   { href: "/eleve/emploi-du-temps", label: "Emploi du temps" },
   { href: "/eleve/progression", label: "Progression" },

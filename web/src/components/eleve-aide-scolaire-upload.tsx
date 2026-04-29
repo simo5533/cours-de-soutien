@@ -27,7 +27,7 @@ function openPrintToSaveAsPdf(html: string) {
   };
 }
 
-export function EleveAideMathsUpload() {
+export function EleveAideScolaireUpload() {
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [reply, setReply] = useState<string | null>(null);
@@ -49,7 +49,7 @@ export function EleveAideMathsUpload() {
 
     setPending(true);
     try {
-      const res = await fetch("/api/eleve/aide-maths-fichier", {
+      const res = await fetch("/api/eleve/aide-scolaire-fichier", {
         method: "POST",
         body: upload,
       });

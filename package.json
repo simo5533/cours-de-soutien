@@ -9,7 +9,7 @@
     "build": "cd web && npm run build",
     "start": "cd web && npm run start",
     "lint": "cd web && npm run lint",
-    "check:aide-maths": "cd web && npm run check:aide-maths",
+    "check:aide-scolaire": "cd web && npm run check:aide-scolaire",
     "db:seed": "cd web && npm run db:seed",
     "db:migrate": "cd web && npm run db:migrate",
     "db:studio": "cd web && npm run db:studio",

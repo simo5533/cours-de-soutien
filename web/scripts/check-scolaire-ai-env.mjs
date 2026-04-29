@@ -1,5 +1,5 @@
 /**
- * Vérifie la config aide maths : OpenAI et/ou Ollama (sans afficher les clés).
+ * Vérifie la config aide scolaire IA (toutes matières) : OpenAI et/ou Ollama.
  */
 import { config } from "dotenv";
 import { existsSync } from "node:fs";
@@ -28,7 +28,7 @@ if (openai) {
 }
 
 if (prefer === "openai" || prefer === "ollama") {
-  console.log("MATHS_AI_PROVIDER :", prefer);
+  console.log("MATHS_AI_PROVIDER :", prefer, "(nom historique — couvre toutes les matières)");
 }
 
 if (prefer === "openai" && !openai) {
@@ -59,9 +59,9 @@ if (!openai || prefer === "ollama") {
 }
 
 if (openai && (!prefer || prefer === "openai")) {
-  console.log("→ L’app utilisera OpenAI pour l’aide maths.");
+  console.log("→ L’app utilisera OpenAI pour l’aide aux devoirs (toutes matières).");
 } else if (prefer === "ollama" || !openai) {
-  console.log("→ L’app utilisera Ollama pour l’aide maths (si Ollama tourne).");
+  console.log("→ L’app utilisera Ollama pour l’aide aux devoirs (si Ollama tourne).");
 }
 
 process.exit(0);

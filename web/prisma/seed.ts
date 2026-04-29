@@ -149,7 +149,7 @@ async function main() {
   await prisma.scheduleEntry.createMany({
     data: [
       {
-        title: "Soutien maths — 4e",
+        title: "Soutien scolaire — 4e",
         weekday: 1,
         startTime: "16:30",
         endTime: "18:00",

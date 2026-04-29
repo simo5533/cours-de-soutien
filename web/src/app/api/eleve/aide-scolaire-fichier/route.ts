@@ -1,4 +1,4 @@
-// Réponse JSON uniquement ; export PDF = navigateur (maths-help-print côté client).
+// Réponse JSON ; export PDF = navigateur (maths-help-print côté client).
 import { auth } from "@/auth";
 import { sanitizeMathsHelpPlainText } from "@/lib/maths-help-print";
 import { extractTextFromStudentUpload } from "@/lib/extract-student-document";
@@ -62,7 +62,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: msg }, { status: 502 });
     }
   } catch (e) {
-    console.error("[api/eleve/aide-maths-fichier]", e);
+    console.error("[api/eleve/aide-scolaire-fichier]", e);
     return NextResponse.json(
       { error: e instanceof Error ? e.message : "Erreur serveur inattendue." },
       { status: 500 },

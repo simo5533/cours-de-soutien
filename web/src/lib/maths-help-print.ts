@@ -1,5 +1,5 @@
 /**
- * Page HTML pour impression ou enregistrement « PDF » via le navigateur (aucune lib PDF).
+ * Page HTML pour impression ou PDF via le navigateur (aide scolaire IA — toutes matières).
  */
 
 /**
