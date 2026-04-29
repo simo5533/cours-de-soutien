@@ -1,7 +1,10 @@
 generator client {
-  provider   = "prisma-client-js"
-  /// Souvent plus fiable sur Windows quand le renommage du `.dll.node` échoue (EPERM).
-  engineType = "binary"
+  provider      = "prisma-client-js"
+  /// `library` = moteur Node-API (pas de chmod) — obligatoire sur Vercel/serverless (FS read-only).
+  /// `binary` provoquait : EROFS: read-only file system, chmod query-engine-rhel-openssl-3.0.x
+  engineType    = "library"
+  /// Vercel (Node sur Amazon Linux 2 / OpenSSL 3) + dev local (native).
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
 }
 
 datasource db {

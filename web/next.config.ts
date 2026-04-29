@@ -44,6 +44,8 @@ const isNestedWebFolderInRepo =
  */
 const nextConfig: NextConfig = {
   ...(process.env.VERCEL === "1" && isNestedWebFolderInRepo ? { distDir: "../.next" } : {}),
+  /** Évite que le bundler traite mal Prisma sur Vercel (client + moteur query). */
+  serverExternalPackages: ["@prisma/client", "prisma"],
   experimental: {
     serverActions: {
       bodySizeLimit: "15mb",
