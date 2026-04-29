@@ -26,7 +26,7 @@ function resolveCallbackUrl(raw: string | null, locale: string): string {
   return fallback;
 }
 
-/** Utilise la réponse Next Auth (`res.url`) qui peut être `/apres-connexion` sans locale → 404 Vercel. */
+/** Utilise la réponse Auth.js (`res.url`) ; peut boucler vers `/connexion` ou `/api/auth/signin`. */
 function finalizeLoginHref(
   rawFromAuth: string | null | undefined,
   fallbackResolved: string,
@@ -48,6 +48,25 @@ function finalizeLoginHref(
   return resolveCallbackUrl(merged, locale);
 }
 
+/** Si Auth renvoie une URL qui ramène au login, ignorer et utiliser la destination prévue. */
+function redirectHrefAfterCredentials(
+  authUrl: string | null | undefined,
+  fallbackResolved: string,
+  locale: string,
+): string {
+  const raw = authUrl?.trim();
+  if (!raw) return fallbackResolved;
+  const lower = raw.toLowerCase();
+  if (
+    lower.includes("/connexion") ||
+    lower.includes("/api/auth/signin") ||
+    lower.includes("/api/auth/error")
+  ) {
+    return fallbackResolved;
+  }
+  return finalizeLoginHref(raw, fallbackResolved, locale);
+}
+
 export function ConnexionForm() {
   const searchParams = useSearchParams();
   const params = useParams();
@@ -60,26 +79,37 @@ export function ConnexionForm() {
     e.preventDefault();
     setError(null);
     setPending(true);
-    const form = e.currentTarget;
-    const fd = new FormData(form);
-    const email = fd.get("email") as string;
-    const password = fd.get("password") as string;
+    try {
+      const form = e.currentTarget;
+      const fd = new FormData(form);
+      const email = fd.get("email") as string;
+      const password = fd.get("password") as string;
 
-    const res = await signIn("credentials", {
-      email,
-      password,
-      redirect: false,
-      callbackUrl,
-    });
+      const res = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+        redirectTo: callbackUrl,
+      });
 
-    setPending(false);
+      if (!res || res.error || res.ok === false) {
+        setError(
+          res?.error ?? "Connexion impossible. Vérifiez vos identifiants.",
+        );
+        return;
+      }
 
-    if (res?.error) {
-      setError("E-mail ou mot de passe incorrect.");
-      return;
+      const href = redirectHrefAfterCredentials(res.url, callbackUrl, locale);
+      window.location.assign(
+        href.startsWith("http")
+          ? href
+          : `${window.location.origin}${href.startsWith("/") ? href : `/${href}`}`,
+      );
+    } catch {
+      setError("Erreur réseau ou serveur. Réessayez.");
+    } finally {
+      setPending(false);
     }
-
-    window.location.href = finalizeLoginHref(res?.url, callbackUrl, locale);
   }
 
   return (
