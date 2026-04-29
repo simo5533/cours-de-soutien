@@ -1,0 +1,233 @@
+generator client {
+  provider   = "prisma-client-js"
+  /// Souvent plus fiable sur Windows quand le renommage du `.dll.node` échoue (EPERM).
+  engineType = "binary"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ELEVE
+  PROFESSEUR
+  ADMIN
+}
+
+enum ExerciseType {
+  QCM
+  OUVERT
+}
+
+enum AttemptStatus {
+  EN_ATTENTE
+  CORRIGE
+}
+
+model User {
+  id             String   @id @default(cuid())
+  email          String   @unique
+  passwordHash   String
+  name           String
+  role           Role
+  /// Classe / groupe (ex. « 4ème A », « Terminale 1 ») — réservé aux élèves
+  groupe         String?
+  /// Relation optionnelle vers un groupe structuré
+  groupId        String?
+  group          Group?   @relation(fields: [groupId], references: [id], onDelete: SetNull)
+  /// Année scolaire (ex. « 2025-2026 ») — réservé aux élèves
+  anneeScolaire  String?
+  /// Inscription par l’admin — nombre de langues suivies
+  enrollmentLanguageCount Int?
+  /// Lignes matière : JSON [{ "name": "...", "priceDh": number }] (ancien format quantity×unitPrice encore lu)
+  enrollmentSubjectsJson    String?
+  /// Total forfait (dh)
+  enrollmentTotal         Float?
+  /// Date d’inscription de l’élève
+  enrolledAt               DateTime?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  coursesAuthored Course[]           @relation("CourseAuthor")
+  exercises       Exercise[]
+  attempts        ExerciseAttempt[]  @relation("StudentAttempts")
+  gradedAttempts  ExerciseAttempt[]  @relation("GradedBy")
+  scheduleEntries ScheduleEntry[]    @relation("ScheduleProf")
+  affectations    ProfesseurAffectation[]
+  absences        Absence[]
+  payments        Payment[]
+  courseFavorites CourseFavorite[]
+  /// Groupes dont ce prof est désigné titulaire (référent classe)
+  groupesTitulaire Group[] @relation("GroupTitulaire")
+}
+
+model Group {
+  id            String   @id @default(cuid())
+  name          String
+  anneeScolaire String
+  /// Matière principale de ce groupe (ex. Mathématiques) — vide = groupe-classe créé depuis l’admin
+  matiere       String   @default("")
+  description   String?
+  /// Professeur titulaire / référent du groupe (renseigné à la création)
+  titulaireId   String?
+  titulaire     User?    @relation("GroupTitulaire", fields: [titulaireId], references: [id], onDelete: SetNull)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  students        User[]
+  scheduleEntries ScheduleEntry[]
+
+  @@unique([name, anneeScolaire, matiere])
+}
+
+model Absence {
+  id        String   @id @default(cuid())
+  studentId String
+  student   User     @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  date      DateTime
+  justified Boolean  @default(false)
+  note      String?
+  createdAt DateTime @default(now())
+
+  @@index([studentId, date])
+}
+
+model Payment {
+  id            String   @id @default(cuid())
+  studentId     String
+  student       User     @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  amount        Float
+  paidAt        DateTime @default(now())
+  label         String
+  method        String   @default("ESPECES")
+  receiptNumber Int      @unique
+  note          String?
+  createdAt     DateTime @default(now())
+
+  @@index([studentId])
+}
+
+/// Inscription élève en attente de paiement Stripe (données supprimées après consommation)
+model EleveRegistrationPending {
+  id                  String    @id @default(cuid())
+  email               String
+  passwordHash        String
+  name                String
+  groupe              String
+  anneeScolaire       String
+  stripeSessionId     String?   @unique
+  /// ID transaction Paddle Billing (txn_…)
+  paddleTransactionId String?   @unique
+  createdAt           DateTime  @default(now())
+  consumedAt          DateTime?
+
+  @@index([email])
+}
+
+/// Affectation d’un professeur à un groupe pour une matière et une année scolaire
+model ProfesseurAffectation {
+  id             String   @id @default(cuid())
+  professeurId   String
+  professeur     User     @relation(fields: [professeurId], references: [id], onDelete: Cascade)
+  matiere        String
+  groupe         String
+  anneeScolaire  String
+  createdAt      DateTime @default(now())
+
+  @@unique([professeurId, matiere, groupe, anneeScolaire])
+}
+
+model Course {
+  id           String   @id @default(cuid())
+  title        String
+  description  String?
+  matiere      String
+  niveau       String
+  chapitre     String
+  /// Si renseigné, visible uniquement par les élèves de ce groupe
+  groupeCible         String?
+  /// Si renseigné, visible uniquement pour cette année scolaire
+  anneeScolaireCible  String?
+  contentText  String?
+  pdfFileName  String?
+  published    Boolean  @default(false)
+  authorId     String
+  author       User     @relation("CourseAuthor", fields: [authorId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  favorites    CourseFavorite[]
+}
+
+model CourseFavorite {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  courseId  String
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, courseId])
+  @@index([userId])
+}
+
+model Exercise {
+  id          String         @id @default(cuid())
+  title       String
+  matiere     String
+  niveau      String
+  chapitre    String
+  groupeCible         String?
+  anneeScolaireCible  String?
+  /// Date limite de rendu (optionnelle). Après cette date, l’élève ne peut plus répondre ; 0/20 si aucune tentative.
+  deadlineAt  DateTime?
+  type        ExerciseType
+  contentJson String
+  published   Boolean        @default(true)
+  authorId    String
+  author      User           @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  attempts    ExerciseAttempt[]
+}
+
+model ExerciseAttempt {
+  id           String         @id @default(cuid())
+  exerciseId   String
+  exercise     Exercise       @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+  studentId    String
+  student      User           @relation("StudentAttempts", fields: [studentId], references: [id], onDelete: Cascade)
+  answersJson  String
+  score        Float?
+  maxScore     Float?
+  feedback     String?
+  status       AttemptStatus  @default(EN_ATTENTE)
+  submittedAt  DateTime       @default(now())
+  gradedAt     DateTime?
+  gradedById   String?
+  gradedBy     User?          @relation("GradedBy", fields: [gradedById], references: [id], onDelete: SetNull)
+}
+
+model ScheduleEntry {
+  id        String   @id @default(cuid())
+  title     String
+  weekday   Int
+  startTime String
+  endTime   String
+  niveau    String?
+  matiere   String?
+  room      String?
+  /// Professeur qui assure le créneau (optionnel)
+  professeurId   String?
+  professeur     User?    @relation("ScheduleProf", fields: [professeurId], references: [id], onDelete: SetNull)
+  /// Référentiel groupe (optionnel) — max 5 créneaux par groupe côté application
+  groupId        String?
+  group          Group?   @relation(fields: [groupId], references: [id], onDelete: SetNull)
+  /// Groupe / classe concerné (vide = tous les élèves qui voient le créneau général)
+  groupe         String?
+  /// Année scolaire (vide = toutes)
+  anneeScolaire   String?
+  createdAt DateTime @default(now())
+
+  @@index([groupId])
+}

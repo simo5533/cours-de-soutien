@@ -1,0 +1,185 @@
+@import "tailwindcss";
+
+/* Indispensable en Tailwind v4 : analyse explicite des sources pour générer les classes utilitaires */
+@source "../**/*.{js,ts,jsx,tsx}";
+
+/* Charte METHODIX — fond #0A1F44, sections #F5F7FA, CTA #1E90FF, premium #D4AF37 */
+:root {
+  --background: #f5f7fa;
+  --foreground: #111827;
+  --surface: #ffffff;
+  --surface-elevated: #f5f7fa;
+  --muted: #64748b;
+  --border: rgba(10, 31, 68, 0.12);
+  --navy: #0a1f44;
+  --gold: #d4af37;
+  --brandblue: #1e90ff;
+  --brand: var(--navy);
+  --brand-hover: #071730;
+  --brand-muted: rgba(10, 31, 68, 0.08);
+  --ring: rgba(30, 144, 255, 0.35);
+  --header-h: 4rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a1f44;
+    --foreground: #ffffff;
+    --surface: #0d2548;
+    --surface-elevated: #102752;
+    --muted: #94a3b8;
+    --border: rgba(30, 144, 255, 0.15);
+    --brand: #1e90ff;
+    --brand-hover: #4da6ff;
+    --brand-muted: rgba(30, 144, 255, 0.12);
+    --ring: rgba(212, 175, 55, 0.35);
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-brand: var(--brand);
+  --color-surface: var(--surface);
+  --color-navy: #0a1f44;
+  --color-gold: #d4af37;
+  --color-brandblue: #1e90ff;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+/* Fond bleu charte : dégradé marine → bleu vif + touches or */
+.page-bg {
+  background-color: var(--background);
+  background-image:
+    linear-gradient(
+      165deg,
+      rgba(10, 31, 68, 0.07) 0%,
+      var(--background) 38%,
+      rgba(30, 144, 255, 0.12) 100%
+    ),
+    radial-gradient(
+      ellipse 130% 90% at 50% -15%,
+      rgba(30, 144, 255, 0.22),
+      transparent 52%
+    ),
+    radial-gradient(
+      ellipse 70% 55% at 100% 0%,
+      rgba(10, 31, 68, 0.09),
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse 55% 40% at 0% 100%,
+      rgba(212, 175, 55, 0.08),
+      transparent 55%
+    ),
+    linear-gradient(to bottom, transparent, var(--background) 340px),
+    linear-gradient(rgba(10, 31, 68, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10, 31, 68, 0.055) 1px, transparent 1px);
+  background-size:
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    64px 64px,
+    64px 64px;
+  background-position: center, center top, top right, bottom left, center, 0 0, 0 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .page-bg {
+    background-image:
+      linear-gradient(
+        165deg,
+        #0a1f44 0%,
+        var(--background) 45%,
+        rgba(30, 144, 255, 0.14) 100%
+      ),
+      radial-gradient(
+        ellipse 100% 70% at 50% -5%,
+        rgba(30, 144, 255, 0.18),
+        transparent 58%
+      ),
+      radial-gradient(
+        ellipse 50% 45% at 100% 15%,
+        rgba(10, 31, 68, 0.5),
+        transparent 55%
+      ),
+      radial-gradient(
+        ellipse 45% 35% at 0% 95%,
+        rgba(212, 175, 55, 0.06),
+        transparent 60%
+      ),
+      linear-gradient(to bottom, transparent, var(--background) 380px),
+      linear-gradient(rgba(30, 144, 255, 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(30, 144, 255, 0.07) 1px, transparent 1px);
+    background-size:
+      100% 100%,
+      100% 100%,
+      100% 100%,
+      100% 100%,
+      100% 100%,
+      48px 48px,
+      48px 48px;
+    background-position: center, center top, top right, bottom left, center, 0 0, 0 0;
+  }
+}
+
+@layer components {
+  .input-field {
+    @apply w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 shadow-sm transition-[border-color,box-shadow] placeholder:text-slate-400 focus:border-brandblue/60 focus:outline-none focus:ring-2 focus:ring-brandblue/25 dark:border-slate-700 dark:bg-slate-900/80 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:border-brandblue/50 dark:focus:ring-brandblue/20;
+  }
+
+  /* CTA principal : or sur fond clair */
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-xl bg-gold px-5 py-2.5 text-sm font-semibold text-navy shadow-md shadow-navy/15 transition hover:brightness-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)] dark:bg-gold dark:text-navy dark:shadow-navy/25 dark:hover:brightness-105;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-xl border border-navy/20 bg-white px-5 py-2.5 text-sm font-semibold text-navy shadow-sm transition hover:border-navy/35 hover:bg-navy/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brandblue/30 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100 dark:hover:border-slate-500 dark:hover:bg-slate-700;
+  }
+
+  .card-elevated {
+    @apply rounded-2xl border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.04] dark:border-slate-700/80 dark:bg-slate-900/50 dark:shadow-black/20;
+  }
+
+  /** Carte identité centre (marine + filet or + touche bleu vif) */
+  .brand-card {
+    @apply rounded-2xl border border-navy/10 bg-gradient-to-br from-white via-white to-brandblue/[0.04] shadow-md shadow-navy/[0.06] ring-1 ring-gold/20 dark:border-slate-700/90 dark:from-slate-900/90 dark:via-slate-900/70 dark:to-brandblue/[0.06] dark:shadow-black/25 dark:ring-gold/25;
+  }
+
+  .brand-card-inner {
+    @apply border-s-4 border-gold/40 ps-4 dark:border-gold/35;
+  }
+
+  /** Titres de section (tableaux de bord / admin) */
+  .brand-section-title {
+    @apply text-[11px] font-bold uppercase tracking-[0.22em] text-navy dark:text-gold;
+  }
+
+  .brand-section-subtitle {
+    @apply mt-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400;
+  }
+
+  /** Ligne liste avec accent bleu vif */
+  .brand-list-item {
+    @apply rounded-xl border border-navy/8 bg-white/80 px-4 py-3 shadow-sm transition hover:border-brandblue/25 hover:shadow-md hover:shadow-brandblue/5 dark:border-slate-700/80 dark:bg-slate-900/40 dark:hover:border-brandblue/30;
+  }
+
+  /** Sélecteurs (même traitement que .input-field) */
+  .select-field {
+    @apply min-h-[42px] w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-sm text-navy shadow-sm transition-[border-color,box-shadow] focus:border-brandblue/60 focus:outline-none focus:ring-2 focus:ring-brandblue/25 dark:border-slate-700 dark:bg-slate-900/80 dark:text-slate-100 dark:focus:border-brandblue/50 dark:focus:ring-brandblue/20;
+  }
+}

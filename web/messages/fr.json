@@ -1,0 +1,183 @@
+{
+  "metadata": {
+    "title": "Methodix — Soutien scolaire en ligne au Maroc | Correcteur IA",
+    "description": "Methodix : cours du programme officiel marocain (tronc commun au bac) et correcteur d'exercices par intelligence artificielle. 3 corrections gratuites a l'inscription, abonnement des 99 MAD/mois."
+  },
+  "HomePage": {
+    "badge": "Soutien scolaire — en presentiel et en ligne",
+    "title": "Progressez avec des ateliers cibles et un suivi qui compte.",
+    "intro": "Petits groupes, accompagnement clair, et une plateforme pour reviser quand vous voulez. Inscrivez-vous pour acceder au catalogue et aux prochaines seances.",
+    "heroNote": "Offre de bienvenue : nous vous recontactons apres votre inscription pour convenir du creneau qui vous convient.",
+    "ctaCatalog": "Voir le catalogue",
+    "ctaLogin": "Connexion",
+    "ctaSignup": "Creer un compte",
+    "ctaRegisterNow": "S'inscrire maintenant",
+    "ctaDiscover": "Decouvrir les cours",
+    "ctaLanguagesLink": "Cours de langues — tous âges",
+    "cardCta": "Acceder a l'espace",
+    "trust1": "Accompagnement transparent",
+    "trust2": "Ateliers en petit groupe",
+    "trust3": "Suivi et ressources en ligne",
+    "servicesTitle": "Nos ateliers et services",
+    "servicesSubtitle": "Des formats adaptes a votre rythme et a vos objectifs.",
+    "svcCardBadge": "Offre",
+    "svcWorkshopTitle": "Atelier de revision (groupe)",
+    "svcWorkshopDesc": "Seance encadree sur une matiere et un chapitre precis, fiches et exercices corriges.",
+    "svcPackTitle": "Pack de seances",
+    "svcPackDesc": "Programme court pour consolider les bases avant le prochain controle.",
+    "svcOnlineTitle": "Acces plateforme",
+    "svcOnlineDesc": "Cours PDF, QCM, suivi des notes et emploi du temps — 24h/24.",
+    "pricingTitle": "Formules Methodix",
+    "pricingSubtitle": "Quatre offres — du gratuit a l'abonnement famille. Paiement au Maroc via CMI (pas d'abonnement recurrent natif : renouvellement par lien mensuel ou tokenisation selon contrat).",
+    "planPopular": "Le plus choisi",
+    "planStarterName": "Gratuit",
+    "planStarterPrice": "0 MAD — sans carte bancaire",
+    "planStarterF1": "Correcteur IA : 3 corrections a vie (toutes matieres)",
+    "planStarterF2": "Cours d'introduction et fiches resume (limites starter)",
+    "planStarterF3": "Blog et FAQ — ideal pour decouvrir la plateforme",
+    "planEssentialName": "Essentiel",
+    "planEssentialPrice": "99 MAD/mois ou 799 MAD/an",
+    "planEssentialF1": "Correcteur IA illimite — photo, texte, pas a pas, toutes matieres",
+    "planEssentialF2": "Cours PDF, fiches et exercices complets du programme marocain",
+    "planEssentialF3": "Annales bac, suivi progression, espace parent basique, facture PDF",
+    "planBacPlusName": "Bac+",
+    "planBacPlusPrice": "149 MAD/mois ou 1188 MAD/an",
+    "planBacPlusF1": "Tout Essentiel + simulations examen blanc chronometrees",
+    "planBacPlusF2": "Exercices IA personnalises, plan de revision IA avec compte a rebours bac",
+    "planBacPlusF3": "Espace parent avance, rapport hebdo e-mail, alerte inactivite, support prioritaire",
+    "planFamilyName": "Famille",
+    "planFamilyPrice": "229 MAD/mois ou 1908 MAD/an",
+    "planFamilyF1": "Jusqu'a 3 profils enfants independants (niveaux melanges)",
+    "planFamilyF2": "Memes avantages cours / IA / annales que Essentiel par enfant",
+    "planFamilyF3": "Tableau de bord parent unifie — une seule facture CMI",
+    "planCta": "S'inscrire",
+    "spacesEyebrow": "Espaces plateforme",
+    "spacesSectionTitle": "Acces a la plateforme Methodix",
+    "spacesSectionSubtitle": "Eleves, professeurs et administration : chaque role a son espace securise pour cours, corrections et suivi.",
+    "finalCtaTitle": "Rejoignez Methodix aujourd'hui",
+    "finalCtaSubtitle": "Inscription gratuite en moins de 2 minutes — 3 corrections IA offertes, puis abonnement si vous souhaitez l'illimite.",
+    "finalCtaButton": "Creer mon compte gratuit",
+    "disclaimer": "Remboursement integral sous 7 jours en cas d'insatisfaction sur simple demande. Annulation possible a tout moment depuis votre espace. Paiement CMI : les montants sont en centimes cote passerelle ; le renouvellement mensuel est gere par lien de paiement (ou tokenisation si prevue au contrat).",
+    "spaces": {
+      "student": { "title": "Eleve", "desc": "Cours, exercices, notes et suivi de progression." },
+      "teacher": { "title": "Professeur", "desc": "Publication de contenus, corrections et suivi des classes." },
+      "admin": { "title": "Administration", "desc": "Utilisateurs, moderation et statistiques de la plateforme." }
+    },
+    "subjectsEyebrow": "Soutien scolaire — programme marocain",
+    "languagesEyebrow": "Langues vivantes",
+    "languagesSectionTitle": "Français, espagnol, anglais, anglais américain, allemand et chinois",
+    "languagesSectionIntro": "Nous vous invitons à rejoindre nos ateliers de langues : objectifs clairs (scolarité, examens, conversation ou voyage), petits groupes et pédagogie progressive. Choisissez la langue qui vous correspond et progressez à votre rythme.",
+    "languagesSeparateNote": "Offre à part des matières du bac présentées ci-dessus : ici il s'agit d'ateliers de langues pour tous les publics, sans être limité au programme de lycée.",
+    "languagesWhoTitle": "Qui peut étudier les langues chez Methodix ?",
+    "languagesWhoBody": "Tout le monde : écoliers, collégiens, lycéens, étudiants, adultes en activité, en reconversion, en recherche d'emploi ou à la retraite. Aucun diplôme préalable n'est exigé pour commencer un niveau débutant.",
+    "languagesAgeTitle": "À partir de quel âge ?",
+    "languagesAgeBody": "En pratique, nous proposons des groupes enfants à partir d'environ 8 à 12 ans (selon la langue et la session), des groupes ados 13–17 ans, et des créneaux adultes dès 18 ans. Il n'y a pas d'âge maximum : les seniors sont les bienvenus. Pour les moins de 8 ans, une courte évaluation permet de vérifier que le groupe convient.",
+    "languagesCta": "S'inscrire pour les langues",
+    "languages": {
+      "french": {
+        "title": "Français",
+        "desc": "Renforcer l'écrit et l'oral, préparer le bac ou un diplôme (DELF), ou gagner en confiance au quotidien. Parcours adaptés à votre niveau, du débutant au niveau avancé."
+      },
+      "spanish": {
+        "title": "Espagnol",
+        "desc": "Une langue ouverte sur l'Europe et les Amériques : bases solides, pratique en situation et préparation aux examens (DELE, scolarité bilingue)."
+      },
+      "english": {
+        "title": "Anglais",
+        "desc": "Anglais international : grammaire, compréhension et expression pour études, travail ou certifications (style académique et examens type Cambridge)."
+      },
+      "englishUS": {
+        "title": "Anglais américain",
+        "desc": "Accent, idiomes et culture des États-Unis ; idéal pour la compréhension de séries et médias US, et pour les tests type TOEFL ou études outre-Atlantique."
+      },
+      "german": {
+        "title": "Allemand",
+        "desc": "Langue incontournable pour les études en Allemagne, en Autriche ou en Suisse alémanique : grammaire structurée, expression orale et préparation aux examens (Goethe-Zertifikat, scolarité)."
+      },
+      "chinese": {
+        "title": "Chinois (mandarin)",
+        "desc": "Une langue stratégique pour les études, le commerce et les échanges avec la Chine : prononciation (pinyin), caractères, conversation et préparation aux niveaux HSK. Parcours progressifs du débutant au confirmé."
+      }
+    }
+  },
+  "SiteHeader": {
+    "brandTitle": "Methodix",
+    "languages": "Langues vivantes",
+    "blog": "Blog",
+    "catalog": "Catalogue",
+    "mySpace": "Mon espace",
+    "logout": "Deconnexion",
+    "login": "Connexion",
+    "signup": "Inscription",
+    "brandSubtitle": "Soutien scolaire & IA"
+  },
+  "Connexion": {
+    "title": "Connexion",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "submit": "Se connecter",
+    "submitting": "Connexion…",
+    "error": "E-mail ou mot de passe incorrect.",
+    "noAccount": "Pas encore de compte ?",
+    "register": "Inscription",
+    "demo": "Comptes de demonstration :"
+  },
+  "LanguageSwitcher": {
+    "label": "Langue",
+    "fr": "Francais",
+    "ar": "العربية"
+  },
+  "EleveNav": {
+    "dashboard": "Tableau de bord",
+    "profil": "Classe et annee",
+    "cours": "Mes cours",
+    "exercices": "Exercices et QCM",
+    "notes": "Mes notes",
+    "emploi": "Emploi du temps",
+    "progression": "Progression"
+  },
+  "EleveShell": {
+    "title": "Espace eleve",
+    "subtitle": "Apprendre et s'entrainer facilement — contenus alignes sur votre classe et votre annee scolaire."
+  },
+  "ProfNav": {
+    "dashboard": "Tableau de bord",
+    "emploi": "Emploi du temps",
+    "cours": "Mes cours",
+    "exercices": "Exercices / QCM",
+    "corrections": "Corrections",
+    "eleves": "Eleves et performances"
+  },
+  "ProfShell": {
+    "title": "Espace professeur",
+    "subtitle": "Publier des cours, creer des exercices et suivre la progression des eleves."
+  },
+  "AdminNav": {
+    "dashboard": "Tableau de bord",
+    "users": "Utilisateurs",
+    "emploi": "Emploi du temps",
+    "affectations": "Affectations",
+    "cours": "Cours",
+    "exercices": "Exercices",
+    "stats": "Statistiques"
+  },
+  "AdminShell": {
+    "title": "Administration",
+    "subtitle": "Pilotage des comptes, des contenus et des indicateurs globaux."
+  },
+  "DashboardTop": {
+    "home": "Accueil"
+  },
+  "Blog": {
+    "metaTitle": "Blog — conseils et methodologie | Methodix",
+    "metaDescription": "Articles sur le soutien scolaire, l'accompagnement des parents et les langues vivantes au Maroc.",
+    "badge": "Ressources",
+    "indexTitle": "Conseils pour reussir a l'ecole",
+    "indexSubtitle": "Methodologie, motivation et reflexions autour du soutien scolaire. Contenu redige pour les familles et les eleves.",
+    "readArticle": "Lire l'article",
+    "back": "Retour au blog",
+    "ctaTitle": "Envie d'etre accompagne ?",
+    "ctaBody": "Creez un compte eleve et accedez au catalogue, aux exercices et au suivi pedagogique.",
+    "ctaButton": "S'inscrire"
+  }
+}

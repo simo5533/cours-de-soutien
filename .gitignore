@@ -1,0 +1,32 @@
+# Racine & workspace
+node_modules/
+.DS_Store
+*.log
+
+# Next.js (app dans web/)
+web/node_modules/
+web/.next/
+web/out/
+web/build/
+web/.vercel/
+web/*.tsbuildinfo
+
+# Env & secrets (ne jamais committer)
+.env
+.env.*
+!web/.env.example
+
+# SQLite — ne pas versionner la base locale (prod : Postgres / Neon / Turso…)
+*.db
+*.db-journal
+
+# Uploads locaux
+web/storage/
+
+# Fichiers temporaires locaux
+*_start_err.txt
+*_start_out.txt
+
+# IDE
+.idea/
+.vscode/
