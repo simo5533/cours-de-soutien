@@ -25,7 +25,7 @@ const USER_WRAPPER = (truncated: string) =>
 
 export const OPENAI_KEY_MANQUANTE = "OPENAI_API_KEY_MANQUANTE";
 
-function useOpenAi(): boolean {
+function preferOpenAi(): boolean {
   const explicit = process.env.MATHS_AI_PROVIDER?.trim().toLowerCase();
   const hasKey = !!process.env.OPENAI_API_KEY?.trim();
 
@@ -42,11 +42,8 @@ function ollamaChatUrl(): string {
   return `${host}/v1/chat/completions`;
 }
 
-/** Compatible Node sans AbortSignal.timeout (évite crash 500 silencieux). */
+/** Timeout réseau pour fetch Ollama (sans AbortSignal.timeout pour éviter faux positifs ESLint/React Compiler). */
 function abortAfterMs(ms: number): AbortSignal {
-  if (typeof AbortSignal !== "undefined" && typeof AbortSignal.timeout === "function") {
-    return AbortSignal.timeout(ms);
-  }
   const c = new AbortController();
   setTimeout(() => c.abort(), ms);
   return c.signal;
@@ -168,7 +165,7 @@ async function callOllama(truncated: string): Promise<string> {
 
 export async function generateSubjectHelpFromExtractedText(extractedText: string): Promise<string> {
   const truncated = extractedText.slice(0, 28000);
-  if (useOpenAi()) {
+  if (preferOpenAi()) {
     return callOpenai(truncated);
   }
   return callOllama(truncated);

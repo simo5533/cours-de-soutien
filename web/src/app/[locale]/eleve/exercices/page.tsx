@@ -2,6 +2,7 @@ import { Link } from "@/i18n/navigation";
 import { auth } from "@/auth";
 import { andClauseContenuPourEleve } from "@/lib/eleve-visibility";
 import { applyAutoZeroForPastDeadlines } from "@/lib/exercise-deadline-sync";
+import { isExerciseDeadlinePast } from "@/lib/is-exercise-deadline-past";
 import { prisma } from "@/lib/prisma";
 
 export default async function EleveExercicesPage() {
@@ -42,9 +43,7 @@ export default async function EleveExercicesPage() {
       ) : (
         <ul className="space-y-2">
           {exercises.map((ex) => {
-            const past =
-              ex.deadlineAt != null &&
-              new Date(ex.deadlineAt).getTime() < Date.now();
+            const past = isExerciseDeadlinePast(ex.deadlineAt);
             return (
               <li key={ex.id}>
                 <Link

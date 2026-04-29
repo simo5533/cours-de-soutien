@@ -13,7 +13,7 @@ const ensureDemoScript = path.join(__dirname, "ensure-demo-users.mjs");
 function run(label, cmd, args, opts = {}) {
   const shell =
     opts.shell ??
-    (cmd === "npx" && process.platform === "win32");
+    cmd === "npx";
   console.log(`[build-production] ${label}…`);
   const r = spawnSync(cmd, args, {
     stdio: "inherit",

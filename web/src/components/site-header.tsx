@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { auth } from "@/auth";
 import { logoutAction } from "@/actions/logout";
 import { Link } from "@/i18n/navigation";
@@ -16,13 +17,12 @@ export async function SiteHeader() {
           href="/"
           className="group flex min-w-0 max-w-[min(100%,280px)] items-center gap-3 sm:max-w-none"
         >
-          <img
+          <Image
             src="/methodix-logo.png"
             alt={t("brandTitle")}
             width={220}
             height={72}
-            fetchPriority="high"
-            decoding="async"
+            priority
             className="h-9 w-auto max-h-9 shrink-0 object-contain object-left drop-shadow-sm"
           />
           <span className="hidden min-w-0 flex-col leading-tight md:flex">
