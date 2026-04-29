@@ -91,6 +91,11 @@ type EleveRegisterInput = {
   paddlePlan?: ElevePaddlePlan;
 };
 
+function truncateTech(msg: string, max = 380): string {
+  const t = msg.trim();
+  return t.length > max ? `${t.slice(0, max)}…` : t;
+}
+
 export async function startElevePaddleCheckout(
   input: EleveRegisterInput,
   locale: string,
@@ -103,100 +108,114 @@ export async function startElevePaddleCheckout(
     };
   }
 
-  const existing = await prisma.user.findUnique({
-    where: { email: input.email.trim() },
-  });
-  if (existing) {
-    return { error: "Cet e-mail est déjà utilisé." };
-  }
-
-  await prisma.eleveRegistrationPending.deleteMany({
-    where: { email: input.email.trim(), consumedAt: null },
-  });
-
-  const passwordHash = await bcrypt.hash(input.password, 10);
-
-  const pending = await prisma.eleveRegistrationPending.create({
-    data: {
-      email: input.email.trim(),
-      passwordHash,
-      name: input.name.trim(),
-      groupe: input.groupe.trim(),
-      anneeScolaire: input.anneeScolaire.trim(),
-    },
-  });
-
-  const base = getAppBaseUrl();
-  const loc = locale === "ar" ? "ar" : "fr";
-  const successUrl = `${base}/${loc}/inscription/succes`;
-
-  const plan = input.paddlePlan ?? "essential";
-  const priceId = getPaddlePriceIdForElevePlan(plan);
-  const currencyCode = getPaddleCheckoutCurrency();
-
-  let txn: Transaction;
   try {
-    if (priceId) {
-      txn = await paddle.transactions.create({
-        items: [{ priceId, quantity: 1 }],
-        collectionMode: "automatic",
-        customData: { pending_id: pending.id },
-        checkout: {
-          url: successUrl,
-        },
-      });
-    } else {
-      const minor = getPaddleEleveUnitAmountMinor();
-      txn = await paddle.transactions.create({
-        items: [
-          {
-            quantity: 1,
-            price: {
-              description: "Frais d'inscription — accès plateforme Methodix",
-              unitPrice: {
-                amount: String(minor),
-                currencyCode,
-              },
-              product: {
-                name: "Inscription élève Methodix",
-                taxCategory: "training-services",
-                description: "Inscription et accès élève",
+    const existing = await prisma.user.findUnique({
+      where: { email: input.email.trim() },
+    });
+    if (existing) {
+      return { error: "Cet e-mail est déjà utilisé." };
+    }
+
+    await prisma.eleveRegistrationPending.deleteMany({
+      where: { email: input.email.trim(), consumedAt: null },
+    });
+
+    const passwordHash = await bcrypt.hash(input.password, 10);
+
+    const pending = await prisma.eleveRegistrationPending.create({
+      data: {
+        email: input.email.trim(),
+        passwordHash,
+        name: input.name.trim(),
+        groupe: input.groupe.trim(),
+        anneeScolaire: input.anneeScolaire.trim(),
+      },
+    });
+
+    const base = getAppBaseUrl();
+    const loc = locale === "ar" ? "ar" : "fr";
+    const successUrl = `${base}/${loc}/inscription/succes`;
+
+    const plan = input.paddlePlan ?? "essential";
+    const priceId = getPaddlePriceIdForElevePlan(plan);
+    const currencyCode = getPaddleCheckoutCurrency();
+
+    let txn: Transaction;
+    try {
+      if (priceId) {
+        txn = await paddle.transactions.create({
+          items: [{ priceId, quantity: 1 }],
+          collectionMode: "automatic",
+          customData: { pending_id: pending.id },
+          checkout: {
+            url: successUrl,
+          },
+        });
+      } else {
+        const minor = getPaddleEleveUnitAmountMinor();
+        txn = await paddle.transactions.create({
+          items: [
+            {
+              quantity: 1,
+              price: {
+                description: "Frais d'inscription — accès plateforme Methodix",
+                unitPrice: {
+                  amount: String(minor),
+                  currencyCode,
+                },
+                product: {
+                  name: "Inscription élève Methodix",
+                  taxCategory: "training-services",
+                  description: "Inscription et accès élève",
+                },
               },
             },
+          ],
+          collectionMode: "automatic",
+          customData: { pending_id: pending.id },
+          checkout: {
+            url: successUrl,
           },
-        ],
-        collectionMode: "automatic",
-        customData: { pending_id: pending.id },
-        checkout: {
-          url: successUrl,
-        },
-      });
+        });
+      }
+    } catch (e) {
+      console.error("[startElevePaddleCheckout] Paddle API", e);
+      await prisma.eleveRegistrationPending
+        .delete({ where: { id: pending.id } })
+        .catch(() => {});
+      return {
+        error: `Impossible d'ouvrir la page de paiement. ${paddleTransactionErrorHint(e)}`,
+      };
     }
+
+    const checkoutUrl = txn.checkout?.url;
+    if (!checkoutUrl) {
+      await prisma.eleveRegistrationPending
+        .delete({ where: { id: pending.id } })
+        .catch(() => {});
+      return {
+        error:
+          "Réponse Paddle invalide (URL de paiement absente). Définissez un Default payment link dans Paddle > Checkout.",
+      };
+    }
+
+    await prisma.eleveRegistrationPending.update({
+      where: { id: pending.id },
+      data: { paddleTransactionId: txn.id },
+    });
+
+    return { checkoutUrl };
   } catch (e) {
-    console.error("[startElevePaddleCheckout]", e);
-    await prisma.eleveRegistrationPending
-      .delete({ where: { id: pending.id } })
-      .catch(() => {});
+    console.error("[startElevePaddleCheckout] erreur interne", e);
+    const raw = e instanceof Error ? e.message : String(e);
+    let hint =
+      " Cause probable : base de données inaccessible. Vérifiez DATABASE_URL sur Vercel, que Neon (Postgres) est actif et que les migrations ont été appliquées.";
+    if (/paddle|Paddle|401|403|Unauthorized/i.test(raw)) {
+      hint =
+        " Cause probable : clé Paddle invalide ou mauvais environnement (sandbox vs production).";
+    }
     return {
-      error: `Impossible d'ouvrir la page de paiement. ${paddleTransactionErrorHint(e)}`,
+      error: `Erreur lors de la préparation du paiement.${hint} Détail technique : ${truncateTech(raw)}`,
     };
   }
-
-  const checkoutUrl = txn.checkout?.url;
-  if (!checkoutUrl) {
-    await prisma.eleveRegistrationPending
-      .delete({ where: { id: pending.id } })
-      .catch(() => {});
-    return {
-      error:
-        "Réponse Paddle invalide (URL de paiement absente). Définissez un Default payment link dans Paddle > Checkout.",
-    };
-  }
-
-  await prisma.eleveRegistrationPending.update({
-    where: { id: pending.id },
-    data: { paddleTransactionId: txn.id },
-  });
-
-  return { checkoutUrl };
 }

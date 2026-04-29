@@ -171,9 +171,10 @@ export async function registerAction(
     return { ok: true };
   } catch (e) {
     console.error("[registerAction]", e);
+    const raw = e instanceof Error ? e.message : String(e);
+    const tail = raw.length > 420 ? `${raw.slice(0, 420)}…` : raw;
     return {
-      error:
-        "Erreur serveur lors de l'inscription. Vérifiez DATABASE_URL sur Vercel, que la base de données est accessible, et les logs du déploiement. Si vous utilisez Paddle, vérifiez aussi PADDLE_API_KEY et les IDs de prix (pri_…).",
+      error: `Erreur serveur lors de l'inscription. Détail technique : ${tail}`,
     };
   }
 }
