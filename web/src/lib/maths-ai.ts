@@ -169,6 +169,14 @@ async function callOllama(truncated: string): Promise<string> {
 
 export async function generateSubjectHelpFromExtractedText(extractedText: string): Promise<string> {
   const truncated = extractedText.slice(0, 28000);
+
+  /**
+   * Sur Vercel il n’y a pas d’Ollama local : sans OPENAI_API_KEY la route échouait avec un message trompeur « Ollama ne répond pas ».
+   */
+  if (process.env.VERCEL === "1" && !process.env.OPENAI_API_KEY?.trim()) {
+    throw new Error(OPENAI_KEY_MANQUANTE);
+  }
+
   if (preferOpenAi()) {
     return callOpenai(truncated);
   }

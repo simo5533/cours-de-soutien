@@ -51,10 +51,12 @@ export async function POST(request: Request) {
     } catch (e) {
       const msg = e instanceof Error ? e.message : "Erreur inconnue.";
       if (msg === OPENAI_KEY_MANQUANTE) {
+        const onVercel = process.env.VERCEL === "1";
         return NextResponse.json(
           {
-            error:
-              "OPENAI_API_KEY manquante : dans web/.env ajoutez OPENAI_API_KEY=sk-… (https://platform.openai.com/api-keys ), enregistrez et redémarrez npm run dev. Pour utiliser Ollama à la place : MATHS_AI_PROVIDER=ollama.",
+            error: onVercel
+              ? "OPENAI_API_KEY manquante sur Vercel : Project → Settings → Environment Variables → ajoutez OPENAI_API_KEY avec votre clé (https://platform.openai.com/api-keys ). Cochez au minimum Production ; redeploy ensuite. Les fichiers .env du PC ne sont pas envoyés au déploiement."
+              : "OPENAI_API_KEY manquante : dans web/.env.local ou web/.env ajoutez OPENAI_API_KEY=sk-… puis redémarrez npm run dev.",
           },
           { status: 503 },
         );
