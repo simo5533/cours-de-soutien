@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "cd web && npm run dev",
-    "build": "cd web && npm run build",
+    "build": "cd web && npm run build && cd .. && node scripts/sync-web-next-output.cjs",
     "start": "cd web && npm run start",
     "lint": "cd web && npm run lint",
     "check:aide-scolaire": "cd web && npm run check:aide-scolaire",
