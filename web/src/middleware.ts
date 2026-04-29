@@ -47,7 +47,6 @@ export default async function middleware(request: NextRequest) {
     return intlResponse;
   }
 
-  const pathname = request.nextUrl.pathname;
   const pathWithoutLocale =
     pathname.replace(/^\/(fr|ar)(?=\/|$)/, "") || "/";
 
