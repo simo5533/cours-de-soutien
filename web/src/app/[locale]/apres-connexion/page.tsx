@@ -3,12 +3,11 @@ import { redirectTo } from "@/lib/redirect-locale";
 
 export default async function ApresConnexionPage() {
   const session = await auth();
-  if (!session?.user) {
-    await redirectTo("/connexion");
+  const role = session?.user?.role;
+  if (!role) {
+    await redirectTo("/");
     return;
   }
-
-  const role = session.user.role;
 
   if (role === "ELEVE") {
     await redirectTo("/eleve");

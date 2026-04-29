@@ -24,6 +24,8 @@ const protectedPrefixes = [
   { prefix: "/admin", role: "ADMIN" as const },
 ];
 
+const AUTH_SECRET = process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET;
+
 export default async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
@@ -50,20 +52,46 @@ export default async function middleware(request: NextRequest) {
   const pathWithoutLocale =
     pathname.replace(/^\/(fr|ar)(?=\/|$)/, "") || "/";
 
+  /** Sans slash final pour comparer chemins (/connexion vs /connexion/). */
+  const pathClean =
+    pathWithoutLocale.replace(/\/$/, "") || "/";
+
+  const locale = pathname.split("/")[1] || routing.defaultLocale;
+
   const rule = protectedPrefixes.find(
     (p) =>
       pathWithoutLocale === p.prefix ||
       pathWithoutLocale.startsWith(`${p.prefix}/`),
   );
 
-  const locale = pathname.split("/")[1] || routing.defaultLocale;
+  /**
+   * Connexion / apres-connexion : même JWT que les routes protégées (Edge).
+   * Évite ERR_TOO_MANY_REDIRECTS quand auth() (RSC) et getToken (middleware) diverge.
+   */
+  const authGatePaths =
+    pathClean === "/connexion" ||
+    pathClean === "/apres-connexion" ||
+    !!rule;
+
+  let token: Awaited<ReturnType<typeof getToken>> = null;
+  if (authGatePaths) {
+    token = await getToken({
+      req: request,
+      secret: AUTH_SECRET,
+    });
+  }
+
+  if (pathClean === "/connexion" && token) {
+    return NextResponse.redirect(
+      new URL(`/${locale}/apres-connexion`, request.url),
+    );
+  }
+
+  if (pathClean === "/apres-connexion" && !token) {
+    return NextResponse.redirect(new URL(`/${locale}/connexion`, request.url));
+  }
 
   if (rule) {
-    const token = await getToken({
-      req: request,
-      secret: process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET,
-    });
-
     if (!token) {
       const u = new URL(`/${locale}/connexion`, request.url);
       u.searchParams.set("callbackUrl", pathname);

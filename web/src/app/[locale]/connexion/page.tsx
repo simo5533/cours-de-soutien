@@ -2,18 +2,8 @@ import { Link } from "@/i18n/navigation";
 import { Suspense } from "react";
 import { ConnexionForm } from "@/components/connexion-form";
 import { SiteHeader } from "@/components/site-header";
-import { auth } from "@/auth";
-import { redirectTo } from "@/lib/redirect-locale";
 
-/** Évite une page connexion mise en cache sans cookie → formulaire alors que le header montre déjà la session. */
-export const dynamic = "force-dynamic";
-
-export default async function ConnexionPage() {
-  const session = await auth();
-  if (session?.user) {
-    await redirectTo("/apres-connexion");
-  }
-
+export default function ConnexionPage() {
   return (
     <>
       <SiteHeader />
