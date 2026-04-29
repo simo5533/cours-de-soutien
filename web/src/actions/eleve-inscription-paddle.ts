@@ -42,6 +42,22 @@ function paddleTransactionErrorHint(error: unknown): string {
   }
 
   if (
+    paddleCode === "transaction_checkout_not_enabled" ||
+    lower.includes("checkout has not yet been enabled") ||
+    lower.includes("onboarding process has completed")
+  ) {
+    lines.push(
+      "Le Paddle Checkout n’est pas encore activé pour votre compte vendeur : terminez tout l’onboarding Paddle (infos légales, vérifications demandées) jusqu’à validation ; tant que ce n’est pas fait, aucune transaction/checkout API ne peut être créée.",
+    );
+    lines.push(
+      "Sinon écrivez à sellers@paddle.com pour confirmer que le checkout est bien activé pour votre compte.",
+    );
+    lines.push(
+      "Référence : developer.paddle.com/errors/transactions/transaction_checkout_not_enabled",
+    );
+  }
+
+  if (
     lower.includes("default payment link") ||
     lower.includes("transaction_default_checkout_url_not_set")
   ) {
@@ -69,15 +85,6 @@ function paddleTransactionErrorHint(error: unknown): string {
   }
 
   if (
-    lower.includes("checkout") &&
-    lower.includes("not enabled")
-  ) {
-    lines.push(
-      "Activez Paddle Checkout dans les réglages du compte Paddle si cette erreur est indiquée.",
-    );
-  }
-
-  if (
     lower.includes("incorrectly formatted") ||
     lower.includes("authentication_malformed") ||
     lower.includes("authentication header")
@@ -90,9 +97,7 @@ function paddleTransactionErrorHint(error: unknown): string {
   const tail =
     lines.length > 0
       ? lines.join(" ")
-      : raw.length > 0
-        ? "Voir aussi developer.paddle.com/errors/shared/forbidden si le message mentionne une permission."
-        : "Vérifiez PADDLE_API_KEY, PADDLE_ENVIRONMENT, les pri_ et la devise ; consultez les logs Vercel pour le message Paddle exact.";
+      : "Vérifiez PADDLE_API_KEY, PADDLE_ENVIRONMENT, les pri_ et la devise ; consultez les logs Vercel pour le message Paddle exact.";
 
   const prefix =
     raw.length > 0 && raw.length < 500
