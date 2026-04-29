@@ -1,6 +1,7 @@
 {
   "name": "cours-soutien",
   "private": true,
+  "workspaces": ["web"],
   "engines": {
     "node": ">=20"
   },
