@@ -1,6 +1,7 @@
 /**
  * Build Vercel / prod : migrations + comptes démo si base vide + next build.
  * SKIP_DB_ON_BUILD=1 → next build uniquement (ex. CI sans Postgres).
+ * SKIP_PRISMA_MIGRATE_ON_BUILD=1 → saut de prisma migrate deploy (appliquer les migrations ailleurs).
  * Sur Neon : si migrate deploy échoue avec le pooler, définir DIRECT_URL (connexion
  * sans pooler du dashboard Neon) ; seule l’étape migrate utilisera cette URL.
  */
@@ -46,12 +47,24 @@ if (process.env.DIRECT_URL?.trim()) {
     "[build-production] migrations : DIRECT_URL → utilisé pour prisma migrate deploy (Neon sans pooler).",
   );
 }
-let code = run("prisma migrate deploy", "npx", ["prisma", "migrate", "deploy"], {
-  env: { ...process.env, DATABASE_URL: migrateDbUrl },
-});
-if (code !== 0) process.exit(code);
 
-code = run(
+if (process.env.SKIP_PRISMA_MIGRATE_ON_BUILD === "1") {
+  console.warn(
+    "[build-production] SKIP_PRISMA_MIGRATE_ON_BUILD=1 — prisma migrate deploy ignoré. Appliquer les migrations en prod (Neon SQL Editor, CI ou machine locale avec DATABASE_URL).",
+  );
+} else {
+  const migrateCode = run("prisma migrate deploy", "npx", ["prisma", "migrate", "deploy"], {
+    env: { ...process.env, DATABASE_URL: migrateDbUrl },
+  });
+  if (migrateCode !== 0) {
+    console.error(
+      "[build-production] Migrate deploy : vérifiez DATABASE_URL (prod Neon), ajoutez DIRECT_URL si vous utilisez le pooler, ou appliquez SKIP_PRISMA_MIGRATE_ON_BUILD=1 après migration manuelle.",
+    );
+    process.exit(migrateCode);
+  }
+}
+
+let code = run(
   "ensure-demo-users",
   process.execPath,
   [ensureDemoScript],
