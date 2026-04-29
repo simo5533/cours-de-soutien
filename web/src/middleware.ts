@@ -25,6 +25,22 @@ const protectedPrefixes = [
 ];
 
 export default async function middleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+
+  /** Routes App Router sous `[locale]` : sans `/fr|ar/` → 404 */
+  const hasLocalePrefix = /^\/(fr|ar)(\/|$)/.test(pathname);
+  if (
+    pathname !== "/" &&
+    !pathname.startsWith("/api") &&
+    !pathname.startsWith("/_next") &&
+    !pathname.startsWith("/_vercel") &&
+    !hasLocalePrefix
+  ) {
+    const url = request.nextUrl.clone();
+    url.pathname = `/fr${pathname.startsWith("/") ? pathname : `/${pathname}`}`;
+    return NextResponse.redirect(url);
+  }
+
   const intlResponse = intlMiddleware(request);
   // Redirections i18n (locale manquante, etc.) — ne pas s’appuyer uniquement sur l’en-tête Location.
   if (intlResponse.status >= 300 && intlResponse.status < 400) {

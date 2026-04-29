@@ -26,11 +26,34 @@ function resolveCallbackUrl(raw: string | null, locale: string): string {
   return fallback;
 }
 
+/** Utilise la réponse Next Auth (`res.url`) qui peut être `/apres-connexion` sans locale → 404 Vercel. */
+function finalizeLoginHref(
+  rawFromAuth: string | null | undefined,
+  fallbackResolved: string,
+  locale: string,
+): string {
+  const merged = rawFromAuth?.trim() || fallbackResolved;
+  if (!merged) return fallbackResolved;
+  if (merged.startsWith("http://") || merged.startsWith("https://")) {
+    try {
+      const u = new URL(merged);
+      if (typeof window !== "undefined" && u.origin !== window.location.origin) {
+        return fallbackResolved;
+      }
+      return resolveCallbackUrl(u.pathname + u.search, locale);
+    } catch {
+      return fallbackResolved;
+    }
+  }
+  return resolveCallbackUrl(merged, locale);
+}
+
 export function ConnexionForm() {
   const searchParams = useSearchParams();
   const params = useParams();
   const locale = typeof params.locale === "string" ? params.locale : "fr";
-  const callbackUrl = resolveCallbackUrl(searchParams.get("callbackUrl"), locale);  const [error, setError] = useState<string | null>(null);
+  const callbackUrl = resolveCallbackUrl(searchParams.get("callbackUrl"), locale);
+  const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -56,7 +79,7 @@ export function ConnexionForm() {
       return;
     }
 
-    window.location.href = res?.url ?? callbackUrl;
+    window.location.href = finalizeLoginHref(res?.url, callbackUrl, locale);
   }
 
   return (
