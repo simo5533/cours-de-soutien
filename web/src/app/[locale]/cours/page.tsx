@@ -3,15 +3,26 @@ import { PublicQuizCatalog } from "@/components/public-quiz-catalog";
 import { SiteHeader } from "@/components/site-header";
 import {
   CATALOG_LANGUAGE_MATIERES,
+  CATALOG_MATIERE_I18N_KEY,
   groupQuizzesForCatalog,
 } from "@/lib/language-quiz-catalog";
-import { NIVEAUX } from "@/lib/course-taxonomy";
+import { NIVEAU_CATALOG_I18N_KEY, NIVEAUX } from "@/lib/course-taxonomy";
 import { prisma } from "@/lib/prisma";
 import { ExerciseType } from "@prisma/client";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { routing } from "@/i18n/routing";
 
-export default async function CoursPublicPage() {
+type PageProps = { params: Promise<{ locale: string }> };
+
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
+
+export default async function CoursPublicPage({ params }: PageProps) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const ta = await getTranslations("FreeLangCourses");
+  const t = await getTranslations("CatalogPage");
   const quizzes = await prisma.exercise.findMany({
     where: { published: true, type: ExerciseType.QCM },
     orderBy: [{ matiere: "asc" }, { niveau: "asc" }, { title: "asc" }],
@@ -52,18 +63,19 @@ export default async function CoursPublicPage() {
           />
           <div className="relative">
             <p className="inline-flex items-center rounded-full border border-navy/15 bg-navy/[0.04] px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-navy dark:border-gold/30 dark:bg-gold/10 dark:text-gold">
-              Catalogue quiz
+              {t("heroBadge")}
             </p>
             <h1 className="mt-5 text-3xl font-extrabold tracking-tight text-navy dark:text-white sm:text-4xl sm:leading-tight">
-              Quiz QCM par langue
+              {t("heroTitle")}
             </h1>
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-600 dark:text-slate-300">
-              Chaque langue regroupe ses QCM. Vous pouvez les faire{" "}
-              <strong className="font-semibold text-navy dark:text-white">
-                gratuitement sans compte
-              </strong>
-              ; connectez-vous en élève pour enregistrer vos scores sur la
-              plateforme.
+              {t.rich("heroLead", {
+                highlight: (chunks) => (
+                  <strong className="font-semibold text-navy dark:text-white">
+                    {chunks}
+                  </strong>
+                ),
+              })}
             </p>
             <div className="mt-6 flex flex-wrap items-center gap-4 text-sm">
               <span className="inline-flex items-center gap-2 rounded-xl border border-brandblue/20 bg-brandblue/5 px-4 py-2 font-medium text-navy dark:border-brandblue/25 dark:bg-brandblue/10 dark:text-brandblue">
@@ -73,10 +85,10 @@ export default async function CoursPublicPage() {
                 >
                   {quizCount}
                 </span>
-                QCM publiés
+                {t("qcmPublished")}
               </span>
               <Link href="/inscription" className="btn-secondary !py-2.5">
-                Créer un compte élève
+                {t("createStudentAccount")}
               </Link>
             </div>
           </div>
@@ -110,15 +122,11 @@ export default async function CoursPublicPage() {
 
         {/* Langues = matières des quiz */}
         <section className="mt-14" aria-labelledby="langues-quiz-heading">
-          <h2
-            id="langues-quiz-heading"
-            className="brand-section-title"
-          >
-            Matières langues du catalogue
+          <h2 id="langues-quiz-heading" className="brand-section-title">
+            {t("taxonomyTitle")}
           </h2>
           <p className="brand-section-subtitle mt-2 max-w-2xl">
-            Les enseignants publient chaque QCM sous une de ces matières — le
-            quiz apparaît alors dans la section correspondante.
+            {t("taxonomySubtitle")}
           </p>
           <div className="mt-8 grid gap-5 md:grid-cols-2">
             <div className="brand-card p-5">
@@ -142,7 +150,7 @@ export default async function CoursPublicPage() {
                       />
                     </svg>
                   </span>
-                  Langues vivantes
+                  {t("livingLanguagesTitle")}
                 </h3>
                 <ul className="mt-4 space-y-2.5">
                   {CATALOG_LANGUAGE_MATIERES.map((m) => (
@@ -151,7 +159,11 @@ export default async function CoursPublicPage() {
                       className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300"
                     >
                       <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-brandblue" />
-                      {m}
+                      {t(
+                        `matieres.${CATALOG_MATIERE_I18N_KEY[m]}` as Parameters<
+                          typeof t
+                        >[0],
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -178,7 +190,7 @@ export default async function CoursPublicPage() {
                       />
                     </svg>
                   </span>
-                  Niveaux indiqués sur chaque quiz
+                  {t("levelsCardTitle")}
                 </h3>
                 <ul className="mt-4 space-y-2.5">
                   {NIVEAUX.map((n) => (
@@ -187,13 +199,16 @@ export default async function CoursPublicPage() {
                       className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300"
                     >
                       <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-gold" />
-                      {n}
+                      {t(
+                        `niveaux.${NIVEAU_CATALOG_I18N_KEY[n]}` as Parameters<
+                          typeof t
+                        >[0],
+                      )}
                     </li>
                   ))}
                 </ul>
                 <p className="mt-4 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                  Le champ « chapitre » précise le thème pédagogique (vocabulaire,
-                  grammaire, thème culturel, etc.).
+                  {t("chapterHint")}
                 </p>
               </div>
             </div>
@@ -208,11 +223,10 @@ export default async function CoursPublicPage() {
                 id="liste-qcm-heading"
                 className="text-xl font-bold tracking-tight text-navy dark:text-white sm:text-2xl"
               >
-                Tous les quiz publics
+                {t("listTitle")}
               </h2>
               <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
-                Lancez un quiz ci-dessous sans compte, ou connectez-vous pour
-                sauvegarder vos notes.
+                {t("listSubtitle")}
               </p>
             </div>
           </div>
@@ -225,21 +239,20 @@ export default async function CoursPublicPage() {
         {/* CTA bandeau */}
         <section className="mt-16 overflow-hidden rounded-3xl border border-gold/30 bg-navy px-6 py-10 text-center shadow-xl sm:px-10">
           <h2 className="text-xl font-bold text-gold sm:text-2xl">
-            Compte élève (optionnel)
+            {t("ctaTitle")}
           </h2>
           <p className="mx-auto mt-3 max-w-lg text-sm text-white/80">
-            Les quiz restent gratuits ici. Avec un compte, vos tentatives et
-            notes sont enregistrées et suivies par les enseignants.
+            {t("ctaBody")}
           </p>
           <div className="mt-6 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:justify-center">
             <Link href="/connexion" className="btn-primary !px-8">
-              Connexion
+              {t("ctaLogin")}
             </Link>
             <Link
               href="/inscription"
               className="inline-flex items-center justify-center rounded-xl border border-white/30 bg-white/10 px-8 py-2.5 text-sm font-semibold text-white backdrop-blur transition hover:bg-white/15"
             >
-              Inscription
+              {t("ctaSignup")}
             </Link>
           </div>
         </section>

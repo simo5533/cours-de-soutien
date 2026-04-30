@@ -2,6 +2,7 @@
 
 import { gradePublicQcmAction } from "@/actions/public-quiz";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 type QcmQuestionPublic = {
   id: string;
@@ -18,6 +19,7 @@ export function PublicQcmRunner({
   exerciseId: string;
   contentJson: string;
 }) {
+  const t = useTranslations("PublicQcmRunner");
   const [message, setMessage] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
 
@@ -32,7 +34,7 @@ export function PublicQcmRunner({
     for (const q of content.questions) {
       const v = fd.get(q.id);
       if (v === null) {
-        setMessage("Répondez à toutes les questions.");
+        setMessage(t("answerAll"));
         setPending(false);
         return;
       }
@@ -46,7 +48,10 @@ export function PublicQcmRunner({
     }
     if (res && "ok" in res && res.ok && res.score !== undefined) {
       setMessage(
-        `Score : ${res.score.toFixed(1)} / ${res.maxScore} (gratuit, non enregistré). Connexion élève requise pour sauvegarder la note.`,
+        t("scoreResult", {
+          score: res.score.toFixed(1),
+          max: res.maxScore,
+        }),
       );
     }
   }
@@ -85,7 +90,7 @@ export function PublicQcmRunner({
         disabled={pending}
         className="rounded-full bg-navy px-5 py-2 text-sm font-medium text-white disabled:opacity-60"
       >
-        {pending ? "Calcul…" : "Valider le QCM"}
+        {pending ? t("submitting") : t("submit")}
       </button>
     </form>
   );

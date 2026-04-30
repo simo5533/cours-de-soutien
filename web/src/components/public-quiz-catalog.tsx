@@ -2,9 +2,17 @@
 
 import { Link } from "@/i18n/navigation";
 import { useMemo, useState } from "react";
-import type { QuizCatalogGroup } from "@/lib/language-quiz-catalog";
+import {
+  CATALOG_MATIERE_I18N_KEY,
+  type QuizCatalogGroup,
+  type CatalogLanguageMatiere,
+} from "@/lib/language-quiz-catalog";
+import { NIVEAU_CATALOG_I18N_KEY, type Niveau } from "@/lib/course-taxonomy";
+import { useTranslations } from "next-intl";
 
 export function PublicQuizCatalog({ groups }: { groups: QuizCatalogGroup[] }) {
+  const t = useTranslations("PublicQuizCatalog");
+  const tCat = useTranslations("CatalogPage");
   const [query, setQuery] = useState("");
 
   const flatCount = useMemo(
@@ -34,27 +42,43 @@ export function PublicQuizCatalog({ groups }: { groups: QuizCatalogGroup[] }) {
     [filteredGroups],
   );
 
+  function groupHeading(label: string) {
+    if (label in CATALOG_MATIERE_I18N_KEY) {
+      const k = CATALOG_MATIERE_I18N_KEY[label as CatalogLanguageMatiere];
+      return tCat(`matieres.${k}` as Parameters<typeof tCat>[0]);
+    }
+    return label;
+  }
+
+  function niveauLabel(niveau: string) {
+    if (niveau in NIVEAU_CATALOG_I18N_KEY) {
+      const k = NIVEAU_CATALOG_I18N_KEY[niveau as Niveau];
+      return tCat(`niveaux.${k}` as Parameters<typeof tCat>[0]);
+    }
+    return niveau;
+  }
+
   return (
     <div className="space-y-10">
       <div className="flex flex-col gap-3 rounded-2xl border border-navy/10 bg-white/85 p-4 dark:border-slate-700 dark:bg-slate-900/55 sm:flex-row sm:flex-wrap sm:items-end">
         <label className="flex min-w-[12rem] flex-1 flex-col gap-1 text-xs font-semibold text-navy dark:text-gold/90">
-          Rechercher un quiz
+          {t("searchLabel")}
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Titre, chapitre, niveau…"
+            placeholder={t("searchPlaceholder")}
             className="select-field py-2"
           />
         </label>
         <p className="text-xs text-slate-500 dark:text-slate-400 sm:ms-auto sm:pb-2">
-          {filteredCount} / {flatCount} QCM
+          {t("count", { filtered: filteredCount, total: flatCount })}
         </p>
       </div>
 
       {filteredGroups.length === 0 ? (
         <div className="rounded-2xl border-2 border-dashed border-brandblue/30 bg-brandblue/[0.04] px-8 py-12 text-center dark:border-brandblue/25 dark:bg-brandblue/[0.06]">
           <p className="text-base font-medium text-navy dark:text-gold">
-            Aucun résultat pour cette recherche.
+            {t("noSearchResults")}
           </p>
         </div>
       ) : (
@@ -73,17 +97,16 @@ export function PublicQuizCatalog({ groups }: { groups: QuizCatalogGroup[] }) {
                 id={`quiz-lang-${g.label}`}
                 className="text-lg font-bold text-navy dark:text-white sm:text-xl"
               >
-                {g.label}
+                {groupHeading(g.label)}
               </h2>
               <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
-                {g.items.length} quiz
+                {t("quizCount", { count: g.items.length })}
               </span>
             </div>
 
             {g.items.length === 0 ? (
               <p className="mt-4 text-sm italic text-slate-500 dark:text-slate-500">
-                Aucun QCM publié pour cette langue pour le moment — revenez
-                bientôt.
+                {t("emptySection")}
               </p>
             ) : (
               <ul className="mt-5 grid gap-4 sm:grid-cols-2">
@@ -99,10 +122,10 @@ export function PublicQuizCatalog({ groups }: { groups: QuizCatalogGroup[] }) {
                     <div className="flex flex-1 flex-col p-4 sm:p-5">
                       <div className="flex flex-wrap gap-2">
                         <span className="rounded-full bg-emerald-500/15 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wide text-emerald-800 dark:text-emerald-300">
-                          QCM
+                          {t("tagQCM")}
                         </span>
                         <span className="rounded-full border border-brandblue/25 bg-brandblue/5 px-2.5 py-0.5 text-[11px] font-medium text-navy dark:border-brandblue/30 dark:bg-brandblue/10 dark:text-brandblue">
-                          {q.niveau}
+                          {niveauLabel(q.niveau)}
                         </span>
                         <span className="rounded-full border border-slate-200/90 px-2.5 py-0.5 text-[11px] text-slate-600 dark:border-slate-600 dark:text-slate-400">
                           {q.chapitre}
@@ -113,13 +136,13 @@ export function PublicQuizCatalog({ groups }: { groups: QuizCatalogGroup[] }) {
                       </h3>
                       <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-navy/5 pt-3 dark:border-slate-700/80">
                         <span className="text-xs text-slate-500 dark:text-slate-500">
-                          Gratuit sans compte
+                          {t("freeNoAccount")}
                         </span>
                         <Link
                           href={`/quiz/${q.id}`}
                           className="text-xs font-semibold text-brandblue transition hover:text-navy dark:hover:text-gold"
                         >
-                          Lancer le quiz →
+                          {t("launchQuiz")}
                         </Link>
                       </div>
                     </div>

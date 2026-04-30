@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { getTranslations } from "next-intl/server";
 
 type QcmQuestion = {
   id: string;
@@ -26,23 +27,24 @@ export async function gradePublicQcmAction(
   exerciseId: string,
   answers: Record<string, number>,
 ) {
+  const t = await getTranslations("PublicQuiz");
   const exercise = await prisma.exercise.findUnique({
     where: { id: exerciseId },
   });
 
   if (!exercise || !exercise.published || exercise.type !== "QCM") {
-    return { error: "Quiz introuvable ou indisponible." };
+    return { error: t("errorUnavailable") };
   }
 
   let content: ContentQcm;
   try {
     content = JSON.parse(exercise.contentJson) as ContentQcm;
   } catch {
-    return { error: "Contenu du quiz invalide." };
+    return { error: t("errorInvalidContent") };
   }
 
   if (!Array.isArray(content.questions) || content.questions.length === 0) {
-    return { error: "Aucune question dans ce quiz." };
+    return { error: t("errorEmpty") };
   }
 
   const numeric: Record<string, number> = {};
@@ -52,7 +54,7 @@ export async function gradePublicQcmAction(
 
   for (const q of content.questions) {
     if (!(q.id in numeric) || Number.isNaN(numeric[q.id])) {
-      return { error: "Répondez à toutes les questions." };
+      return { error: t("errorAnswerAll") };
     }
   }
 

@@ -128,7 +128,8 @@
   },
   "LanguageSwitcher": {
     "label": "Langue",
-    "fr": "Francais",
+    "chooseLanguage": "Choisir la langue du site",
+    "fr": "Français",
     "ar": "العربية"
   },
   "EleveNav": {
@@ -304,5 +305,66 @@
     "ctaBody": "Inscrivez-vous pour bloquer un creneau groupe ou demander un entretien : nous vous confirmons la partie gratuite exacte pour votre langue et votre niveau.",
     "ctaRegister": "S'inscrire",
     "ctaCatalog": "Voir les quiz"
+  },
+  "CatalogPage": {
+    "heroBadge": "Catalogue quiz",
+    "heroTitle": "Quiz QCM par langue",
+    "heroLead": "Chaque langue regroupe ses QCM. Vous pouvez les faire <highlight>gratuitement sans compte</highlight> ; connectez-vous en élève pour enregistrer vos scores sur la plateforme.",
+    "qcmPublished": "QCM publiés",
+    "createStudentAccount": "Créer un compte élève",
+    "taxonomyTitle": "Matières langues du catalogue",
+    "taxonomySubtitle": "Les enseignants publient chaque QCM sous une de ces matières — le quiz apparaît alors dans la section correspondante.",
+    "livingLanguagesTitle": "Langues vivantes",
+    "levelsCardTitle": "Niveaux indiqués sur chaque quiz",
+    "chapterHint": "Le champ « chapitre » précise le thème pédagogique (vocabulaire, grammaire, thème culturel, etc.).",
+    "listTitle": "Tous les quiz publics",
+    "listSubtitle": "Lancez un quiz ci-dessous sans compte, ou connectez-vous pour sauvegarder vos notes.",
+    "ctaTitle": "Compte élève (optionnel)",
+    "ctaBody": "Les quiz restent gratuits ici. Avec un compte, vos tentatives et notes sont enregistrées et suivies par les enseignants.",
+    "ctaLogin": "Connexion",
+    "ctaSignup": "Inscription",
+    "matieres": {
+      "french": "Français",
+      "spanish": "Espagnol",
+      "english": "Anglais",
+      "englishUS": "Anglais américain",
+      "german": "Allemand",
+      "chinese": "Chinois (mandarin)"
+    },
+    "niveaux": {
+      "primaire": "Primaire",
+      "college": "Collège",
+      "lycee": "Lycée"
+    }
+  },
+  "QuizPublicPage": {
+    "metaTitle": "Quiz — mode gratuit | Methodix",
+    "metaDescription": "Réponse aux QCM sans compte ; score affiché, non enregistré.",
+    "backToQuizzes": "Retour aux quiz",
+    "badge": "Quiz gratuit — sans connexion",
+    "noteBody": "Votre score s’affiche ici ; il n’est pas enregistré sur votre compte. Connectez-vous en tant qu’élève pour que les tentatives comptent dans l’espace pédagogique."
+  },
+  "PublicQuizCatalog": {
+    "searchLabel": "Rechercher un quiz",
+    "searchPlaceholder": "Titre, chapitre, niveau…",
+    "count": "{filtered} / {total} QCM",
+    "noSearchResults": "Aucun résultat pour cette recherche.",
+    "quizCount": "{count} quiz",
+    "emptySection": "Aucun QCM publié pour cette langue pour le moment — revenez bientôt.",
+    "tagQCM": "QCM",
+    "freeNoAccount": "Gratuit sans compte",
+    "launchQuiz": "Lancer le quiz"
+  },
+  "PublicQcmRunner": {
+    "answerAll": "Répondez à toutes les questions.",
+    "submit": "Valider le QCM",
+    "submitting": "Calcul…",
+    "scoreResult": "Score : {score} / {max} (gratuit, non enregistré). Connexion élève requise pour sauvegarder la note."
+  },
+  "PublicQuiz": {
+    "errorUnavailable": "Quiz introuvable ou indisponible.",
+    "errorInvalidContent": "Contenu du quiz invalide.",
+    "errorEmpty": "Aucune question dans ce quiz.",
+    "errorAnswerAll": "Répondez à toutes les questions."
   }
 }

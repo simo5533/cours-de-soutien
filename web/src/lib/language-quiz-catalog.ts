@@ -12,6 +12,17 @@ export const CATALOG_LANGUAGE_MATIERES = [
 export type CatalogLanguageMatiere =
   (typeof CATALOG_LANGUAGE_MATIERES)[number];
 
+/** Clés `CatalogPage.matieres.{key}` pour l’affichage selon la locale */
+export const CATALOG_MATIERE_I18N_KEY: Record<CatalogLanguageMatiere, string> =
+  {
+    Français: "french",
+    Espagnol: "spanish",
+    Anglais: "english",
+    "Anglais américain": "englishUS",
+    Allemand: "german",
+    "Chinois (mandarin)": "chinese",
+  };
+
 export const LANGUAGE_MATIERE_GRADIENT: Record<
   CatalogLanguageMatiere,
   string

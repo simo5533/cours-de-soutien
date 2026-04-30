@@ -128,6 +128,7 @@
   },
   "LanguageSwitcher": {
     "label": "اللغة",
+    "chooseLanguage": "اختر لغة الموقع",
     "fr": "Français",
     "ar": "العربية"
   },
@@ -304,5 +305,66 @@
     "ctaBody": "سجّل لحجز فوج أو طلب لقاء: نؤكد لك الجزء المجاني الفعلي للغة والمستوى.",
     "ctaRegister": "التسجيل",
     "ctaCatalog": "اطّلع على الاختبارات"
+  },
+  "CatalogPage": {
+    "heroBadge": "كتالوج الاختبارات",
+    "heroTitle": "اختبارات QCM حسب اللغة",
+    "heroLead": "كل لغة تجمع أسئلتها المتعددة. يمكنك إجراؤها <highlight>مجاناً دون حساب</highlight>؛ سجّل كتلميذ لحفظ النقاط على المنصة.",
+    "qcmPublished": "أسئلة منشورة",
+    "createStudentAccount": "إنشاء حساب تلميذ",
+    "taxonomyTitle": "مواد اللغات في الكتالوج",
+    "taxonomySubtitle": "ينشر الأساتذة كل QCM تحت إحدى هذه المواد — فيظهر الاختبار في القسم المناسب.",
+    "livingLanguagesTitle": "اللغات الحية",
+    "levelsCardTitle": "المستويات المذكورة على كل اختبار",
+    "chapterHint": "حقل «الفصل» يحدد الموضوع التعليمي (مفردات، قواعد، ثقافة…).",
+    "listTitle": "كل الاختبارات العامة",
+    "listSubtitle": "ابدأ اختباراً أدناه دون حساب، أو سجّل الدخول لحفظ نقاطك.",
+    "ctaTitle": "حساب تلميذ (اختياري)",
+    "ctaBody": "تبقى الاختبارات مجانية هنا. مع حساب، تُسجَّل محاولاتك ونقاطك ويتابعها الأساتذة.",
+    "ctaLogin": "تسجيل الدخول",
+    "ctaSignup": "التسجيل",
+    "matieres": {
+      "french": "الفرنسية",
+      "spanish": "الإسبانية",
+      "english": "الإنجليزية",
+      "englishUS": "الإنجليزية الأمريكية",
+      "german": "الألمانية",
+      "chinese": "الصينية (الماندرين)"
+    },
+    "niveaux": {
+      "primaire": "التعليم الابتدائي",
+      "college": "الإعدادي",
+      "lycee": "الثانوي"
+    }
+  },
+  "QuizPublicPage": {
+    "metaTitle": "اختبار — وضع مجاني | ميثوديكس",
+    "metaDescription": "إجابات QCM دون حساب؛ تظهر النقطة دون تسجيلها.",
+    "backToQuizzes": "← العودة إلى الاختبارات",
+    "badge": "اختبار مجاني — دون اتصال",
+    "noteBody": "تظهر نتيجتك هنا دون تسجيلها في حسابك. سجّل كتلميذ لتُحتسب المحاولات في المساحة التعليمية."
+  },
+  "PublicQuizCatalog": {
+    "searchLabel": "البحث عن اختبار",
+    "searchPlaceholder": "عنوان، فصل، مستوى…",
+    "count": "{filtered} / {total} QCM",
+    "noSearchResults": "لا نتائج لهذا البحث.",
+    "quizCount": "{count} اختبار",
+    "emptySection": "لا توجد أسئلة منشورة لهذه اللغة حالياً — عد لاحقاً.",
+    "tagQCM": "QCM",
+    "freeNoAccount": "مجاني دون حساب",
+    "launchQuiz": "بدء الاختبار ←‎"
+  },
+  "PublicQcmRunner": {
+    "answerAll": "أجب عن جميع الأسئلة.",
+    "submit": "تأكيد QCM",
+    "submitting": "جاري الحساب…",
+    "scoreResult": "النتيجة : {score} / {max} (مجاني، غير مسجّل). يلزم حساب تلميذ لحفظ النقطة."
+  },
+  "PublicQuiz": {
+    "errorUnavailable": "الاختبار غير متوفر أو غير موجود.",
+    "errorInvalidContent": "محتوى الاختبار غير صالح.",
+    "errorEmpty": "لا توجد أسئلة في هذا الاختبار.",
+    "errorAnswerAll": "أجب عن جميع الأسئلة."
   }
 }
