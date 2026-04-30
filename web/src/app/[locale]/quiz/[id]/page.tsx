@@ -6,7 +6,7 @@ import { ExerciseType } from "@prisma/client";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
-import { catalogMatiereI18nSuffix } from "@/lib/language-quiz-catalog";
+import { catalogMatiereI18nSuffix, isCatalogLanguageMatiere } from "@/lib/language-quiz-catalog";
 import { NIVEAU_CATALOG_I18N_KEY, type Niveau } from "@/lib/course-taxonomy";
 
 type PageProps = { params: Promise<{ locale: string; id: string }> };
@@ -71,13 +71,22 @@ export default async function PublicQuizPage({ params }: PageProps) {
     ? tCat(`matieres.${matSuffix}` as Parameters<typeof tCat>[0])
     : exercise.matiere;
 
-  const nivKey =
-    exercise.niveau in NIVEAU_CATALOG_I18N_KEY
-      ? NIVEAU_CATALOG_I18N_KEY[exercise.niveau as Niveau]
-      : null;
-  const niveauLabel = nivKey
-    ? tCat(`niveaux.${nivKey}` as Parameters<typeof tCat>[0])
-    : exercise.niveau;
+  let niveauLabel: string;
+  if (
+    isCatalogLanguageMatiere(exercise.matiere) &&
+    (exercise.niveau === "A" ||
+      exercise.niveau === "B" ||
+      exercise.niveau === "C")
+  ) {
+    niveauLabel = tCat(
+      `langLevels.${exercise.niveau}` as Parameters<typeof tCat>[0],
+    );
+  } else if (exercise.niveau in NIVEAU_CATALOG_I18N_KEY) {
+    const nivKey = NIVEAU_CATALOG_I18N_KEY[exercise.niveau as Niveau];
+    niveauLabel = tCat(`niveaux.${nivKey}` as Parameters<typeof tCat>[0]);
+  } else {
+    niveauLabel = exercise.niveau;
+  }
 
   return (
     <>

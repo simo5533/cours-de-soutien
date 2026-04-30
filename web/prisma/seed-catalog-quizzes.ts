@@ -26,7 +26,7 @@ export const CATALOG_SEED_QCMS: SeedCatalogQcm[] = [
     id: "seed-qcm-fr-1",
     title: "Français — Quiz 1 · bases",
     matiere: "Français",
-    niveau: "Série 1",
+    niveau: "A",
     chapitre: "Articles, accords simples, présent",
     questions: [
       {
@@ -59,7 +59,7 @@ export const CATALOG_SEED_QCMS: SeedCatalogQcm[] = [
     id: "seed-qcm-fr-2",
     title: "Français — Quiz 2 · passé / imparfait",
     matiere: "Français",
-    niveau: "Série 2",
+    niveau: "B",
     chapitre: "Passé composé vs imparfait",
     questions: [
       {
@@ -92,7 +92,7 @@ export const CATALOG_SEED_QCMS: SeedCatalogQcm[] = [
     id: "seed-qcm-fr-3",
     title: "Français — Quiz 3 · subjonctif / style",
     matiere: "Français",
-    niveau: "Série 3",
+    niveau: "C",
     chapitre: "Subjonctif après certaines conjonctions",
     questions: [
       {
@@ -127,7 +127,7 @@ export const CATALOG_SEED_QCMS: SeedCatalogQcm[] = [
     id: "seed-qcm-es-1",
     title: "Espagnol — Quiz 1 · ser / estar",
     matiere: "Espagnol",
-    niveau: "Série 1",
+    niveau: "A",
     chapitre: "Verbes ser et estar",
     questions: [
       {
@@ -160,7 +160,7 @@ export const CATALOG_SEED_QCMS: SeedCatalogQcm[] = [
     id: "seed-qcm-es-2",
     title: "Espagnol — Quiz 2 · temps du passé",
     matiere: "Espagnol",
-    niveau: "Série 2",
+    niveau: "B",
     chapitre: "Préterito / imperfecto",
     questions: [
       {
@@ -193,7 +193,7 @@ export const CATALOG_SEED_QCMS: SeedCatalogQcm[] = [
     id: "seed-qcm-es-3",
     title: "Espagnol — Quiz 3 · subjonctif",
     matiere: "Espagnol",
-    niveau: "Série 3",
+    niveau: "C",
     chapitre: "Subjonctif (déclencheurs)",
     questions: [
       {
@@ -228,7 +228,7 @@ export const CATALOG_SEED_QCMS: SeedCatalogQcm[] = [
     id: "seed-qcm-en-1",
     title: "Anglais — Quiz 1 · présent",
     matiere: "Anglais",
-    niveau: "Série 1",
+    niveau: "A",
     chapitre: "Present simple vs continuous",
     questions: [
       {
@@ -261,7 +261,7 @@ export const CATALOG_SEED_QCMS: SeedCatalogQcm[] = [
     id: "seed-qcm-en-2",
     title: "Anglais — Quiz 2 · present perfect",
     matiere: "Anglais",
-    niveau: "Série 2",
+    niveau: "B",
     chapitre: "Present perfect / past simple",
     questions: [
       {
@@ -294,7 +294,7 @@ export const CATALOG_SEED_QCMS: SeedCatalogQcm[] = [
     id: "seed-qcm-en-3",
     title: "Anglais — Quiz 3 · conditionnels",
     matiere: "Anglais",
-    niveau: "Série 3",
+    niveau: "C",
     chapitre: "First / second conditional",
     questions: [
       {
@@ -329,7 +329,7 @@ export const CATALOG_SEED_QCMS: SeedCatalogQcm[] = [
     id: "seed-qcm-enus-1",
     title: "Anglais américain — Quiz 1 · graphie",
     matiere: "Anglais américain",
-    niveau: "Série 1",
+    niveau: "A",
     chapitre: "US vs UK spelling",
     questions: [
       {
@@ -362,7 +362,7 @@ export const CATALOG_SEED_QCMS: SeedCatalogQcm[] = [
     id: "seed-qcm-enus-2",
     title: "Anglais américain — Quiz 2 · phrasal verbs",
     matiere: "Anglais américain",
-    niveau: "Série 2",
+    niveau: "B",
     chapitre: "Phrasal verbs courants",
     questions: [
       {
@@ -395,7 +395,7 @@ export const CATALOG_SEED_QCMS: SeedCatalogQcm[] = [
     id: "seed-qcm-enus-3",
     title: "Anglais américain — Quiz 3 · culture & oral",
     matiere: "Anglais américain",
-    niveau: "Série 3",
+    niveau: "C",
     chapitre: "Idiomes & usage",
     questions: [
       {
@@ -430,7 +430,7 @@ export const CATALOG_SEED_QCMS: SeedCatalogQcm[] = [
     id: "seed-qcm-de-1",
     title: "Allemand — Quiz 1 · articles",
     matiere: "Allemand",
-    niveau: "Série 1",
+    niveau: "A",
     chapitre: "Der, die, das",
     questions: [
       {
@@ -463,7 +463,7 @@ export const CATALOG_SEED_QCMS: SeedCatalogQcm[] = [
     id: "seed-qcm-de-2",
     title: "Allemand — Quiz 2 · accusatif",
     matiere: "Allemand",
-    niveau: "Série 2",
+    niveau: "B",
     chapitre: "Cas accusatif (objet direct)",
     questions: [
       {
@@ -496,7 +496,7 @@ export const CATALOG_SEED_QCMS: SeedCatalogQcm[] = [
     id: "seed-qcm-de-3",
     title: "Allemand — Quiz 3 · ordre des mots",
     matiere: "Allemand",
-    niveau: "Série 3",
+    niveau: "C",
     chapitre: "V2, verbe à la fin (subordonnée)",
     questions: [
       {
@@ -531,7 +531,7 @@ export const CATALOG_SEED_QCMS: SeedCatalogQcm[] = [
     id: "seed-qcm-zh-1",
     title: "Chinois — Quiz 1 · HSK 1",
     matiere: "Chinois (mandarin)",
-    niveau: "Série 1",
+    niveau: "A",
     chapitre: "Salutations, famille, chiffres",
     questions: [
       {
@@ -564,7 +564,7 @@ export const CATALOG_SEED_QCMS: SeedCatalogQcm[] = [
     id: "seed-qcm-zh-2",
     title: "Chinois — Quiz 2 · temps & mesure",
     matiere: "Chinois (mandarin)",
-    niveau: "Série 2",
+    niveau: "B",
     chapitre: "Classificateurs, heure (intro)",
     questions: [
       {
@@ -597,7 +597,7 @@ export const CATALOG_SEED_QCMS: SeedCatalogQcm[] = [
     id: "seed-qcm-zh-3",
     title: "Chinois — Quiz 3 · particules",
     matiere: "Chinois (mandarin)",
-    niveau: "Série 3",
+    niveau: "C",
     chapitre: "了, 过, question",
     questions: [
       {
@@ -636,7 +636,7 @@ export const CATALOG_SEED_QCMS: SeedCatalogQcm[] = [
     id: "seed-qcm-fr-4",
     title: "Français — Quiz 4 · pronoms et relatives",
     matiere: "Français",
-    niveau: "Série 4",
+    niveau: "C",
     chapitre: "COD / COI, dont / où / que",
     questions: [
       {
@@ -681,7 +681,7 @@ export const CATALOG_SEED_QCMS: SeedCatalogQcm[] = [
     id: "seed-qcm-es-4",
     title: "Espagnol — Quiz 4 · futur et conditionnel",
     matiere: "Espagnol",
-    niveau: "Série 4",
+    niveau: "C",
     chapitre: "Futuro simple / condicional",
     questions: [
       {
@@ -726,7 +726,7 @@ export const CATALOG_SEED_QCMS: SeedCatalogQcm[] = [
     id: "seed-qcm-en-4",
     title: "Anglais — Quiz 4 · modaux et passif",
     matiere: "Anglais",
-    niveau: "Série 4",
+    niveau: "C",
     chapitre: "Must / should / passive voice",
     questions: [
       {
@@ -771,7 +771,7 @@ export const CATALOG_SEED_QCMS: SeedCatalogQcm[] = [
     id: "seed-qcm-enus-4",
     title: "Anglais américain — Quiz 4 · temps et tournures",
     matiere: "Anglais américain",
-    niveau: "Série 4",
+    niveau: "C",
     chapitre: "Past tense, tags, prépositions",
     questions: [
       {
@@ -816,7 +816,7 @@ export const CATALOG_SEED_QCMS: SeedCatalogQcm[] = [
     id: "seed-qcm-de-4",
     title: "Allemand — Quiz 4 · datif et prépositions",
     matiere: "Allemand",
-    niveau: "Série 4",
+    niveau: "C",
     chapitre: "Dativ, Wechselpräpositionen",
     questions: [
       {
@@ -861,7 +861,7 @@ export const CATALOG_SEED_QCMS: SeedCatalogQcm[] = [
     id: "seed-qcm-zh-4",
     title: "Chinois — Quiz 4 · lieu et mouvement",
     matiere: "Chinois (mandarin)",
-    niveau: "Série 4",
+    niveau: "C",
     chapitre: "里 / 上 / 去 / 来",
     questions: [
       {

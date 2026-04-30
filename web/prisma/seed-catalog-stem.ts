@@ -8,16 +8,16 @@ export const STEM_CATALOG_SEED_QCMS: SeedCatalogQcm[] = [
   // ——— Mathématiques ———
   {
     id: "seed-qcm-math-1",
-    title: "Mathématiques — Fractions et nombres relatifs",
+    title: "Mathématiques — Calcul mental et fractions simples (primaire)",
     matiere: "Mathématiques",
-    niveau: "Collège",
-    chapitre: "Fractions · signe",
+    niveau: "Primaire",
+    chapitre: "Opérations · bases",
     questions: [
-      { id: "m1-q1", prompt: "La somme 1/2 + 1/4 vaut :", options: ["1/6", "2/6", "3/4"], correct: 2 },
-      { id: "m1-q2", prompt: "(-3) × (-4) =", options: ["-12", "12", "-7"], correct: 1 },
-      { id: "m1-q3", prompt: "3/5 en pourcentage vaut environ :", options: ["30%", "35%", "60%"], correct: 2 },
-      { id: "m1-q4", prompt: "Le PGCD de 12 et 18 est :", options: ["2", "6", "36"], correct: 1 },
-      { id: "m1-q5", prompt: "Arrondi à l’unité de √2 (≈ 1,414) :", options: ["1", "2", "3"], correct: 1 },
+      { id: "m1-q1", prompt: "6 × 7 =", options: ["42", "56", "49"], correct: 0 },
+      { id: "m1-q2", prompt: "La moitié de 18 est :", options: ["6", "9", "36"], correct: 1 },
+      { id: "m1-q3", prompt: "Le périmètre d’un carré de côté 5 cm est :", options: ["10 cm", "20 cm", "25 cm"], correct: 1 },
+      { id: "m1-q4", prompt: "1/2 + 1/2 =", options: ["1/4", "1", "2/4 seulement"], correct: 1 },
+      { id: "m1-q5", prompt: "Arrondi à la dizaine près de 47 :", options: ["40", "50", "45"], correct: 1 },
     ],
   },
   {
@@ -80,16 +80,16 @@ export const STEM_CATALOG_SEED_QCMS: SeedCatalogQcm[] = [
   // ——— Physique-Chimie ———
   {
     id: "seed-qcm-phy-1",
-    title: "Physique-Chimie — Mouvement et vitesse",
+    title: "Physique-Chimie — Observer et mesurer (primaire)",
     matiere: "Physique-Chimie",
-    niveau: "Collège",
-    chapitre: "Vitesse moyenne",
+    niveau: "Primaire",
+    chapitre: "Matière · mesure",
     questions: [
-      { id: "p1-q1", prompt: "Unité SI de la vitesse la plus courante en cours :", options: ["m/s", "km/h seulement", "N"], correct: 0 },
-      { id: "p1-q2", prompt: "v = d/t ; d = 120 km en 2 h → v moyenne :", options: ["40 km/h", "60 km/h", "240 km/h"], correct: 1 },
-      { id: "p1-q3", prompt: "Une trajectoire rectiligne uniforme signifie vitesse :", options: ["variable", "constante", "nulle"], correct: 1 },
-      { id: "p1-q4", prompt: "10 m/s ≈", options: ["36 km/h", "3,6 km/h", "100 km/h"], correct: 0 },
-      { id: "p1-q5", prompt: "Le référentiel étudié en collège sert surtout à :", options: ["décrire un mouvement", "mesurer la chaleur", "calculer la masse molaire"], correct: 0 },
+      { id: "p1-q1", prompt: "L’eau à température ambiante est le plus souvent :", options: ["solide", "liquide", "gazeuse"], correct: 1 },
+      { id: "p1-q2", prompt: "On mesure une longueur en :", options: ["secondes", "mètres", "kilogrammes"], correct: 1 },
+      { id: "p1-q3", prompt: "Un objet tombe quand on le lâche à cause de :", options: ["le vent seulement", "la pesanteur", "la lumière"], correct: 1 },
+      { id: "p1-q4", prompt: "La masse d’un objet indique :", options: ["sa couleur", "« combien de matière »", "sa vitesse fixe"], correct: 1 },
+      { id: "p1-q5", prompt: "Un récipient gradué sert souvent à mesurer :", options: ["un volume de liquide", "une force en newtons sans étalonnage", "une température exacte sans thermomètre"], correct: 0 },
     ],
   },
   {
@@ -138,16 +138,16 @@ export const STEM_CATALOG_SEED_QCMS: SeedCatalogQcm[] = [
   // ——— SVT ———
   {
     id: "seed-qcm-svt-1",
-    title: "SVT — La cellule vivante",
+    title: "SVT — Êtres vivants et besoins (primaire)",
     matiere: "SVT",
-    niveau: "Collège",
-    chapitre: "Cellule · organites",
+    niveau: "Primaire",
+    chapitre: "Vivant · alimentation",
     questions: [
-      { id: "s1-q1", prompt: "L’information génétique nucléaire eucaryote se trouve surtout dans :", options: ["mitochondrie seule", "noyau", "paroi (animal)"], correct: 1 },
-      { id: "s1-q2", prompt: "Site principal de production d’ATP en aérobiose :", options: ["noyau", "mitochondrie", "vacuole"], correct: 1 },
-      { id: "s1-q3", prompt: "La membrane plasmique est :", options: ["imperméable", "sélective (semi-perméable)", "absente chez les cellules"], correct: 1 },
-      { id: "s1-q4", prompt: "Ribosomes : rôle majeur :", options: ["photosynthèse", "synthèse de protéines", "digestion intracellulaire seule"], correct: 1 },
-      { id: "s1-q5", prompt: "Plant cell : paroi en :", options: ["cholestérol", "cellulose principalement", "peptidoglycane (comme bactérie)"], correct: 1 },
+      { id: "s1-q1", prompt: "Les plantes vertes fabriquent en partie leur nourriture grâce à :", options: ["la lumière", "le vent seulement", "le métal"], correct: 0 },
+      { id: "s1-q2", prompt: "Les animaux ont besoin de respirer surtout :", options: ["de l’azote pur", "de l’oxygène (air)", "du sel seulement"], correct: 1 },
+      { id: "s1-q3", prompt: "Une proie est :", options: ["un animal qui mange des plantes ou d’autres animaux", "toujours une plante", "un caillou"], correct: 0 },
+      { id: "s1-q4", prompt: "Les racines des plantes servent entre autres à :", options: ["s’ancrer et puiser de l’eau", "voler", "produire de la lumière"], correct: 0 },
+      { id: "s1-q5", prompt: "Un ver de terre vit plutôt :", options: ["dans l’eau salée du large", "dans le sol", "dans l’espace"], correct: 1 },
     ],
   },
   {
@@ -196,16 +196,16 @@ export const STEM_CATALOG_SEED_QCMS: SeedCatalogQcm[] = [
   // ——— Histoire-Géographie ———
   {
     id: "seed-qcm-hg-1",
-    title: "Histoire-Géographie — Antiquité (repères)",
+    title: "Histoire-Géographie — Repères du temps et de l’espace (primaire)",
     matiere: "Histoire-Géographie",
-    niveau: "Collège",
-    chapitre: "Grèce et Rome (bases)",
+    niveau: "Primaire",
+    chapitre: "Passé · carte",
     questions: [
-      { id: "h1-q1", prompt: "Athènes est souvent associée à la naissance de :", options: ["l’empire romain d’Orient", "certaines formes de citoyenneté et démocratie antique", "l’islam classique"], correct: 1 },
-      { id: "h1-q2", prompt: "Rome antique : pouvoir exécutif républicain marquant :", options: ["consulat (avec d’autres institutions)", "seulement pharaon", "shogun"], correct: 0 },
-      { id: "h1-q3", prompt: "Le latin était la langue de l’administration dans :", options: ["Rome et son empire étendu", "Chine Han", "Empire aztèque"], correct: 0 },
-      { id: "h1-q4", prompt: "Jules César (repère culturel) :", options: ["philosophe grec", "figure majeure fin République romaine", "sultan mamelouk"], correct: 1 },
-      { id: "h1-q5", prompt: "Le christianisme devient religion autorisée puis dominante :", options: ["tout de suite en 753 av. J.-C.", "surtout à partir du IVe s. apr. J.-C. (Edit de Milan, etc.)", "jamais dans l’Empire"], correct: 1 },
+      { id: "h1-q1", prompt: "Une carte sert avant tout à :", options: ["lire une nouvelle", "représenter un territoire", "mesurer le vent"], correct: 1 },
+      { id: "h1-q2", prompt: "Avant notre ère s’abrège souvent :", options: ["apr. J.-C.", "av. J.-C.", "km/h"], correct: 1 },
+      { id: "h1-q3", prompt: "Au Maroc, la capitale administrative est :", options: ["Rabat", "Paris", "Le Caire"], correct: 0 },
+      { id: "h1-q4", prompt: "Une ligne d’échelle sur une carte indique :", options: ["la température", "la correspondance distance carte / réel", "l’âge des roches toujours exact"], correct: 1 },
+      { id: "h1-q5", prompt: "Le passé désigne :", options: ["le futur seulement", "ce qui s’est déjà produit", "le présent uniquement"], correct: 1 },
     ],
   },
   {
@@ -226,7 +226,7 @@ export const STEM_CATALOG_SEED_QCMS: SeedCatalogQcm[] = [
     id: "seed-qcm-hg-3",
     title: "Histoire-Géographie — Maroc et indépendances (XXe)",
     matiere: "Histoire-Géographie",
-    niveau: "Lycée",
+    niveau: "Collège",
     chapitre: "Décolonisation · repères",
     questions: [
       { id: "h3-q1", prompt: "Indépendance du Maroc (protectorats) : ordre de grandeur :", options: ["1956 (réunification, repère courant)", "1918", "2001"], correct: 0 },

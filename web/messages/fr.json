@@ -317,9 +317,9 @@
     "livingLanguagesTitle": "Langues vivantes",
     "stemSectionTitle": "Tronc commun",
     "levelsCardTitle": "Niveaux indiqués sur chaque quiz",
-    "chapterHint": "Le champ « chapitre » précise le thème (vocabulaire, chapitre du programme, etc.). Les QCM utilisent souvent Primaire, Collège ou Lycée, ou une série pédagogique.",
+    "chapterHint": "Le champ « chapitre » précise le thème. Langues : niveaux A, B, C (progression type CECRL simplifiée). Autres matières : Primaire, Collège ou Lycée.",
     "listTitle": "Tous les quiz publics",
-    "listSubtitle": "Filtrez par matière ou langue, recherchez par titre ou chapitre, puis lancez un quiz sans compte.",
+    "listSubtitle": "Filtrez par matière, puis parcourez les niveaux (A–C pour les langues ; primaire / collège / lycée pour les autres). Recherche par mot-clé possible.",
     "ctaTitle": "Compte élève (optionnel)",
     "ctaBody": "Les quiz restent gratuits ici. Avec un compte, vos tentatives et notes sont enregistrées et suivies par les enseignants.",
     "ctaLogin": "Connexion",
@@ -335,6 +335,11 @@
       "physics": "Physique-Chimie",
       "svt": "SVT",
       "historyGeo": "Histoire-Géographie"
+    },
+    "langLevels": {
+      "A": "Niveau A (bases)",
+      "B": "Niveau B (intermédiaire)",
+      "C": "Niveau C (consolidation)"
     },
     "niveaux": {
       "primaire": "Primaire",
@@ -357,7 +362,7 @@
     "count": "{filtered} / {total} QCM",
     "noSearchResults": "Aucun résultat pour cette recherche.",
     "quizCount": "{count} quiz",
-    "emptySection": "Aucun QCM publié dans cette section pour le moment — revenez bientôt.",
+    "emptyBand": "Aucun QCM pour ce niveau pour le moment.",
     "tagQCM": "QCM",
     "freeNoAccount": "Gratuit sans compte",
     "launchQuiz": "Lancer le quiz"

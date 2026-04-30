@@ -4,10 +4,15 @@ import { Link } from "@/i18n/navigation";
 import { useMemo, useState } from "react";
 import {
   catalogMatiereI18nSuffix,
+  isCatalogLanguageMatiere,
   type QuizCatalogGroup,
 } from "@/lib/language-quiz-catalog";
 import { NIVEAU_CATALOG_I18N_KEY, type Niveau } from "@/lib/course-taxonomy";
 import { useTranslations } from "next-intl";
+
+function groupItemCount(g: QuizCatalogGroup): number {
+  return g.subgroups.reduce((n, s) => n + s.items.length, 0);
+}
 
 export function PublicQuizCatalog({ groups }: { groups: QuizCatalogGroup[] }) {
   const t = useTranslations("PublicQuizCatalog");
@@ -21,7 +26,7 @@ export function PublicQuizCatalog({ groups }: { groups: QuizCatalogGroup[] }) {
   }, [groups, matiereFilter]);
 
   const scopeTotal = useMemo(
-    () => scopedGroups.reduce((n, g) => n + g.items.length, 0),
+    () => scopedGroups.reduce((n, g) => n + groupItemCount(g), 0),
     [scopedGroups],
   );
 
@@ -31,19 +36,24 @@ export function PublicQuizCatalog({ groups }: { groups: QuizCatalogGroup[] }) {
     return scopedGroups
       .map((g) => ({
         ...g,
-        items: g.items.filter(
-          (it) =>
-            it.title.toLowerCase().includes(q) ||
-            it.chapitre.toLowerCase().includes(q) ||
-            it.niveau.toLowerCase().includes(q) ||
-            it.matiere.toLowerCase().includes(q),
-        ),
+        subgroups: g.subgroups
+          .map((sg) => ({
+            ...sg,
+            items: sg.items.filter(
+              (it) =>
+                it.title.toLowerCase().includes(q) ||
+                it.chapitre.toLowerCase().includes(q) ||
+                it.niveau.toLowerCase().includes(q) ||
+                it.matiere.toLowerCase().includes(q),
+            ),
+          }))
+          .filter((sg) => sg.items.length > 0),
       }))
-      .filter((g) => g.items.length > 0);
+      .filter((g) => g.subgroups.length > 0);
   }, [scopedGroups, query]);
 
   const filteredCount = useMemo(
-    () => filteredGroups.reduce((n, g) => n + g.items.length, 0),
+    () => filteredGroups.reduce((n, g) => n + groupItemCount(g), 0),
     [filteredGroups],
   );
 
@@ -53,12 +63,19 @@ export function PublicQuizCatalog({ groups }: { groups: QuizCatalogGroup[] }) {
     return label;
   }
 
-  function niveauLabel(niveau: string) {
-    if (niveau in NIVEAU_CATALOG_I18N_KEY) {
-      const k = NIVEAU_CATALOG_I18N_KEY[niveau as Niveau];
+  function bucketHeading(matiere: string, bucket: string) {
+    if (isCatalogLanguageMatiere(matiere) && (bucket === "A" || bucket === "B" || bucket === "C")) {
+      return tCat(`langLevels.${bucket}` as Parameters<typeof tCat>[0]);
+    }
+    if (bucket in NIVEAU_CATALOG_I18N_KEY) {
+      const k = NIVEAU_CATALOG_I18N_KEY[bucket as Niveau];
       return tCat(`niveaux.${k}` as Parameters<typeof tCat>[0]);
     }
-    return niveau;
+    return bucket;
+  }
+
+  function niveauBadge(matiere: string, niveau: string) {
+    return bucketHeading(matiere, niveau);
   }
 
   return (
@@ -105,7 +122,7 @@ export function PublicQuizCatalog({ groups }: { groups: QuizCatalogGroup[] }) {
           <section
             key={g.label}
             className="scroll-mt-[calc(var(--header-h)+1rem)]"
-            aria-labelledby={`quiz-lang-${g.label}`}
+            aria-labelledby={`quiz-matiere-${g.label}`}
           >
             <div className="flex flex-wrap items-end gap-3 border-b border-slate-200/90 pb-4 dark:border-slate-700/80">
               <div
@@ -113,62 +130,71 @@ export function PublicQuizCatalog({ groups }: { groups: QuizCatalogGroup[] }) {
                 aria-hidden
               />
               <h2
-                id={`quiz-lang-${g.label}`}
+                id={`quiz-matiere-${g.label}`}
                 className="text-lg font-bold text-navy dark:text-white sm:text-xl"
               >
                 {groupHeading(g.label)}
               </h2>
               <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
-                {t("quizCount", { count: g.items.length })}
+                {t("quizCount", { count: groupItemCount(g) })}
               </span>
             </div>
 
-            {g.items.length === 0 ? (
-              <p className="mt-4 text-sm italic text-slate-500 dark:text-slate-500">
-                {t("emptySection")}
-              </p>
-            ) : (
-              <ul className="mt-5 grid gap-4 sm:grid-cols-2">
-                {g.items.map((q) => (
-                  <li
-                    key={q.id}
-                    className="group brand-card flex flex-col overflow-hidden transition duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-navy/10 dark:hover:shadow-black/40"
-                  >
-                    <div
-                      className={`h-1 w-full bg-gradient-to-r ${g.gradient}`}
-                      aria-hidden
-                    />
-                    <div className="flex flex-1 flex-col p-4 sm:p-5">
-                      <div className="flex flex-wrap gap-2">
-                        <span className="rounded-full bg-emerald-500/15 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wide text-emerald-800 dark:text-emerald-300">
-                          {t("tagQCM")}
-                        </span>
-                        <span className="rounded-full border border-brandblue/25 bg-brandblue/5 px-2.5 py-0.5 text-[11px] font-medium text-navy dark:border-brandblue/30 dark:bg-brandblue/10 dark:text-brandblue">
-                          {niveauLabel(q.niveau)}
-                        </span>
-                        <span className="rounded-full border border-slate-200/90 px-2.5 py-0.5 text-[11px] text-slate-600 dark:border-slate-600 dark:text-slate-400">
-                          {q.chapitre}
-                        </span>
-                      </div>
-                      <h3 className="mt-3 text-base font-bold leading-snug text-slate-900 dark:text-white">
-                        {q.title}
-                      </h3>
-                      <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-navy/5 pt-3 dark:border-slate-700/80">
-                        <span className="text-xs text-slate-500 dark:text-slate-500">
-                          {t("freeNoAccount")}
-                        </span>
-                        <Link
-                          href={`/quiz/${q.id}`}
-                          className="text-xs font-semibold text-brandblue transition hover:text-navy dark:hover:text-gold"
+            <div className="mt-6 space-y-8">
+              {g.subgroups.map((sg) => (
+                <div key={`${g.label}-${sg.niveauBucket}`}>
+                  <h3 className="text-sm font-bold uppercase tracking-wide text-slate-600 dark:text-slate-400">
+                    {bucketHeading(g.label, sg.niveauBucket)}
+                  </h3>
+                  {sg.items.length === 0 ? (
+                    <p className="mt-2 text-sm italic text-slate-500 dark:text-slate-500">
+                      {t("emptyBand")}
+                    </p>
+                  ) : (
+                    <ul className="mt-4 grid gap-4 sm:grid-cols-2">
+                      {sg.items.map((q) => (
+                        <li
+                          key={q.id}
+                          className="group brand-card flex flex-col overflow-hidden transition duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-navy/10 dark:hover:shadow-black/40"
                         >
-                          {t("launchQuiz")}
-                        </Link>
-                      </div>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            )}
+                          <div
+                            className={`h-1 w-full bg-gradient-to-r ${g.gradient}`}
+                            aria-hidden
+                          />
+                          <div className="flex flex-1 flex-col p-4 sm:p-5">
+                            <div className="flex flex-wrap gap-2">
+                              <span className="rounded-full bg-emerald-500/15 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wide text-emerald-800 dark:text-emerald-300">
+                                {t("tagQCM")}
+                              </span>
+                              <span className="rounded-full border border-brandblue/25 bg-brandblue/5 px-2.5 py-0.5 text-[11px] font-medium text-navy dark:border-brandblue/30 dark:bg-brandblue/10 dark:text-brandblue">
+                                {niveauBadge(g.label, q.niveau)}
+                              </span>
+                              <span className="rounded-full border border-slate-200/90 px-2.5 py-0.5 text-[11px] text-slate-600 dark:border-slate-600 dark:text-slate-400">
+                                {q.chapitre}
+                              </span>
+                            </div>
+                            <h4 className="mt-3 text-base font-bold leading-snug text-slate-900 dark:text-white">
+                              {q.title}
+                            </h4>
+                            <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-navy/5 pt-3 dark:border-slate-700/80">
+                              <span className="text-xs text-slate-500 dark:text-slate-500">
+                                {t("freeNoAccount")}
+                              </span>
+                              <Link
+                                href={`/quiz/${q.id}`}
+                                className="text-xs font-semibold text-brandblue transition hover:text-navy dark:hover:text-gold"
+                              >
+                                {t("launchQuiz")}
+                              </Link>
+                            </div>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              ))}
+            </div>
           </section>
         ))
       )}

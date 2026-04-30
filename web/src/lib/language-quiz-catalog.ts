@@ -12,6 +12,16 @@ export const CATALOG_LANGUAGE_MATIERES = [
 export type CatalogLanguageMatiere =
   (typeof CATALOG_LANGUAGE_MATIERES)[number];
 
+/** Niveaux langues (bandes CECRL simplifiées A / B / C). */
+export const LANGUAGE_LEVEL_KEYS = ["A", "B", "C"] as const;
+
+export type LanguageLevelKey = (typeof LANGUAGE_LEVEL_KEYS)[number];
+
+/** Niveaux tronc commun (cycles). */
+export const STEM_LEVEL_KEYS = ["Primaire", "Collège", "Lycée"] as const;
+
+export type StemLevelKey = (typeof STEM_LEVEL_KEYS)[number];
+
 /** Autres matières affichées après les langues (tronc commun). */
 export const CATALOG_STEM_MATIERES = [
   "Mathématiques",
@@ -55,6 +65,10 @@ export function catalogMatiereI18nSuffix(matiere: string): string | null {
   return null;
 }
 
+export function isCatalogLanguageMatiere(matiere: string): boolean {
+  return (CATALOG_LANGUAGE_MATIERES as readonly string[]).includes(matiere);
+}
+
 export const LANGUAGE_MATIERE_GRADIENT: Record<
   CatalogLanguageMatiere,
   string
@@ -82,11 +96,42 @@ export type QuizCatalogRow = {
   chapitre: string;
 };
 
+export type QuizCatalogSubgroup = {
+  /** Valeur stockée en base : A, B, C ou Primaire, Collège, Lycée */
+  niveauBucket: string;
+  items: QuizCatalogRow[];
+};
+
 export type QuizCatalogGroup = {
   label: string;
   gradient: string;
-  items: QuizCatalogRow[];
+  subgroups: QuizCatalogSubgroup[];
 };
+
+function splitIntoLevelSubgroups(
+  matiere: string,
+  items: QuizCatalogRow[],
+): QuizCatalogSubgroup[] {
+  const isLang = isCatalogLanguageMatiere(matiere);
+  const order: readonly string[] = isLang ? LANGUAGE_LEVEL_KEYS : STEM_LEVEL_KEYS;
+  const map = new Map<string, QuizCatalogRow[]>();
+  for (const row of items) {
+    const list = map.get(row.niveau);
+    if (list) list.push(row);
+    else map.set(row.niveau, [row]);
+  }
+  const subgroups: QuizCatalogSubgroup[] = [];
+  for (const key of order) {
+    subgroups.push({ niveauBucket: key, items: map.get(key) ?? [] });
+    map.delete(key);
+  }
+  for (const [k, rows] of map) {
+    if (rows.length > 0) {
+      subgroups.push({ niveauBucket: k, items: rows });
+    }
+  }
+  return subgroups;
+}
 
 export function groupQuizzesForCatalog(rows: QuizCatalogRow[]): QuizCatalogGroup[] {
   const byMatiere = new Map<string, QuizCatalogRow[]>();
@@ -98,19 +143,21 @@ export function groupQuizzesForCatalog(rows: QuizCatalogRow[]): QuizCatalogGroup
 
   const out: QuizCatalogGroup[] = [];
   for (const lang of CATALOG_LANGUAGE_MATIERES) {
+    const items = byMatiere.get(lang) ?? [];
     out.push({
       label: lang,
       gradient: LANGUAGE_MATIERE_GRADIENT[lang],
-      items: byMatiere.get(lang) ?? [],
+      subgroups: splitIntoLevelSubgroups(lang, items),
     });
     byMatiere.delete(lang);
   }
 
   for (const m of CATALOG_STEM_MATIERES) {
+    const items = byMatiere.get(m) ?? [];
     out.push({
       label: m,
       gradient: STEM_MATIERE_GRADIENT[m],
-      items: byMatiere.get(m) ?? [],
+      subgroups: splitIntoLevelSubgroups(m, items),
     });
     byMatiere.delete(m);
   }
@@ -122,7 +169,7 @@ export function groupQuizzesForCatalog(rows: QuizCatalogRow[]): QuizCatalogGroup
     out.push({
       label: matiere,
       gradient: "from-slate-600 to-brandblue",
-      items,
+      subgroups: splitIntoLevelSubgroups(matiere, items),
     });
   }
   return out;
