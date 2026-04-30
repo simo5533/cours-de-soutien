@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { CATALOG_SEED_QCMS } from "./seed-catalog-quizzes";
 import { STEM_CATALOG_SEED_QCMS } from "./seed-catalog-stem";
+import { FILL_CATALOG_SEED_QCMS } from "./seed-catalog-fill";
 
 const prisma = new PrismaClient();
 
@@ -136,7 +137,11 @@ async function main() {
     },
   });
 
-  const allCatalogQcms = [...CATALOG_SEED_QCMS, ...STEM_CATALOG_SEED_QCMS];
+  const allCatalogQcms = [
+    ...CATALOG_SEED_QCMS,
+    ...STEM_CATALOG_SEED_QCMS,
+    ...FILL_CATALOG_SEED_QCMS,
+  ];
 
   for (const qcm of allCatalogQcms) {
     const contentJson = JSON.stringify({ questions: qcm.questions });
