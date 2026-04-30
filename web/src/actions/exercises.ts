@@ -78,6 +78,8 @@ export async function createExerciseAction(formData: FormData) {
     }
   }
 
+  const published = formData.get("published") === "on";
+
   await prisma.exercise.create({
     data: {
       title: parsed.data.title,
@@ -90,13 +92,42 @@ export async function createExerciseAction(formData: FormData) {
       type: parsed.data.type,
       contentJson: parsed.data.contentJson,
       authorId: session.user.id,
-      published: true,
+      published,
     },
   });
 
   revalidatePathAllLocales("/professeur/exercices");
   revalidatePathAllLocales("/eleve/exercices");
+  revalidatePathAllLocales("/cours");
   await redirectTo("/professeur/exercices");
+}
+
+export async function toggleExercisePublished(
+  exerciseId: string,
+  published: boolean,
+) {
+  const session = await auth();
+  if (!session?.user) return;
+  const exercise = await prisma.exercise.findUnique({ where: { id: exerciseId } });
+  if (!exercise) return;
+  if (
+    session.user.role === "PROFESSEUR" &&
+    exercise.authorId !== session.user.id
+  ) {
+    return;
+  }
+  if (session.user.role !== "ADMIN" && session.user.role !== "PROFESSEUR") {
+    return;
+  }
+
+  await prisma.exercise.update({
+    where: { id: exerciseId },
+    data: { published },
+  });
+  revalidatePathAllLocales("/professeur/exercices");
+  revalidatePathAllLocales("/eleve/exercices");
+  revalidatePathAllLocales("/admin/exercices");
+  revalidatePathAllLocales("/cours");
 }
 
 export async function deleteExerciseAction(exerciseId: string) {
@@ -107,4 +138,5 @@ export async function deleteExerciseAction(exerciseId: string) {
   await prisma.exercise.delete({ where: { id: exerciseId } });
   revalidatePathAllLocales("/admin/exercices");
   revalidatePathAllLocales("/eleve/exercices");
+  revalidatePathAllLocales("/cours");
 }

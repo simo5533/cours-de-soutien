@@ -1,5 +1,6 @@
 import { Link } from "@/i18n/navigation";
 import { auth } from "@/auth";
+import { ExercisePublishToggle } from "@/components/exercise-actions";
 import { prisma } from "@/lib/prisma";
 
 export default async function ProfesseurExercicesPage() {
@@ -13,7 +14,8 @@ export default async function ProfesseurExercicesPage() {
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <p className="text-sm text-zinc-600 dark:text-zinc-400">
-          Exercices et QCM que vous avez créés.
+          Exercices et QCM que vous avez créés. Les QCM cochés « publié »
+          apparaissent sur le catalogue public des quiz.
         </p>
         <Link
           href="/professeur/exercices/nouveau"
@@ -31,18 +33,33 @@ export default async function ProfesseurExercicesPage() {
           {exercises.map((ex) => (
             <li
               key={ex.id}
-              className="rounded-xl border border-zinc-200 px-4 py-3 dark:border-zinc-800"
+              className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-zinc-200 px-4 py-3 dark:border-zinc-800"
             >
-              <span className="font-medium">{ex.title}</span>
-              <span className="ml-2 text-xs text-zinc-500">
-                {ex.type} · {ex.matiere} · {ex.niveau} · {ex.chapitre}
-                {ex.deadlineAt
-                  ? ` · limite ${new Date(ex.deadlineAt).toLocaleString("fr-FR", {
-                      dateStyle: "short",
-                      timeStyle: "short",
-                    })}`
-                  : ""}
-              </span>
+              <div className="min-w-0 flex-1">
+                <span className="font-medium">{ex.title}</span>
+                <span className="ml-2 text-xs text-zinc-500">
+                  {ex.type} · {ex.matiere} · {ex.niveau} · {ex.chapitre}
+                  {ex.deadlineAt
+                    ? ` · limite ${new Date(ex.deadlineAt).toLocaleString("fr-FR", {
+                        dateStyle: "short",
+                        timeStyle: "short",
+                      })}`
+                    : ""}
+                </span>
+                {ex.published ? (
+                  <span className="ms-2 text-xs font-medium text-navy dark:text-brandblue">
+                    · Publié
+                  </span>
+                ) : (
+                  <span className="ms-2 text-xs font-medium text-amber-700 dark:text-amber-400">
+                    · Brouillon
+                  </span>
+                )}
+              </div>
+              <ExercisePublishToggle
+                exerciseId={ex.id}
+                published={ex.published}
+              />
             </li>
           ))}
         </ul>

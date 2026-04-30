@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
+import { CATALOG_SEED_QCMS } from "./seed-catalog-quizzes";
 
 const prisma = new PrismaClient();
 
@@ -134,6 +135,33 @@ async function main() {
     },
   });
 
+  for (const qcm of CATALOG_SEED_QCMS) {
+    const contentJson = JSON.stringify({ questions: qcm.questions });
+    await prisma.exercise.upsert({
+      where: { id: qcm.id },
+      update: {
+        title: qcm.title,
+        matiere: qcm.matiere,
+        niveau: qcm.niveau,
+        chapitre: qcm.chapitre,
+        type: "QCM",
+        contentJson,
+        published: true,
+      },
+      create: {
+        id: qcm.id,
+        title: qcm.title,
+        matiere: qcm.matiere,
+        niveau: qcm.niveau,
+        chapitre: qcm.chapitre,
+        type: "QCM",
+        contentJson,
+        published: true,
+        authorId: prof.id,
+      },
+    });
+  }
+
   await prisma.professeurAffectation.deleteMany({});
   await prisma.scheduleEntry.deleteMany({});
 
@@ -172,7 +200,13 @@ async function main() {
     ],
   });
 
-  console.log("Seed OK:", { admin: admin.email, prof: prof.email, eleve: eleve.email, course: course.title });
+  console.log("Seed OK:", {
+    admin: admin.email,
+    prof: prof.email,
+    eleve: eleve.email,
+    course: course.title,
+    catalogQcms: CATALOG_SEED_QCMS.length,
+  });
 }
 
 main()

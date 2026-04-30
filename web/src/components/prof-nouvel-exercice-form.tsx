@@ -2,6 +2,7 @@
 
 import { createExerciseAction } from "@/actions/exercises";
 import { MATIERES, NIVEAUX } from "@/lib/course-taxonomy";
+import { CATALOG_LANGUAGE_MATIERES } from "@/lib/language-quiz-catalog";
 import { ANNEES_SCOLAIRES } from "@/lib/school-years";
 import { Link } from "@/i18n/navigation";
 import { useState } from "react";
@@ -14,6 +15,20 @@ type Cible = { groupe: string; anneeScolaire: string };
 
 type QcmDraft = { prompt: string; options: string[]; correct: number };
 type OpenDraft = { prompt: string };
+
+const NIVEAUX_LANGUES_CERTIF = [
+  "HSK 1",
+  "HSK 2",
+  "HSK 3",
+  "HSK 4",
+  "A1",
+  "A2",
+  "B1",
+  "B2",
+  "C1",
+] as const;
+
+const LANGUES_CATALOG_SET = new Set<string>(CATALOG_LANGUAGE_MATIERES);
 
 export function ProfNouvelExerciceForm({
   ciblesUniques,
@@ -138,13 +153,28 @@ export function ProfNouvelExerciceForm({
             required
             className="rounded-lg border border-zinc-300 bg-white px-3 py-2 dark:border-zinc-700 dark:bg-zinc-900"
           >
-            {MATIERES.map((m) => (
-              <option key={m} value={m}>
-                {m}
-              </option>
-            ))}
+            <optgroup label="Langues vivantes (catalogue quiz public)">
+              {CATALOG_LANGUAGE_MATIERES.map((m) => (
+                <option key={m} value={m}>
+                  {m}
+                </option>
+              ))}
+            </optgroup>
+            <optgroup label="Autres matières">
+              {MATIERES.filter((m) => !LANGUES_CATALOG_SET.has(m)).map(
+                (m) => (
+                  <option key={m} value={m}>
+                    {m}
+                  </option>
+                ),
+              )}
+            </optgroup>
           </select>
         </label>
+        <p className="text-xs text-zinc-500">
+          Pour classer un QCM sous une langue sur le site public, choisissez la
+          ligne correspondante dans le premier groupe (libellés exacts).
+        </p>
         <label className="flex flex-col gap-1 text-sm">
           <span>Niveau</span>
           <select
@@ -152,11 +182,20 @@ export function ProfNouvelExerciceForm({
             required
             className="rounded-lg border border-zinc-300 bg-white px-3 py-2 dark:border-zinc-700 dark:bg-zinc-900"
           >
-            {NIVEAUX.map((n) => (
-              <option key={n} value={n}>
-                {n}
-              </option>
-            ))}
+            <optgroup label="Scolaire (Maroc)">
+              {NIVEAUX.map((n) => (
+                <option key={n} value={n}>
+                  {n}
+                </option>
+              ))}
+            </optgroup>
+            <optgroup label="Langues / certifications (ex.)">
+              {NIVEAUX_LANGUES_CERTIF.map((n) => (
+                <option key={n} value={n}>
+                  {n}
+                </option>
+              ))}
+            </optgroup>
           </select>
         </label>
         <label className="flex flex-col gap-1 text-sm">
@@ -458,11 +497,30 @@ export function ProfNouvelExerciceForm({
           </div>
         )}
 
+        <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-zinc-200 bg-zinc-50/80 p-4 text-sm dark:border-zinc-700 dark:bg-zinc-900/40">
+          <input
+            type="checkbox"
+            name="published"
+            defaultChecked
+            className="mt-1 accent-brandblue"
+          />
+          <span>
+            <span className="font-medium text-zinc-900 dark:text-zinc-100">
+              Publier le quiz
+            </span>
+            <span className="mt-1 block text-xs font-normal text-zinc-600 dark:text-zinc-400">
+              Visible sur le catalogue public (QCM) et pour les élèves autorisés.
+              Décochez pour enregistrer en brouillon, puis publiez depuis la liste
+              des exercices.
+            </span>
+          </span>
+        </label>
+
         <button
           type="submit"
           className="rounded-full bg-navy px-5 py-2 text-sm font-medium text-white hover:bg-navy/90"
         >
-          Publier l’exercice
+          Enregistrer l’exercice
         </button>
       </form>
     </div>
