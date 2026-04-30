@@ -58,15 +58,12 @@ export default async function CoursPublicPage() {
               Quiz QCM par langue
             </h1>
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-600 dark:text-slate-300">
-              Chaque langue vivante regroupe ses questionnaires à choix multiples.
-              Pour répondre et enregistrer votre score,{" "}
-              <Link
-                href="/connexion"
-                className="font-semibold text-brandblue underline-offset-2 hover:underline dark:text-brandblue"
-              >
-                connectez-vous
-              </Link>{" "}
-              avec un compte élève.
+              Chaque langue regroupe ses QCM. Vous pouvez les faire{" "}
+              <strong className="font-semibold text-navy dark:text-white">
+                gratuitement sans compte
+              </strong>
+              ; connectez-vous en élève pour enregistrer vos scores sur la
+              plateforme.
             </p>
             <div className="mt-6 flex flex-wrap items-center gap-4 text-sm">
               <span className="inline-flex items-center gap-2 rounded-xl border border-brandblue/20 bg-brandblue/5 px-4 py-2 font-medium text-navy dark:border-brandblue/25 dark:bg-brandblue/10 dark:text-brandblue">
@@ -214,7 +211,8 @@ export default async function CoursPublicPage() {
                 Tous les quiz publics
               </h2>
               <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
-                Uniquement les QCM publiés — réponse en ligne après connexion.
+                Lancez un quiz ci-dessous sans compte, ou connectez-vous pour
+                sauvegarder vos notes.
               </p>
             </div>
           </div>
@@ -227,11 +225,11 @@ export default async function CoursPublicPage() {
         {/* CTA bandeau */}
         <section className="mt-16 overflow-hidden rounded-3xl border border-gold/30 bg-navy px-6 py-10 text-center shadow-xl sm:px-10">
           <h2 className="text-xl font-bold text-gold sm:text-2xl">
-            Entraînez-vous sur la plateforme
+            Compte élève (optionnel)
           </h2>
           <p className="mx-auto mt-3 max-w-lg text-sm text-white/80">
-            Connexion élève pour lancer les quiz, enregistrer vos tentatives et
-            suivre la progression.
+            Les quiz restent gratuits ici. Avec un compte, vos tentatives et
+            notes sont enregistrées et suivies par les enseignants.
           </p>
           <div className="mt-6 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:justify-center">
             <Link href="/connexion" className="btn-primary !px-8">

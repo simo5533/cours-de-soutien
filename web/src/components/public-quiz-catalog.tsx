@@ -111,15 +111,15 @@ export function PublicQuizCatalog({ groups }: { groups: QuizCatalogGroup[] }) {
                       <h3 className="mt-3 text-base font-bold leading-snug text-slate-900 dark:text-white">
                         {q.title}
                       </h3>
-                      <div className="mt-4 flex items-center justify-between border-t border-navy/5 pt-3 dark:border-slate-700/80">
+                      <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-navy/5 pt-3 dark:border-slate-700/80">
                         <span className="text-xs text-slate-500 dark:text-slate-500">
-                          Réponses & score : espace élève
+                          Gratuit sans compte
                         </span>
                         <Link
-                          href="/connexion"
+                          href={`/quiz/${q.id}`}
                           className="text-xs font-semibold text-brandblue transition hover:text-navy dark:hover:text-gold"
                         >
-                          Se connecter →
+                          Lancer le quiz →
                         </Link>
                       </div>
                     </div>
