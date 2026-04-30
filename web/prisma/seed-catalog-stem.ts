@@ -1,0 +1,253 @@
+/**
+ * QCM catalogue public — matières du tronc commun (hors langues vivantes du bloc dédié).
+ * Libellés de matière = ceux du programme (`course-taxonomy` / seed Methodix).
+ */
+import type { SeedCatalogQcm } from "./seed-catalog-quizzes";
+
+export const STEM_CATALOG_SEED_QCMS: SeedCatalogQcm[] = [
+  // ——— Mathématiques ———
+  {
+    id: "seed-qcm-math-1",
+    title: "Mathématiques — Fractions et nombres relatifs",
+    matiere: "Mathématiques",
+    niveau: "Collège",
+    chapitre: "Fractions · signe",
+    questions: [
+      { id: "m1-q1", prompt: "La somme 1/2 + 1/4 vaut :", options: ["1/6", "2/6", "3/4"], correct: 2 },
+      { id: "m1-q2", prompt: "(-3) × (-4) =", options: ["-12", "12", "-7"], correct: 1 },
+      { id: "m1-q3", prompt: "3/5 en pourcentage vaut environ :", options: ["30%", "35%", "60%"], correct: 2 },
+      { id: "m1-q4", prompt: "Le PGCD de 12 et 18 est :", options: ["2", "6", "36"], correct: 1 },
+      { id: "m1-q5", prompt: "Arrondi à l’unité de √2 (≈ 1,414) :", options: ["1", "2", "3"], correct: 1 },
+    ],
+  },
+  {
+    id: "seed-qcm-math-2",
+    title: "Mathématiques — Équations du premier degré",
+    matiere: "Mathématiques",
+    niveau: "Collège",
+    chapitre: "Équations à une inconnue",
+    questions: [
+      { id: "m2-q1", prompt: "Solution de 2x + 5 = 13 :", options: ["x = 4", "x = 9", "x = 6"], correct: 0 },
+      { id: "m2-q2", prompt: "3(x − 1) = 9 équivaut à :", options: ["x = 4", "x = 3", "x = 2"], correct: 0 },
+      { id: "m2-q3", prompt: "Si 5a = 20 alors a =", options: ["3", "4", "25"], correct: 1 },
+      { id: "m2-q4", prompt: "L’équation x/2 = −6 a pour solution :", options: ["x = −3", "x = −12", "x = 12"], correct: 1 },
+      { id: "m2-q5", prompt: "Triple d’un nombre x augmenté de 7 donne 22 : équation :", options: ["3x + 7 = 22", "x + 3 + 7 = 22", "3(x + 7) = 22"], correct: 0 },
+    ],
+  },
+  {
+    id: "seed-qcm-math-3",
+    title: "Mathématiques — Géométrie (angles, triangles)",
+    matiere: "Mathématiques",
+    niveau: "Collège",
+    chapitre: "Triangles · angles",
+    questions: [
+      { id: "m3-q1", prompt: "Somme des angles internes d’un triangle :", options: ["90°", "180°", "360°"], correct: 1 },
+      { id: "m3-q2", prompt: "Un triangle rectangle a un angle de :", options: ["45°", "90°", "180°"], correct: 1 },
+      { id: "m3-q3", prompt: "Théorème de Pythagore s’applique au triangle :", options: ["quelconque", "rectangle", "équilatéral"], correct: 1 },
+      { id: "m3-q4", prompt: "Triangle isocèle : deux côtés :", options: ["perpendiculaires", "de même longueur", "sans relation"], correct: 1 },
+      { id: "m3-q5", prompt: "Dans un triangle, deux angles mesurent 35° et 90°. Le troisième mesure :", options: ["45°", "55°", "65°"], correct: 1 },
+    ],
+  },
+  {
+    id: "seed-qcm-math-4",
+    title: "Mathématiques — Fonctions affines",
+    matiere: "Mathématiques",
+    niveau: "Lycée",
+    chapitre: "Fonctions · coefficient directeur",
+    questions: [
+      { id: "m4-q1", prompt: "f(x) = 3x − 2 : l’image de 4 est :", options: ["10", "12", "14"], correct: 0 },
+      { id: "m4-q2", prompt: "Le coefficient directeur de y = −½x + 1 est :", options: ["−½", "1", "2"], correct: 0 },
+      { id: "m4-q3", prompt: "Une fonction affine avec a > 0 est :", options: ["décroissante sur ℝ", "croissante sur ℝ", "constante"], correct: 1 },
+      { id: "m4-q4", prompt: "f(0) = 5 et f(1) = 8 : la pente a vaut :", options: ["3", "5", "8"], correct: 0 },
+      { id: "m4-q5", prompt: "Antécédent de 0 pour g(x) = 2x + 6 :", options: ["x = −3", "x = 3", "x = 0"], correct: 0 },
+    ],
+  },
+  {
+    id: "seed-qcm-math-5",
+    title: "Mathématiques — Produit remarquable (a+b)²",
+    matiere: "Mathématiques",
+    niveau: "Lycée",
+    chapitre: "Identités remarquables",
+    questions: [
+      { id: "m5-q1", prompt: "(a + b)² égal à :", options: ["a² + b²", "a² + 2ab + b²", "a² − b²"], correct: 1 },
+      { id: "m5-q2", prompt: "(x − 3)² =", options: ["x² − 9", "x² − 6x + 9", "x² + 6x + 9"], correct: 1 },
+      { id: "m5-q3", prompt: "a² − b² factorise en :", options: ["(a−b)²", "(a+b)(a−b)", "(a+b)²"], correct: 1 },
+      { id: "m5-q4", prompt: "(x + 1)(x − 1) =", options: ["x² − 1", "x² + 1", "2x"], correct: 0 },
+      { id: "m5-q5", prompt: "(2a + 3)² développé :", options: ["4a² + 12a + 9", "4a² + 9", "2a² + 6a + 9"], correct: 0 },
+    ],
+  },
+
+  // ——— Physique-Chimie ———
+  {
+    id: "seed-qcm-phy-1",
+    title: "Physique-Chimie — Mouvement et vitesse",
+    matiere: "Physique-Chimie",
+    niveau: "Collège",
+    chapitre: "Vitesse moyenne",
+    questions: [
+      { id: "p1-q1", prompt: "Unité SI de la vitesse la plus courante en cours :", options: ["m/s", "km/h seulement", "N"], correct: 0 },
+      { id: "p1-q2", prompt: "v = d/t ; d = 120 km en 2 h → v moyenne :", options: ["40 km/h", "60 km/h", "240 km/h"], correct: 1 },
+      { id: "p1-q3", prompt: "Une trajectoire rectiligne uniforme signifie vitesse :", options: ["variable", "constante", "nulle"], correct: 1 },
+      { id: "p1-q4", prompt: "10 m/s ≈", options: ["36 km/h", "3,6 km/h", "100 km/h"], correct: 0 },
+      { id: "p1-q5", prompt: "Le référentiel étudié en collège sert surtout à :", options: ["décrire un mouvement", "mesurer la chaleur", "calculer la masse molaire"], correct: 0 },
+    ],
+  },
+  {
+    id: "seed-qcm-phy-2",
+    title: "Physique-Chimie — Masse, volume, densité",
+    matiere: "Physique-Chimie",
+    niveau: "Collège",
+    chapitre: "Densité",
+    questions: [
+      { id: "p2-q1", prompt: "ρ = m/V ; m = 200 g, V = 50 cm³ → ρ :", options: ["4 g/cm³", "2,5 g/cm³", "0,25 g/cm³"], correct: 0 },
+      { id: "p2-q2", prompt: "Unité SI de la masse :", options: ["Newton", "kilogramme", "litre"], correct: 1 },
+      { id: "p2-q3", prompt: "Eau à température ambiante : densité proche de :", options: ["0,1 g/mL", "1 g/mL", "10 g/mL"], correct: 1 },
+      { id: "p2-q4", prompt: "Un corps plus dense que l’eau (même volume) :", options: ["flotte toujours", "coule souvent", "n’a pas de masse"], correct: 1 },
+      { id: "p2-q5", prompt: "Volume d’un parallélépipède L×l×h :", options: ["L + l + h", "L × l × h", "2(L+l+h)"], correct: 1 },
+    ],
+  },
+  {
+    id: "seed-qcm-phy-3",
+    title: "Physique-Chimie — Forces et équilibre",
+    matiere: "Physique-Chimie",
+    niveau: "Lycée",
+    chapitre: "Lexique forces · 1re loi / inertie",
+    questions: [
+      { id: "p3-q1", prompt: "Poids P ≈ m×g ; m = 60 kg, g ≈ 10 N/kg → P :", options: ["600 N", "6 N", "60 N"], correct: 0 },
+      { id: "p3-q2", prompt: "Réaction du support (assise au sol) s’oppose souvent à :", options: ["la température", "le poids", "la vitesse"], correct: 1 },
+      { id: "p3-q3", prompt: "Sans frottement, somme des forces nulle sur objet :", options: ["vitesse forcément nulle", "accélération nulle (MRU possible)", "température constante obligatoire"], correct: 1 },
+      { id: "p3-q4", prompt: "Le newton (N) est une unité de :", options: ["masse", "force", "énergie"], correct: 1 },
+      { id: "p3-q5", prompt: "Force de frottement : tend à :", options: ["accélérer", "s’opposer au glissement", "augmenter la chute libre"], correct: 1 },
+    ],
+  },
+  {
+    id: "seed-qcm-phy-4",
+    title: "Physique-Chimie — Énergie (intro)",
+    matiere: "Physique-Chimie",
+    niveau: "Lycée",
+    chapitre: "Énergie cinétique / potentielle",
+    questions: [
+      { id: "p4-q1", prompt: "Énergie cinétique augmente quand la vitesse : (à masse fixée)", options: ["diminue", "augmente", "est nulle obligatoirement"], correct: 1 },
+      { id: "p4-q2", prompt: "Unité du joule (J) :", options: ["force", "énergie / travail", "puissance seule"], correct: 1 },
+      { id: "p4-q3", prompt: "En levant un objet, on augmente souvent son énergie :", options: ["cinétique seule", "potentielle de pesanteur", "nucléaire"], correct: 1 },
+      { id: "p4-q4", prompt: "P ≈ U×I (DC) donne une :", options: ["résistance", "puissance électrique", "charge"], correct: 1 },
+      { id: "p4-q5", prompt: "Conservation de l’énergie (système isolé) :", options: ["l’énergie totale se conserve (échanges de formes)", "l’énergie disparaît", "seule la chaleur compte"], correct: 0 },
+    ],
+  },
+
+  // ——— SVT ———
+  {
+    id: "seed-qcm-svt-1",
+    title: "SVT — La cellule vivante",
+    matiere: "SVT",
+    niveau: "Collège",
+    chapitre: "Cellule · organites",
+    questions: [
+      { id: "s1-q1", prompt: "L’information génétique nucléaire eucaryote se trouve surtout dans :", options: ["mitochondrie seule", "noyau", "paroi (animal)"], correct: 1 },
+      { id: "s1-q2", prompt: "Site principal de production d’ATP en aérobiose :", options: ["noyau", "mitochondrie", "vacuole"], correct: 1 },
+      { id: "s1-q3", prompt: "La membrane plasmique est :", options: ["imperméable", "sélective (semi-perméable)", "absente chez les cellules"], correct: 1 },
+      { id: "s1-q4", prompt: "Ribosomes : rôle majeur :", options: ["photosynthèse", "synthèse de protéines", "digestion intracellulaire seule"], correct: 1 },
+      { id: "s1-q5", prompt: "Plant cell : paroi en :", options: ["cholestérol", "cellulose principalement", "peptidoglycane (comme bactérie)"], correct: 1 },
+    ],
+  },
+  {
+    id: "seed-qcm-svt-2",
+    title: "SVT — Photosynthèse",
+    matiere: "SVT",
+    niveau: "Collège",
+    chapitre: "Plante · lumière",
+    questions: [
+      { id: "s2-q1", prompt: "Principaux réactifs de la photosynthèse :", options: ["O₂ et glucose", "CO₂ et H₂O (simplifié) + lumière", "azote seul"], correct: 1 },
+      { id: "s2-q2", prompt: "Photosynthèse libère typiquement :", options: ["CO₂", "O₂", "azote"], correct: 1 },
+      { id: "s2-q3", prompt: "Capture de l’énergie lumineuse : organite :", options: ["mitochondrie", "chloroplaste", "ribosome"], correct: 1 },
+      { id: "s2-q4", prompt: "Feuille verte : rôle principal :", options: ["absorber l’eau seulement", "photosynthèse et échanges gazeux", "transport exclusif du sève brute seule"], correct: 1 },
+      { id: "s2-q5", prompt: "Sans lumière suffisante, la photosynthèse :", options: ["s’arrête ou ralentit fortement", "double toujours", "produit du CO₂ seulement"], correct: 0 },
+    ],
+  },
+  {
+    id: "seed-qcm-svt-3",
+    title: "SVT — ADN et génétique (intro)",
+    matiere: "SVT",
+    niveau: "Lycée",
+    chapitre: "Chromosomes · gènes",
+    questions: [
+      { id: "s3-q1", prompt: "Les gènes sont portés par :", options: ["lipides", "ADN", "eau"], correct: 1 },
+      { id: "s3-q2", prompt: "Chez l’humain : cellules somatiques : 46 chromosomes → paires :", options: ["23", "46", "92"], correct: 0 },
+      { id: "s3-q3", prompt: "Réplication semi-conservative de l’ADN : moment du cycle :", options: ["mitose / préparation division", "finition uniquement", "jamais"], correct: 0 },
+      { id: "s3-q4", prompt: "Allèles :", options: ["formes variantes d’un gène", "protéines identiques toujours", "organites"], correct: 0 },
+      { id: "s3-q5", prompt: "ARN messager : rôle schématique :", options: ["copie l’information pour traduction en protéine", "stocke l’énergie", "digère les lipides seuls"], correct: 0 },
+    ],
+  },
+  {
+    id: "seed-qcm-svt-4",
+    title: "SVT — Écosystèmes et réseaux trophiques",
+    matiere: "SVT",
+    niveau: "Lycée",
+    chapitre: "Chaînes alimentaires",
+    questions: [
+      { id: "s4-q1", prompt: "Producteurs primaires :", options: ["champignons décomposeurs", "plantes photosynthétiques", "carnivores apex"], correct: 1 },
+      { id: "s4-q2", prompt: "Consommateur primaire mange :", options: ["les décomposeurs uniquement", "les producteurs", "l’ozone"], correct: 1 },
+      { id: "s4-q3", prompt: "Biomasse transmise entre niveaux trophiques (ordre de grandeur) :", options: ["~100%", "~10% souvent (pertes)", "0%"], correct: 1 },
+      { id: "s4-q4", prompt: "Décomposeurs :", options: ["recyclent la matière organique", "produisent O₂ par photosynthèse", "fixent l’azote atmosphérique toujours"], correct: 0 },
+      { id: "s4-q5", prompt: "Réseau trophique vs chaîne :", options: ["le réseau relie plusieurs chaînes", "une chaîne n’existe pas", "identique"], correct: 0 },
+    ],
+  },
+
+  // ——— Histoire-Géographie ———
+  {
+    id: "seed-qcm-hg-1",
+    title: "Histoire-Géographie — Antiquité (repères)",
+    matiere: "Histoire-Géographie",
+    niveau: "Collège",
+    chapitre: "Grèce et Rome (bases)",
+    questions: [
+      { id: "h1-q1", prompt: "Athènes est souvent associée à la naissance de :", options: ["l’empire romain d’Orient", "certaines formes de citoyenneté et démocratie antique", "l’islam classique"], correct: 1 },
+      { id: "h1-q2", prompt: "Rome antique : pouvoir exécutif républicain marquant :", options: ["consulat (avec d’autres institutions)", "seulement pharaon", "shogun"], correct: 0 },
+      { id: "h1-q3", prompt: "Le latin était la langue de l’administration dans :", options: ["Rome et son empire étendu", "Chine Han", "Empire aztèque"], correct: 0 },
+      { id: "h1-q4", prompt: "Jules César (repère culturel) :", options: ["philosophe grec", "figure majeure fin République romaine", "sultan mamelouk"], correct: 1 },
+      { id: "h1-q5", prompt: "Le christianisme devient religion autorisée puis dominante :", options: ["tout de suite en 753 av. J.-C.", "surtout à partir du IVe s. apr. J.-C. (Edit de Milan, etc.)", "jamais dans l’Empire"], correct: 1 },
+    ],
+  },
+  {
+    id: "seed-qcm-hg-2",
+    title: "Histoire-Géographie — Carte et climats (bases)",
+    matiere: "Histoire-Géographie",
+    niveau: "Collège",
+    chapitre: "Relief · climat",
+    questions: [
+      { id: "h2-q1", prompt: "Échelle d’une carte : 1 cm → 50 km signifie :", options: ["distances réelles réduites selon le ratio", "1 cm = 50 m toujours", "la carte n’a pas d’échelle"], correct: 0 },
+      { id: "h2-q2", prompt: "Équateur : climats tropicaux humides chauds typiques :", options: ["oui en général", "non, toujours polaires", "déserts uniquement"], correct: 0 },
+      { id: "h2-q3", prompt: "Courants marins froids près d’un bord oriental… (concept simplifié examen collège) : terme courant « upwelling » implique souvent :", options: ["remontée d’eaux froides nourricières", "soleil vertical", "pas d’effet"], correct: 0 },
+      { id: "h2-q4", prompt: "Relief : ligne fictive joignant points même altitude :", options: ["isohypse / courbe de niveau", "méridien", "frontière"], correct: 0 },
+      { id: "h2-q5", prompt: "Désert chaud (ex. Sahara) : pluviométrie annuelle typique basse :", options: ["oui", "non, toujours > 2000 mm", "aucun lien"], correct: 0 },
+    ],
+  },
+  {
+    id: "seed-qcm-hg-3",
+    title: "Histoire-Géographie — Maroc et indépendances (XXe)",
+    matiere: "Histoire-Géographie",
+    niveau: "Lycée",
+    chapitre: "Décolonisation · repères",
+    questions: [
+      { id: "h3-q1", prompt: "Indépendance du Maroc (protectorats) : ordre de grandeur :", options: ["1956 (réunification, repère courant)", "1918", "2001"], correct: 0 },
+      { id: "h3-q2", prompt: "Conférence de Berlin (1885) : enjeu majeur :", options: ["free trade internet", "répartition coloniale en Afrique", "traité de Vienne 1815"], correct: 1 },
+      { id: "h3-q3", prompt: "Protectorat français (partie) au Maroc : rôle :", options: ["autonomie totale immédiate partout", "présence administrative et militaire variable selon zone", "disparition du sultanat"], correct: 1 },
+      { id: "h3-q4", prompt: "Mouvement national marocain : figures (culture générale) :", options: ["Allal El Fassi / figures du nationalisme (repère)", "Jules César", "Galilée"], correct: 0 },
+      { id: "h3-q5", prompt: "L’ONU joue un rôle dans plusieurs processus d’autodétermination :", options: ["oui, médiation / résolutions", "jamais", "uniquement sur la Lune"], correct: 0 },
+    ],
+  },
+  {
+    id: "seed-qcm-hg-4",
+    title: "Histoire-Géographie — Mondialisation (repères)",
+    matiere: "Histoire-Géographie",
+    niveau: "Lycée",
+    chapitre: "Échanges · flux",
+    questions: [
+      { id: "h4-q1", prompt: "Mondialisation : se caractérise notamment par :", options: ["intensification des flux (biens, capitaux, infos)", "isolement complet", "fin du commerce"], correct: 0 },
+      { id: "h4-q2", prompt: "FMIs (FMI, BM) : rôle général enseigné :", options: ["coordination économique / prêts et politiques (débats inclus)", "météo locale", "cartographie IGN locale"], correct: 0 },
+      { id: "h4-q3", prompt: "Divisions Nord/Sud : sens souvent utilisé en géographie :", options: ["oppositions développement / inégalités globales", "latitude 0 uniquement", "aucun sens"], correct: 0 },
+      { id: "h4-q4", prompt: "Délocalisations industrielles : visent souvent :", options: ["réduire coûts / zones à bas salaires", "augmenter distances sans raison", "interdire export"], correct: 0 },
+      { id: "h4-q5", prompt: "Zone euro :", options: ["union monétaire (UE)", "organisation football", "traité de l’Atlantique Nord militaire"], correct: 0 },
+    ],
+  },
+];

@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { CATALOG_SEED_QCMS } from "./seed-catalog-quizzes";
+import { STEM_CATALOG_SEED_QCMS } from "./seed-catalog-stem";
 
 const prisma = new PrismaClient();
 
@@ -135,7 +136,9 @@ async function main() {
     },
   });
 
-  for (const qcm of CATALOG_SEED_QCMS) {
+  const allCatalogQcms = [...CATALOG_SEED_QCMS, ...STEM_CATALOG_SEED_QCMS];
+
+  for (const qcm of allCatalogQcms) {
     const contentJson = JSON.stringify({ questions: qcm.questions });
     await prisma.exercise.upsert({
       where: { id: qcm.id },
@@ -205,7 +208,7 @@ async function main() {
     prof: prof.email,
     eleve: eleve.email,
     course: course.title,
-    catalogQcms: CATALOG_SEED_QCMS.length,
+    catalogQcms: allCatalogQcms.length,
   });
 }
 

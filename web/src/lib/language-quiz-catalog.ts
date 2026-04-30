@@ -12,7 +12,17 @@ export const CATALOG_LANGUAGE_MATIERES = [
 export type CatalogLanguageMatiere =
   (typeof CATALOG_LANGUAGE_MATIERES)[number];
 
-/** Clés `CatalogPage.matieres.{key}` pour l’affichage selon la locale */
+/** Autres matières affichées après les langues (tronc commun). */
+export const CATALOG_STEM_MATIERES = [
+  "Mathématiques",
+  "Physique-Chimie",
+  "SVT",
+  "Histoire-Géographie",
+] as const;
+
+export type CatalogStemMatiere = (typeof CATALOG_STEM_MATIERES)[number];
+
+/** Clés `CatalogPage.matieres.{key}` — langues */
 export const CATALOG_MATIERE_I18N_KEY: Record<CatalogLanguageMatiere, string> =
   {
     Français: "french",
@@ -22,6 +32,28 @@ export const CATALOG_MATIERE_I18N_KEY: Record<CatalogLanguageMatiere, string> =
     Allemand: "german",
     "Chinois (mandarin)": "chinese",
   };
+
+/** Clés `CatalogPage.matieres.{key}` — tronc commun */
+export const CATALOG_STEM_MATIERE_I18N_KEY: Record<
+  CatalogStemMatiere,
+  string
+> = {
+  Mathématiques: "mathematics",
+  "Physique-Chimie": "physics",
+  SVT: "svt",
+  "Histoire-Géographie": "historyGeo",
+};
+
+/** Suffixe i18n `matieres.*` pour une matière catalogue, ou null si inconnu. */
+export function catalogMatiereI18nSuffix(matiere: string): string | null {
+  if (matiere in CATALOG_MATIERE_I18N_KEY) {
+    return CATALOG_MATIERE_I18N_KEY[matiere as CatalogLanguageMatiere];
+  }
+  if (matiere in CATALOG_STEM_MATIERE_I18N_KEY) {
+    return CATALOG_STEM_MATIERE_I18N_KEY[matiere as CatalogStemMatiere];
+  }
+  return null;
+}
 
 export const LANGUAGE_MATIERE_GRADIENT: Record<
   CatalogLanguageMatiere,
@@ -33,6 +65,13 @@ export const LANGUAGE_MATIERE_GRADIENT: Record<
   "Anglais américain": "from-brandblue via-navy to-brandblue",
   Allemand: "from-navy via-gold/70 to-navy",
   "Chinois (mandarin)": "from-red-700/90 via-gold to-navy",
+};
+
+export const STEM_MATIERE_GRADIENT: Record<CatalogStemMatiere, string> = {
+  Mathématiques: "from-violet-600 to-brandblue",
+  "Physique-Chimie": "from-cyan-600 to-slate-800",
+  SVT: "from-emerald-600 to-teal-900",
+  "Histoire-Géographie": "from-amber-600 to-rose-900",
 };
 
 export type QuizCatalogRow = {
@@ -65,6 +104,15 @@ export function groupQuizzesForCatalog(rows: QuizCatalogRow[]): QuizCatalogGroup
       items: byMatiere.get(lang) ?? [],
     });
     byMatiere.delete(lang);
+  }
+
+  for (const m of CATALOG_STEM_MATIERES) {
+    out.push({
+      label: m,
+      gradient: STEM_MATIERE_GRADIENT[m],
+      items: byMatiere.get(m) ?? [],
+    });
+    byMatiere.delete(m);
   }
 
   const rest = Array.from(byMatiere.entries())

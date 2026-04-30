@@ -6,10 +6,7 @@ import { ExerciseType } from "@prisma/client";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
-import {
-  CATALOG_MATIERE_I18N_KEY,
-  type CatalogLanguageMatiere,
-} from "@/lib/language-quiz-catalog";
+import { catalogMatiereI18nSuffix } from "@/lib/language-quiz-catalog";
 import { NIVEAU_CATALOG_I18N_KEY, type Niveau } from "@/lib/course-taxonomy";
 
 type PageProps = { params: Promise<{ locale: string; id: string }> };
@@ -69,12 +66,9 @@ export default async function PublicQuizPage({ params }: PageProps) {
     })),
   };
 
-  const matKey =
-    exercise.matiere in CATALOG_MATIERE_I18N_KEY
-      ? CATALOG_MATIERE_I18N_KEY[exercise.matiere as CatalogLanguageMatiere]
-      : null;
-  const matiereLabel = matKey
-    ? tCat(`matieres.${matKey}` as Parameters<typeof tCat>[0])
+  const matSuffix = catalogMatiereI18nSuffix(exercise.matiere);
+  const matiereLabel = matSuffix
+    ? tCat(`matieres.${matSuffix}` as Parameters<typeof tCat>[0])
     : exercise.matiere;
 
   const nivKey =

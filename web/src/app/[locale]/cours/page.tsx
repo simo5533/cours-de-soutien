@@ -4,6 +4,8 @@ import { SiteHeader } from "@/components/site-header";
 import {
   CATALOG_LANGUAGE_MATIERES,
   CATALOG_MATIERE_I18N_KEY,
+  CATALOG_STEM_MATIERES,
+  CATALOG_STEM_MATIERE_I18N_KEY,
   groupQuizzesForCatalog,
 } from "@/lib/language-quiz-catalog";
 import { NIVEAU_CATALOG_I18N_KEY, NIVEAUX } from "@/lib/course-taxonomy";
@@ -128,7 +130,7 @@ export default async function CoursPublicPage({ params }: PageProps) {
           <p className="brand-section-subtitle mt-2 max-w-2xl">
             {t("taxonomySubtitle")}
           </p>
-          <div className="mt-8 grid gap-5 md:grid-cols-2">
+          <div className="mt-8 grid gap-5 md:grid-cols-3">
             <div className="brand-card p-5">
               <div className="brand-card-inner border-s-4 border-gold/50 ps-4">
                 <h3 className="flex items-center gap-2 text-sm font-bold text-navy dark:text-gold">
@@ -161,6 +163,46 @@ export default async function CoursPublicPage({ params }: PageProps) {
                       <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-brandblue" />
                       {t(
                         `matieres.${CATALOG_MATIERE_I18N_KEY[m]}` as Parameters<
+                          typeof t
+                        >[0],
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            <div className="brand-card p-5">
+              <div className="brand-card-inner border-s-4 border-gold/50 ps-4">
+                <h3 className="flex items-center gap-2 text-sm font-bold text-navy dark:text-gold">
+                  <span
+                    className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-violet-600 to-brandblue text-white shadow-md"
+                    aria-hidden
+                  >
+                    <svg
+                      className="h-4 w-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2-4H3m18 4h2m-2 4h2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"
+                      />
+                    </svg>
+                  </span>
+                  {t("stemSectionTitle")}
+                </h3>
+                <ul className="mt-4 space-y-2.5">
+                  {CATALOG_STEM_MATIERES.map((m) => (
+                    <li
+                      key={m}
+                      className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300"
+                    >
+                      <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-violet-500" />
+                      {t(
+                        `matieres.${CATALOG_STEM_MATIERE_I18N_KEY[m]}` as Parameters<
                           typeof t
                         >[0],
                       )}

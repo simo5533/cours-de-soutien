@@ -3,9 +3,8 @@
 import { Link } from "@/i18n/navigation";
 import { useMemo, useState } from "react";
 import {
-  CATALOG_MATIERE_I18N_KEY,
+  catalogMatiereI18nSuffix,
   type QuizCatalogGroup,
-  type CatalogLanguageMatiere,
 } from "@/lib/language-quiz-catalog";
 import { NIVEAU_CATALOG_I18N_KEY, type Niveau } from "@/lib/course-taxonomy";
 import { useTranslations } from "next-intl";
@@ -14,16 +13,22 @@ export function PublicQuizCatalog({ groups }: { groups: QuizCatalogGroup[] }) {
   const t = useTranslations("PublicQuizCatalog");
   const tCat = useTranslations("CatalogPage");
   const [query, setQuery] = useState("");
+  const [matiereFilter, setMatiereFilter] = useState("");
 
-  const flatCount = useMemo(
-    () => groups.reduce((n, g) => n + g.items.length, 0),
-    [groups],
+  const scopedGroups = useMemo(() => {
+    if (!matiereFilter) return groups;
+    return groups.filter((g) => g.label === matiereFilter);
+  }, [groups, matiereFilter]);
+
+  const scopeTotal = useMemo(
+    () => scopedGroups.reduce((n, g) => n + g.items.length, 0),
+    [scopedGroups],
   );
 
   const filteredGroups = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return groups;
-    return groups
+    if (!q) return scopedGroups;
+    return scopedGroups
       .map((g) => ({
         ...g,
         items: g.items.filter(
@@ -35,7 +40,7 @@ export function PublicQuizCatalog({ groups }: { groups: QuizCatalogGroup[] }) {
         ),
       }))
       .filter((g) => g.items.length > 0);
-  }, [groups, query]);
+  }, [scopedGroups, query]);
 
   const filteredCount = useMemo(
     () => filteredGroups.reduce((n, g) => n + g.items.length, 0),
@@ -43,10 +48,8 @@ export function PublicQuizCatalog({ groups }: { groups: QuizCatalogGroup[] }) {
   );
 
   function groupHeading(label: string) {
-    if (label in CATALOG_MATIERE_I18N_KEY) {
-      const k = CATALOG_MATIERE_I18N_KEY[label as CatalogLanguageMatiere];
-      return tCat(`matieres.${k}` as Parameters<typeof tCat>[0]);
-    }
+    const k = catalogMatiereI18nSuffix(label);
+    if (k) return tCat(`matieres.${k}` as Parameters<typeof tCat>[0]);
     return label;
   }
 
@@ -62,6 +65,22 @@ export function PublicQuizCatalog({ groups }: { groups: QuizCatalogGroup[] }) {
     <div className="space-y-10">
       <div className="flex flex-col gap-3 rounded-2xl border border-navy/10 bg-white/85 p-4 dark:border-slate-700 dark:bg-slate-900/55 sm:flex-row sm:flex-wrap sm:items-end">
         <label className="flex min-w-[12rem] flex-1 flex-col gap-1 text-xs font-semibold text-navy dark:text-gold/90">
+          {t("filterMatiereLabel")}
+          <select
+            value={matiereFilter}
+            onChange={(e) => setMatiereFilter(e.target.value)}
+            className="select-field py-2"
+            aria-label={t("filterMatiereLabel")}
+          >
+            <option value="">{t("filterAllMatieres")}</option>
+            {groups.map((g) => (
+              <option key={g.label} value={g.label}>
+                {groupHeading(g.label)}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="flex min-w-[12rem] flex-1 flex-col gap-1 text-xs font-semibold text-navy dark:text-gold/90">
           {t("searchLabel")}
           <input
             value={query}
@@ -71,7 +90,7 @@ export function PublicQuizCatalog({ groups }: { groups: QuizCatalogGroup[] }) {
           />
         </label>
         <p className="text-xs text-slate-500 dark:text-slate-400 sm:ms-auto sm:pb-2">
-          {t("count", { filtered: filteredCount, total: flatCount })}
+          {t("count", { filtered: filteredCount, total: scopeTotal })}
         </p>
       </div>
 
