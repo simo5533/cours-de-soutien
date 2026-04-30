@@ -257,9 +257,15 @@ export default async function Home({ params }: PageProps) {
               </div>
             ))}
           </div>
-          <div className="relative mt-8 flex justify-center">
+          <div className="relative mt-8 flex flex-col items-center gap-3">
             <Link href="/inscription" className="btn-primary px-8 py-3 text-base">
               {t("languagesCta")}
+            </Link>
+            <Link
+              href="/cours-gratuits-langues"
+              className="text-sm font-semibold text-brandblue underline decoration-brandblue/30 underline-offset-4 transition hover:text-navy hover:decoration-navy dark:text-brandblue dark:hover:text-gold"
+            >
+              {t("languagesFreeArticleLink")}
             </Link>
           </div>
         </section>

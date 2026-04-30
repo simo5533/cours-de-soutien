@@ -8,11 +8,11 @@
     "title": "Progressez avec des ateliers cibles et un suivi qui compte.",
     "intro": "Petits groupes, accompagnement clair, et une plateforme pour reviser quand vous voulez. Inscrivez-vous pour acceder au catalogue et aux prochaines seances.",
     "heroNote": "Offre de bienvenue : nous vous recontactons apres votre inscription pour convenir du creneau qui vous convient.",
-    "ctaCatalog": "Voir le catalogue",
+    "ctaCatalog": "Voir les quiz",
     "ctaLogin": "Connexion",
     "ctaSignup": "Creer un compte",
     "ctaRegisterNow": "S'inscrire maintenant",
-    "ctaDiscover": "Decouvrir les cours",
+    "ctaDiscover": "Voir les quiz par langue",
     "ctaLanguagesLink": "Cours de langues — tous âges",
     "cardCta": "Acceder a l'espace",
     "trust1": "Accompagnement transparent",
@@ -73,6 +73,7 @@
     "languagesAgeTitle": "À partir de quel âge ?",
     "languagesAgeBody": "En pratique, nous proposons des groupes enfants à partir d'environ 8 à 12 ans (selon la langue et la session), des groupes ados 13–17 ans, et des créneaux adultes dès 18 ans. Il n'y a pas d'âge maximum : les seniors sont les bienvenus. Pour les moins de 8 ans, une courte évaluation permet de vérifier que le groupe convient.",
     "languagesCta": "S'inscrire pour les langues",
+    "languagesFreeArticleLink": "Partie gratuite : lire l'article sur chaque langue",
     "languages": {
       "french": {
         "title": "Français",
@@ -104,7 +105,8 @@
     "brandTitle": "Methodix",
     "languages": "Langues vivantes",
     "blog": "Blog",
-    "catalog": "Catalogue",
+    "catalog": "Quiz",
+    "freeLangCourses": "Cours langues — partie gratuite",
     "mySpace": "Mon espace",
     "logout": "Deconnexion",
     "login": "Connexion",
@@ -181,5 +183,126 @@
     "ctaTitle": "Envie d'etre accompagne ?",
     "ctaBody": "Creez un compte eleve et accedez au catalogue, aux exercices et au suivi pedagogique.",
     "ctaButton": "S'inscrire"
+  },
+  "FreeLangCourses": {
+    "metaTitle": "Langues vivantes — ce qui est gratuit | Methodix",
+    "metaDescription": "Apercu des programmes francais, espagnol, anglais, anglais americain, allemand et chinois : partie gratuite (decouverte, fiches) et fil conducteur pedagogique, en ligne comme un article.",
+    "kicker": "Guide — pas de piece jointe",
+    "title": "Langues vivantes : la partie gratuite de chaque programme",
+    "lead": "Vous trouverez ici l'equivalent clair et lisible de nos brochures PDF : pour chaque langue, ce qui est offert sans engagement, puis un apercu structure du parcours (niveaux, objectifs et themes). L'inscription complete et la suite du programme se font avec l'equipe Methodix.",
+    "freeSectionTitle": "Qu'est-ce qui est inclus gratuitement ?",
+    "freeSectionBody": "Pour les six langues, nous proposons un socle commun : une seance de decouverte sans facturation, l'acces aux fiches « premier contact » et a un extrait du premier module sur la plateforme lorsque l'offre Gratuite / Starter est active, ainsi qu'un court positionnement pour choisir le bon niveau (oral ou questionnaire). Les details peuvent varier selon la session et le creneau.",
+    "footnote": "Les programmes detailles au format PDF restent disponibles sur demande aupres de nos coordinateurs ; cette page les resume volontairement pour une lecture rapide sur mobile et ordinateur.",
+    "catalogTeaserTitle": "Programmes langues : lire la partie gratuite",
+    "catalogTeaserBody": "Article avec apercu de chaque langue — meme contenu que les brochures, presente comme une page web.",
+    "catalogTeaserCta": "Ouvrir l'article",
+    "languages": {
+      "french": {
+        "title": "Francais",
+        "teaser": "Renforcer ecrit et oral, preparer le bac ou un diplome (DELF / DALF), ou gagner en aisance au quotidien.",
+        "freeTitle": "Sans payer, vous obtenez",
+        "freeBullets": [
+          "Une seance decouverte (presentation des objectifs et du rythme du groupe).",
+          "Fiches de revision « premiers pas » (salutations, presentation, nombres et temps).",
+          "Apercu du module d'introduction sur la plateforme et conseils pour viser le bon niveau CECRL."
+        ],
+        "programTitle": "Fil du programme (apercu)",
+        "programBullets": [
+          "Niveaux A1 a C1 : progression par competences (comprhension, production, interaction).",
+          "Phonetique ciblee, grammaire en contexte, lexique thematique (ecole, travail, voyage).",
+          "Ateliers d'expression orale et ecrite ; preparation certification (DELF / DALF) en option.",
+          "Culture et civilisation : medias, extraits litteraires, debats courts en petit groupe."
+        ]
+      },
+      "spanish": {
+        "title": "Espagnol",
+        "teaser": "Une langue ouverte sur l'Europe et les Ameriques : bases solides, pratique en situation et examens (DELE, scolarite bilingue).",
+        "freeTitle": "Sans payer, vous obtenez",
+        "freeBullets": [
+          "Seance decouverte et test de niveau simplifie (ecrit ou oral selon le groupe).",
+          "Fiches phonetique + vocabulaire de survie et premieres phrases utiles.",
+          "Acces limite au module 0 — alphabet, salutations et presentation — sur l'espace eleve Starter."
+        ],
+        "programTitle": "Fil du programme (apercu)",
+        "programBullets": [
+          "A1 a B2+ : ser / estar, temps du passe, subjonctif introduit progressivement.",
+          "Comprhension audio et lecture courtes (voyage, culture, actualite adaptee).",
+          "Expression orale dialogues et mini-role-plays ; preparation DELE si besoin.",
+          "Lexique thematique (vie quotidienne, etudes, tourisme, professionnel)."
+        ]
+      },
+      "english": {
+        "title": "Anglais",
+        "teaser": "Anglais international : grammaire, comprehension et expression pour etudes, travail ou certifications (style academique et examens type Cambridge).",
+        "freeTitle": "Sans payer, vous obtenez",
+        "freeBullets": [
+          "Decouverte du parcours et alignement sur votre objectif (scolaire, pro ou certification).",
+          "Pack « starter » : temps verbaux cles, questions courantes, mini-fiches listening.",
+          "Acces a un extrait du premier chapitre numerique (vocabulaire + comprehension guidee)."
+        ],
+        "programTitle": "Fil du programme (apercu)",
+        "programBullets": [
+          "Par niveau A1 a C1 : grammaire fonctionnelle, vocabulaire par domaines.",
+          "Listening et reading structures ; progression vers production orale B1/B2.",
+          "Ecrit : phrases, paragraphes puis redactions types examen (avec corrections encadrees).",
+          "Bloc certification Cambridge / IELTS-style en option selon le groupe."
+        ]
+      },
+      "englishUS": {
+        "title": "Anglais americain",
+        "teaser": "Accent, idiomes et culture des Etats-Unis ; ideal pour medias US et tests type TOEFL ou etudes outre-Atlantique.",
+        "freeTitle": "Sans payer, vous obtenez",
+        "freeBullets": [
+          "Seance decouverte avec focus prononciation americaine (voyelles, reduction, stress).",
+          "Liste d'idiomes frequents + fiches « small talk » et situations du quotidien.",
+          "Apercu du module culture US (comprehension d'extraits courts sans spoiler la suite)."
+        ],
+        "programTitle": "Fil du programme (apercu)",
+        "programBullets": [
+          "Prononciation comparee (US vs UK) et reduction naturelle dans la fluence.",
+          "Phrasal verbs et expressions orales typiques ; ecoute de conversations reelles ralenties.",
+          "Lecture de textes contemporains ; preparation orale type entretien / campus.",
+          "Introduction aux formats TOEFL (listening / structure) pour les groupes cibles."
+        ]
+      },
+      "german": {
+        "title": "Allemand",
+        "teaser": "Etudes en zone DACH : grammaire structuree, oral et certifications (Goethe, scolarite).",
+        "freeTitle": "Sans payer, vous obtenez",
+        "freeBullets": [
+          "Rencontre pedagogique : objectifs (etudes, emploi, migration linguistique).",
+          "Fiches declinaisons et premiers cas (nominatif / accusatif) avec exemples audio.",
+          "Acces limite au module d'initiation : alphabet, sons, formules de politesse."
+        ],
+        "programTitle": "Fil du programme (apercu)",
+        "programBullets": [
+          "A1 a B2 : cas, ordre des mots, modes verbaux (Indikativ, Konjunktiv II intro).",
+          "Vocabulaire thematique (travail, logement, universite, vie quotidienne).",
+          "Comprhension orale et lecture adaptees au niveau ; production orale en atelier.",
+          "Preparation Goethe-Zertifikat et connaissances Landeskunde integrees."
+        ]
+      },
+      "chinese": {
+        "title": "Chinois (mandarin)",
+        "teaser": "Pinyin, caracteres, conversation et niveaux HSK du debutant au confirme.",
+        "freeTitle": "Sans payer, vous obtenez",
+        "freeBullets": [
+          "Seance decouverte : tons, Hanyu Pinyin et premiers mots (sans pression sur l'ecrit au tout debut).",
+          "Fiches radicaux et caracteres frequents avec ordre des traits illustre.",
+          "Acces a des exercices audio pilotes et au sommaire du module HSK 1 / survol niveau 2."
+        ],
+        "programTitle": "Fil du programme (apercu)",
+        "programBullets": [
+          "HSK 1 a HSK 4+ selon groupes : phonetique, vocabulaire et grammaire essentielle.",
+          "Ecriture progressive : caracteres simples puis phrases courtes en situation.",
+          "Comprehension orale avec debits adaptes ; mimique et contexte culturel.",
+          "Themes concrets : presenter sa famille, se deplacer, travailler, voyager en Chine."
+        ]
+      }
+    },
+    "ctaTitle": "Passer de l'article au cours",
+    "ctaBody": "Inscrivez-vous pour bloquer un creneau groupe ou demander un entretien : nous vous confirmons la partie gratuite exacte pour votre langue et votre niveau.",
+    "ctaRegister": "S'inscrire",
+    "ctaCatalog": "Voir les quiz"
   }
 }
