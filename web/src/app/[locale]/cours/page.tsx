@@ -6,6 +6,8 @@ import {
   CATALOG_MATIERE_I18N_KEY,
   CATALOG_STEM_MATIERES,
   CATALOG_STEM_MATIERE_I18N_KEY,
+  LANGUAGE_LEVEL_KEYS,
+  STEM_LEVEL_KEYS,
   groupQuizzesForCatalog,
 } from "@/lib/language-quiz-catalog";
 import { NIVEAU_CATALOG_I18N_KEY, NIVEAUX } from "@/lib/course-taxonomy";
@@ -154,18 +156,29 @@ export default async function CoursPublicPage({ params }: PageProps) {
                   </span>
                   {t("livingLanguagesTitle")}
                 </h3>
-                <ul className="mt-4 space-y-2.5">
+                <ul className="mt-4 space-y-4">
                   {CATALOG_LANGUAGE_MATIERES.map((m) => (
-                    <li
-                      key={m}
-                      className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300"
-                    >
-                      <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-brandblue" />
-                      {t(
-                        `matieres.${CATALOG_MATIERE_I18N_KEY[m]}` as Parameters<
-                          typeof t
-                        >[0],
-                      )}
+                    <li key={m} className="text-sm text-slate-700 dark:text-slate-300">
+                      <div className="flex items-center gap-2 font-semibold text-navy dark:text-slate-100">
+                        <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-brandblue" />
+                        {t(
+                          `matieres.${CATALOG_MATIERE_I18N_KEY[m]}` as Parameters<
+                            typeof t
+                          >[0],
+                        )}
+                      </div>
+                      <ul className="ms-5 mt-2 space-y-1 border-s border-brandblue/25 ps-3 dark:border-brandblue/35">
+                        {LANGUAGE_LEVEL_KEYS.map((lv) => (
+                          <li
+                            key={`${m}-${lv}`}
+                            className="text-xs leading-relaxed text-slate-600 dark:text-slate-400"
+                          >
+                            {t(
+                              `langLevels.${lv}` as Parameters<typeof t>[0],
+                            )}
+                          </li>
+                        ))}
+                      </ul>
                     </li>
                   ))}
                 </ul>
@@ -194,18 +207,31 @@ export default async function CoursPublicPage({ params }: PageProps) {
                   </span>
                   {t("stemSectionTitle")}
                 </h3>
-                <ul className="mt-4 space-y-2.5">
+                <ul className="mt-4 space-y-4">
                   {CATALOG_STEM_MATIERES.map((m) => (
-                    <li
-                      key={m}
-                      className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300"
-                    >
-                      <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-violet-500" />
-                      {t(
-                        `matieres.${CATALOG_STEM_MATIERE_I18N_KEY[m]}` as Parameters<
-                          typeof t
-                        >[0],
-                      )}
+                    <li key={m} className="text-sm text-slate-700 dark:text-slate-300">
+                      <div className="flex items-center gap-2 font-semibold text-navy dark:text-slate-100">
+                        <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-violet-500" />
+                        {t(
+                          `matieres.${CATALOG_STEM_MATIERE_I18N_KEY[m]}` as Parameters<
+                            typeof t
+                          >[0],
+                        )}
+                      </div>
+                      <ul className="ms-5 mt-2 space-y-1 border-s border-violet-400/35 ps-3 dark:border-violet-500/40">
+                        {STEM_LEVEL_KEYS.map((lv) => (
+                          <li
+                            key={`${m}-${lv}`}
+                            className="text-xs leading-relaxed text-slate-600 dark:text-slate-400"
+                          >
+                            {t(
+                              `niveaux.${NIVEAU_CATALOG_I18N_KEY[lv]}` as Parameters<
+                                typeof t
+                              >[0],
+                            )}
+                          </li>
+                        ))}
+                      </ul>
                     </li>
                   ))}
                 </ul>
