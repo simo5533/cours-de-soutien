@@ -19,15 +19,16 @@ export default async function EleveSalleCoursPage({
   const { id } = await params;
   const session = await auth();
   const locale = await getLocale();
+  const user = session?.user;
 
-  if (!session?.user) {
-    redirect({
+  if (!user) {
+    return redirect({
       href: `/connexion?callbackUrl=${encodeURIComponent(`/eleve/cours-en-ligne/salle/${id}`)}`,
       locale,
     });
   }
 
-  if (session.user.role !== "ELEVE") {
+  if (user.role !== "ELEVE") {
     notFound();
   }
 
@@ -39,12 +40,12 @@ export default async function EleveSalleCoursPage({
     },
   });
 
-  if (!booking || !userCanAccessLessonRoom(booking, session.user)) {
+  if (!booking || !userCanAccessLessonRoom(booking, user)) {
     notFound();
   }
 
   const allowed = canJoinLessonRoom(booking);
-  const displayName = session.user.name ?? booking.student?.name ?? "Élève";
+  const displayName = user.name ?? booking.student?.name ?? "Élève";
 
   return (
     <div className="space-y-6">
@@ -80,7 +81,7 @@ export default async function EleveSalleCoursPage({
             domain={getJitsiDomain()}
           />
           <p className="text-xs text-zinc-500">
-            Connecté en tant que {session.user.email}. Visioconférence sécurisée.
+            Connecté en tant que {user.email}. Visioconférence sécurisée.
           </p>
         </>
       )}

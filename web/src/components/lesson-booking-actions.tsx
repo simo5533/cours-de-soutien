@@ -20,7 +20,7 @@ type BookingRow = {
   meetingRoomId: string;
   studentComment: string | null;
   teacherNotes: string | null;
-  student: { name: string; email: string };
+  student: { name: string; email: string } | null;
   teacher: { name: string };
 };
 
