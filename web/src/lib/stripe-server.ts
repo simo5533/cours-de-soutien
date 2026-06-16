@@ -23,6 +23,20 @@ export function getStripePriceIdEleve(): string | null {
   return id || null;
 }
 
+export type EleveStripePlan = "essential" | "bacplus" | "family";
+
+/** `price_…` pour la formule ; repli sur `STRIPE_PRICE_ID_ELEVE_INSCRIPTION`. */
+export function getStripePriceIdForElevePlan(plan: EleveStripePlan): string | null {
+  const fromPlan =
+    plan === "essential"
+      ? process.env.STRIPE_PRICE_ID_ELEVE_ESSENTIAL?.trim()
+      : plan === "bacplus"
+        ? process.env.STRIPE_PRICE_ID_ELEVE_BAC_PLUS?.trim()
+        : process.env.STRIPE_PRICE_ID_ELEVE_FAMILY?.trim();
+  if (fromPlan) return fromPlan;
+  return getStripePriceIdEleve();
+}
+
 export function getAppBaseUrl(): string {
   return (
     process.env.NEXT_PUBLIC_APP_URL?.trim() ||

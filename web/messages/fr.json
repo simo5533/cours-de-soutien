@@ -14,6 +14,7 @@
     "ctaRegisterNow": "S'inscrire maintenant",
     "ctaDiscover": "Voir les quiz par langue",
     "ctaLanguagesLink": "Cours de langues — tous âges",
+    "ctaOnlineCourses": "Cours en ligne avec un professeur",
     "cardCta": "Acceder a l'espace",
     "trust1": "Accompagnement transparent",
     "trust2": "Ateliers en petit groupe",
@@ -107,6 +108,7 @@
     "blog": "Blog",
     "catalog": "Quiz",
     "freeLangCourses": "Cours langues — partie gratuite",
+    "onlineCourses": "Cours en ligne",
     "mySpace": "Mon espace",
     "logout": "Deconnexion",
     "login": "Connexion",
@@ -114,6 +116,25 @@
     "brandSubtitle": "Soutien scolaire & IA",
     "openMenu": "Ouvrir le menu",
     "closeMenu": "Fermer le menu"
+  },
+  "CoursEnLignePage": {
+    "backHome": "Retour à l'accueil",
+    "eyebrow": "Visioconférence",
+    "title": "Cours en ligne avec un professeur",
+    "intro": "Réservez un cours à distance : choisissez la langue ou la matière, indiquez la date et l'heure qui vous conviennent. Notre équipe vérifie votre demande, assigne un professeur, puis vous rejoignez la salle virtuelle à l'heure prévue.",
+    "stepsTitle": "Étapes",
+    "step1Title": "Décrivez votre besoin",
+    "step1Desc": "Langue, matière, date, horaire, téléphone et mot de passe pour le live (compte créé après validation).",
+    "step2Title": "Validation admin",
+    "step2Desc": "L'administration vérifie la demande, crée votre compte élève et assigne le professeur.",
+    "step3Title": "Cours en direct",
+    "step3Desc": "Visio sécurisée : caméra, micro, chat et partage d'écran.",
+    "bullet1": "Salle privée professeur + élève",
+    "bullet2": "Confirmation par e-mail après validation",
+    "bullet3": "Paiement géré après acceptation (selon formule)",
+    "alreadyAccount": "Déjà inscrit ?",
+    "login": "Connexion",
+    "signup": "Créer un compte"
   },
   "Connexion": {
     "title": "Connexion",
@@ -186,17 +207,20 @@
     "ctaButton": "S'inscrire"
   },
   "FreeLangCourses": {
-    "metaTitle": "Langues vivantes — ce qui est gratuit | Methodix",
-    "metaDescription": "Apercu des programmes francais, espagnol, anglais, anglais americain, allemand et chinois : partie gratuite (decouverte, fiches) et fil conducteur pedagogique, en ligne comme un article.",
-    "kicker": "Guide — pas de piece jointe",
-    "title": "Langues vivantes : la partie gratuite de chaque programme",
-    "lead": "Vous trouverez ici l'equivalent clair et lisible de nos brochures PDF : pour chaque langue, ce qui est offert sans engagement, puis un apercu structure du parcours (niveaux, objectifs et themes). L'inscription complete et la suite du programme se font avec l'equipe Methodix.",
+    "metaTitle": "Cours gratuits — langues et matières | Methodix",
+    "metaDescription": "Ce qui est offert sans engagement pour les six langues vivantes et pour les matières du tronc commun (mathématiques, physique-chimie, SVT, histoire-géographie) : séances découverte, fiches et aperçu du programme, comme un article web.",
+    "kicker": "Guide — pas de pièce jointe",
+    "title": "Langues et matières : la partie gratuite de chaque programme",
+    "lead": "Pour chaque langue et pour chaque matière du programme marocain présentée ici, vous trouvez ce qui est offert sans engagement, puis un fil conducteur pédagogique (niveaux, objectifs, thèmes). Le détail des brochures PDF et l’inscription complète se font avec l’équipe Methodix.",
     "freeSectionTitle": "Qu'est-ce qui est inclus gratuitement ?",
-    "freeSectionBody": "Pour les six langues, nous proposons un socle commun : une seance de decouverte sans facturation, l'acces aux fiches « premier contact » et a un extrait du premier module sur la plateforme lorsque l'offre Gratuite / Starter est active, ainsi qu'un court positionnement pour choisir le bon niveau (oral ou questionnaire). Les details peuvent varier selon la session et le creneau.",
-    "footnote": "Les programmes detailles au format PDF restent disponibles sur demande aupres de nos coordinateurs ; cette page les resume volontairement pour une lecture rapide sur mobile et ordinateur.",
-    "catalogTeaserTitle": "Programmes langues : lire la partie gratuite",
-    "catalogTeaserBody": "Article avec apercu de chaque langue — meme contenu que les brochures, presente comme une page web.",
-    "catalogTeaserCta": "Ouvrir l'article",
+    "freeSectionBody": "Pour les six langues et pour les matières du tronc commun ci-dessous, le principe est le même : une séance de découverte sans facturation, l’accès à des fiches « premier contact » et à un extrait du premier module sur la plateforme lorsque l’offre Gratuite / Starter est active, ainsi qu’un court positionnement pour choisir le bon niveau. Les détails peuvent varier selon la session et le créneau.",
+    "footnote": "Les programmes détaillés au format PDF restent disponibles sur demande auprès de nos coordinateurs ; cette page les résume volontairement pour une lecture rapide sur mobile et ordinateur.",
+    "stemProgramsTitle": "Matières du tronc commun (programme marocain)",
+    "stemProgramsIntro": "Mathématiques, physique-chimie, SVT et histoire-géographie : même logique que pour les langues — gratuité de découverte, puis parcours structuré avec nos professeurs.",
+    "tocAriaLabel": "Sommaire des langues et des matières",
+    "catalogTeaserTitle": "Cours gratuits : langues et matières",
+    "catalogTeaserBody": "Article récapitulatif pour chaque langue vivante et chaque matière du tronc commun — contenu proche des brochures, présenté sur une page web.",
+    "catalogTeaserCta": "Ouvrir le guide",
     "languages": {
       "french": {
         "title": "Francais",
@@ -301,8 +325,78 @@
         ]
       }
     },
+    "stemSubjects": {
+      "mathematics": {
+        "title": "Mathematiques",
+        "teaser": "Du primaire au lycee : numerique, geometrie, fonctions, probabilites et preparation aux controles du programme marocain.",
+        "freeTitle": "Sans payer, vous obtenez",
+        "freeBullets": [
+          "Une seance decouverte (cahier des charges du groupe, rythme et attentes par niveau).",
+          "Fiches « methodes cles » (equations, fractions, theoremes fondamentaux selon le cycle).",
+          "Acces limite a un extrait du premier chapitre corrige sur la plateforme Starter."
+        ],
+        "programTitle": "Fil du programme (apercu)",
+        "programBullets": [
+          "Primaire / college / lycee : alignement sur le tronc commun et revision avant examens nationaux.",
+          "Problemes types et annales commentees ; erreurs frequentes et auto-correction guidee.",
+          "Geometrie, stats et modelisation progressive selon la classe.",
+          "Suivi des acquis et feuilles de route personnalisees avec l'equipe."
+        ]
+      },
+      "physics": {
+        "title": "Physique-Chimie",
+        "teaser": "Experiences, grandeurs physique, reactions chimiques et liens avec le quotidien et le programme officiel.",
+        "freeTitle": "Sans payer, vous obtenez",
+        "freeBullets": [
+          "Presentation securisee du laboratoire virtuel ou du protocole de la premiere seance.",
+          "Fiches quantites unites conversions et premieres lois (mouvement, energie).",
+          "Acces a une experience filmee ou simulee et a son corrige commente (extrait)."
+        ],
+        "programTitle": "Fil du programme (apercu)",
+        "programBullets": [
+          "Electricite, mecanique, optique et chimie descriptive selon le niveau.",
+          "Mise en situation (environnement, sante, technologie) pour ancrer les concepts.",
+          "Exercices progressifs avec corrections detaillees.",
+          "Preparation au brevet et au bac scientifiques en complement du cours."
+        ]
+      },
+      "svt": {
+        "title": "SVT",
+        "teaser": "Cellule, genetique, ecologie et geologie : sciences vivantes et Terre en lien avec le monde reel.",
+        "freeTitle": "Sans payer, vous obtenez",
+        "freeBullets": [
+          "Seance introductive : fil rouge de l'annee et competences visees.",
+          "Schemas a completer (cellule, cycles biogeochimiques) + corrections guidees.",
+          "Video ou podcast pedagogique sur un theme du programme (extrait module 1)."
+        ],
+        "programTitle": "Fil du programme (apercu)",
+        "programBullets": [
+          "Biologie, geologie et ecologie integrees comme au programme marocain.",
+          "Protocoles simples d'observation et interpretation de documents scientifiques.",
+          "Fiches de memorisation et QCM d'entrainement.",
+          "Lien avec l'actualite scientifique (sante, climat) en respect du programme."
+        ]
+      },
+      "historyGeo": {
+        "title": "Histoire-Geographie",
+        "teaser": "Chronologies, espaces, societes : comprendre le Maroc, le monde et les enjeux contemporains.",
+        "freeTitle": "Sans payer, vous obtenez",
+        "freeBullets": [
+          "Presentation des objectifs : matriser les themes du programme et les savoir-faire cartographiques.",
+          "Frise ou carte muette a completer avec correction pas a pas (extrait).",
+          "Acces a une lecon en ligne et a son questionnaire auto-evalue (extrait)."
+        ],
+        "programTitle": "Fil du programme (apercu)",
+        "programBullets": [
+          "Histoire marocaine et mondiale ; geographie physique et humaine.",
+          "Analyse de documents (textes, cartes, iconographie) comme a l'examen.",
+          "Methodologie de dissertation et fiches de revision transversales.",
+          "Actualite reliee aux notions du programme (sans quitter le cadre officiel)."
+        ]
+      }
+    },
     "ctaTitle": "Passer de l'article au cours",
-    "ctaBody": "Inscrivez-vous pour bloquer un creneau groupe ou demander un entretien : nous vous confirmons la partie gratuite exacte pour votre langue et votre niveau.",
+    "ctaBody": "Inscrivez-vous pour bloquer un creneau groupe ou demander un entretien : nous vous confirmons la partie gratuite exacte pour votre langue ou matiere et votre niveau.",
     "ctaRegister": "S'inscrire",
     "ctaCatalog": "Voir les quiz"
   },

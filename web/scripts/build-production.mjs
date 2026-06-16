@@ -4,10 +4,13 @@
  * SKIP_PRISMA_MIGRATE_ON_BUILD=1 → saut de prisma migrate deploy (appliquer les migrations ailleurs).
  * Neon : si DIRECT_URL est absent, on tente une URL « directe » en retirant « -pooler » du hostname
  * et le paramètre pgbouncer (schéma courant Neon + Prisma migrate).
+ * PRISMA_MIGRATE_RETRIES=3 (défaut) — réessaie migrate deploy (réveil Neon / cold start).
  */
 import { spawnSync } from "node:child_process";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const webRoot = path.join(__dirname, "..");
@@ -42,6 +45,33 @@ function neonMigrateUrlFromPooled(databaseUrl) {
   }
 }
 
+/** sslmode + délai connexion pour Prisma / Neon depuis Vercel. */
+function withNeonQueryDefaults(url) {
+  try {
+    const u = new URL(url);
+    if (!u.hostname.includes("neon.tech")) return url;
+    if (!u.searchParams.has("sslmode")) {
+      u.searchParams.set("sslmode", "require");
+    }
+    if (!u.searchParams.has("connect_timeout")) {
+      u.searchParams.set("connect_timeout", "60");
+    }
+    return u.toString();
+  } catch {
+    return url;
+  }
+}
+
+function redactDbUrl(url) {
+  try {
+    const u = new URL(url);
+    if (u.password) u.password = "***";
+    return u.toString();
+  } catch {
+    return "(URL invalide)";
+  }
+}
+
 function run(label, cmd, args, opts = {}) {
   const shell =
     opts.shell ??
@@ -73,7 +103,9 @@ const pooledUrl = process.env.DATABASE_URL.trim();
 const explicitDirect = process.env.DIRECT_URL?.trim();
 const neonDerived =
   !explicitDirect && pooledUrl ? neonMigrateUrlFromPooled(pooledUrl) : null;
-const migrateDbUrl = explicitDirect || neonDerived || pooledUrl;
+let migrateDbUrl = withNeonQueryDefaults(
+  explicitDirect || neonDerived || pooledUrl,
+);
 
 if (explicitDirect) {
   console.log(
@@ -90,12 +122,50 @@ if (process.env.SKIP_PRISMA_MIGRATE_ON_BUILD === "1") {
     "[build-production] SKIP_PRISMA_MIGRATE_ON_BUILD=1 — prisma migrate deploy ignoré. Appliquer les migrations en prod (Neon SQL Editor, CI ou machine locale avec DATABASE_URL).",
   );
 } else {
-  const migrateCode = run("prisma migrate deploy", "npx", ["prisma", "migrate", "deploy"], {
-    env: { ...process.env, DATABASE_URL: migrateDbUrl },
-  });
+  console.log(
+    `[build-production] migrate host : ${redactDbUrl(migrateDbUrl)}`,
+  );
+  const maxAttempts = Math.max(
+    1,
+    Number.parseInt(process.env.PRISMA_MIGRATE_RETRIES ?? "3", 10) || 3,
+  );
+  let migrateCode = 1;
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    if (attempt > 1) {
+      const waitMs = 8000 * (attempt - 1);
+      console.warn(
+        `[build-production] migrate deploy tentative ${attempt}/${maxAttempts} (attente ${waitMs} ms — réveil Neon possible)…`,
+      );
+      await sleep(waitMs);
+    }
+    migrateCode = run(
+      `prisma migrate deploy (${attempt}/${maxAttempts})`,
+      "npx",
+      ["prisma", "migrate", "deploy"],
+      {
+        env: { ...process.env, DATABASE_URL: migrateDbUrl },
+      },
+    );
+    if (migrateCode === 0) break;
+  }
   if (migrateCode !== 0) {
     console.error(
-      "[build-production] Migrate deploy : vérifiez DATABASE_URL (prod Neon), ajoutez DIRECT_URL si vous utilisez le pooler, ou appliquez SKIP_PRISMA_MIGRATE_ON_BUILD=1 après migration manuelle.",
+      "[build-production] Migrate deploy (P1001 = serveur injoignable) :",
+    );
+    console.error(
+      "  1) Neon → projet actif, pas en pause ; désactiver IP Allow si activé.",
+    );
+    console.error(
+      "  2) Vercel : DATABASE_URL = chaîne « Pooled » Neon ; DIRECT_URL = chaîne « Direct » (dashboard Connection details).",
+    );
+    console.error(
+      "  3) Mot de passe avec @#? → réinitialiser le mot de passe Neon ou encoder l’URL.",
+    );
+    console.error(
+      "  4) Tester en local : cd web && npx prisma migrate deploy (même DATABASE_URL/DIRECT_URL).",
+    );
+    console.error(
+      "  5) Contournement : SKIP_PRISMA_MIGRATE_ON_BUILD=1 après migrate manuelle.",
     );
     process.exit(migrateCode);
   }

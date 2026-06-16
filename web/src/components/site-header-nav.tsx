@@ -61,6 +61,9 @@ export function SiteHeaderNav({ user }: { user: HeaderUser | null }) {
           <Link href="/cours-gratuits-langues" className={navLinkClass()}>
             {t("freeLangCourses")}
           </Link>
+          <Link href="/cours-en-ligne" className={navLinkClass()}>
+            {t("onlineCourses")}
+          </Link>
           {user ? (
             <>
               <Link
@@ -182,6 +185,13 @@ export function SiteHeaderNav({ user }: { user: HeaderUser | null }) {
                 onClick={() => setMobileOpen(false)}
               >
                 {t("freeLangCourses")}
+              </Link>
+              <Link
+                href="/cours-en-ligne"
+                className={navLinkClass(true)}
+                onClick={() => setMobileOpen(false)}
+              >
+                {t("onlineCourses")}
               </Link>
               {user ? (
                 <>

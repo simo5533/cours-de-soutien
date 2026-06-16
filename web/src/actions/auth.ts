@@ -7,6 +7,7 @@ import { startEleveStripeCheckout } from "@/actions/eleve-inscription-stripe";
 import { prisma } from "@/lib/prisma";
 import { getPaddle } from "@/lib/paddle-server";
 import type { ElevePaddlePlan } from "@/lib/paddle-server";
+import { getPaymentProvider } from "@/lib/payment-provider";
 import { getStripe } from "@/lib/stripe-server";
 
 const registerSchema = z
@@ -82,8 +83,7 @@ export async function registerAction(
       process.env.NODE_ENV === "development" &&
       process.env.STRIPE_BYPASS_IN_DEV?.trim() === "true";
 
-    const provider =
-      process.env.PAYMENT_PROVIDER?.trim().toLowerCase() || "stripe";
+    const provider = getPaymentProvider();
 
     if (!getStripe() && !getPaddle() && devBypass) {
       await prisma.user.create({
@@ -99,6 +99,15 @@ export async function registerAction(
       return { ok: true, paymentSkippedInDev: true };
     }
 
+    const locale = String(formData.get("locale") || "fr");
+    const rawPlan = formData.get("elevePlan");
+    const elevePlan: ElevePaddlePlan =
+      rawPlan === "bacplus"
+        ? "bacplus"
+        : rawPlan === "family"
+          ? "family"
+          : "essential";
+
     if (provider === "paddle") {
       const paddle = getPaddle();
       if (!paddle) {
@@ -107,14 +116,6 @@ export async function registerAction(
             "Paiement Paddle indisponible : ajoutez PADDLE_API_KEY dans web/.env (sandbox : developer.paddle.com). PAYMENT_PROVIDER=paddle.",
         };
       }
-      const locale = String(formData.get("locale") || "fr");
-      const rawPlan = formData.get("elevePlan");
-      const paddlePlan: ElevePaddlePlan =
-        rawPlan === "bacplus"
-          ? "bacplus"
-          : rawPlan === "family"
-            ? "family"
-            : "essential";
       const checkout = await startElevePaddleCheckout(
         {
           name: parsed.data.name,
@@ -122,7 +123,7 @@ export async function registerAction(
           password: parsed.data.password,
           groupe: parsed.data.groupe!.trim(),
           anneeScolaire: parsed.data.anneeScolaire!.trim(),
-          paddlePlan,
+          paddlePlan: elevePlan,
         },
         locale,
       );
@@ -136,11 +137,10 @@ export async function registerAction(
     if (!stripe) {
       return {
         error:
-          "Paiement en ligne indisponible : ajoutez STRIPE_SECRET_KEY ou configurez Paddle (PADDLE_API_KEY + PAYMENT_PROVIDER=paddle). En local uniquement, STRIPE_BYPASS_IN_DEV=true permet de créer un compte élève sans paiement.",
+          "Paiement en ligne indisponible : ajoutez PADDLE_API_KEY (PAYMENT_PROVIDER=paddle ou laissez vide) ou STRIPE_SECRET_KEY si PAYMENT_PROVIDER=stripe. En local uniquement, STRIPE_BYPASS_IN_DEV=true permet de créer un compte élève sans paiement.",
       };
     }
 
-    const locale = String(formData.get("locale") || "fr");
     const checkout = await startEleveStripeCheckout(
       {
         name: parsed.data.name,
@@ -148,6 +148,7 @@ export async function registerAction(
         password: parsed.data.password,
         groupe: parsed.data.groupe!.trim(),
         anneeScolaire: parsed.data.anneeScolaire!.trim(),
+        stripePlan: elevePlan,
       },
       locale,
     );

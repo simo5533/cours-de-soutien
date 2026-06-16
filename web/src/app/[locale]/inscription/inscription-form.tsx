@@ -13,13 +13,18 @@ const roles = [
 ] as const;
 
 export function InscriptionForm({
-  paymentProvider = "stripe",
+  paymentProvider = "paddle",
 }: {
   paymentProvider?: string;
 }) {
   const locale = useLocale();
   const tHome = useTranslations("HomePage");
-  const paddlePayment = paymentProvider === "paddle";
+  const paymentLabel =
+    paymentProvider === "stripe"
+      ? "Stripe"
+      : paymentProvider === "paddle"
+        ? "Paddle"
+        : "paiement sécurisé";
   const payCancel = useSearchParams().get("pay") === "cancel";
   const [role, setRole] = useState<string>("ELEVE");
   const [state, formAction, pending] = useActionState(
@@ -42,9 +47,8 @@ export function InscriptionForm({
             Redirection vers le paiement sécurisé…
           </p>
           <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">
-            Vous allez être redirigé vers notre prestataire de paiement (Stripe ou
-            Paddle selon la configuration). Complétez le paiement pour activer
-            votre compte élève.
+            Vous allez être redirigé vers le paiement sécurisé ({paymentLabel}).
+            Complétez le paiement pour activer votre compte élève.
           </p>
           <p className="mt-4 text-xs text-slate-500 dark:text-slate-500">
             Si rien ne se passe, vérifiez que les pop-ups ou redirections ne sont
@@ -91,7 +95,7 @@ export function InscriptionForm({
                 <code className="rounded bg-amber-100/80 px-1 py-0.5 font-mono text-xs dark:bg-amber-900/80">
                   STRIPE_BYPASS_IN_DEV=true
                 </code>{" "}
-                est activé alors qu’aucune clé Stripe/Paddle n’est configurée.
+                est activé alors qu’aucune clé Paddle / Stripe n’est configurée.
               </p>
               <p className="mt-3 text-sm font-medium text-navy dark:text-brandblue">
                 Pour un vrai paiement : dans{" "}
@@ -104,17 +108,17 @@ export function InscriptionForm({
                 </code>
                 , ajoutez{" "}
                 <code className="rounded bg-slate-100 px-1 dark:bg-slate-800">
-                  STRIPE_SECRET_KEY
-                </code>{" "}
-                (ou Paddle :{" "}
-                <code className="rounded bg-slate-100 px-1 dark:bg-slate-800">
                   PADDLE_API_KEY
                 </code>{" "}
-                +{" "}
+                (défaut) ou{" "}
                 <code className="rounded bg-slate-100 px-1 dark:bg-slate-800">
-                  PAYMENT_PROVIDER=paddle
+                  STRIPE_SECRET_KEY
+                </code>{" "}
+                avec{" "}
+                <code className="rounded bg-slate-100 px-1 dark:bg-slate-800">
+                  PAYMENT_PROVIDER=stripe
                 </code>
-                ), puis réinscrivez-vous.
+                , puis réinscrivez-vous.
               </p>
               <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">
                 Vous pouvez tout de même vous connecter pour tester sans paiement.
@@ -156,7 +160,7 @@ export function InscriptionForm({
             <strong className="font-semibold">Élève :</strong> après validation du
             formulaire, vous allez être{" "}
             <strong className="font-semibold">redirigé vers le paiement sécurisé</strong>{" "}
-            (Stripe ou Paddle). Le compte élève n’est activé qu’après paiement réussi ;
+            ({paymentLabel}). Le compte élève n’est activé qu’après paiement réussi ;
             vous pourrez alors vous connecter.
           </p>
         ) : null}
@@ -225,29 +229,27 @@ export function InscriptionForm({
           </label>
           {role === "ELEVE" ? (
             <>
-              {paddlePayment ? (
-                <label className="flex flex-col gap-2 text-sm">
-                  <span className="font-medium text-slate-700 dark:text-slate-300">
-                    Formule
-                  </span>
-                  <select
-                    name="elevePlan"
-                    required
-                    defaultValue="essential"
-                    className="input-field"
-                  >
-                    <option value="essential">
-                      {tHome("planEssentialName")} — {tHome("planEssentialPrice")}
-                    </option>
-                    <option value="bacplus">
-                      {tHome("planBacPlusName")} — {tHome("planBacPlusPrice")}
-                    </option>
-                    <option value="family">
-                      {tHome("planFamilyName")} — {tHome("planFamilyPrice")}
-                    </option>
-                  </select>
-                </label>
-              ) : null}
+              <label className="flex flex-col gap-2 text-sm">
+                <span className="font-medium text-slate-700 dark:text-slate-300">
+                  Formule
+                </span>
+                <select
+                  name="elevePlan"
+                  required
+                  defaultValue="essential"
+                  className="input-field"
+                >
+                  <option value="essential">
+                    {tHome("planEssentialName")} — {tHome("planEssentialPrice")}
+                  </option>
+                  <option value="bacplus">
+                    {tHome("planBacPlusName")} — {tHome("planBacPlusPrice")}
+                  </option>
+                  <option value="family">
+                    {tHome("planFamilyName")} — {tHome("planFamilyPrice")}
+                  </option>
+                </select>
+              </label>
               <label className="flex flex-col gap-2 text-sm">
                 <span className="font-medium text-slate-700 dark:text-slate-300">
                   Groupe / classe

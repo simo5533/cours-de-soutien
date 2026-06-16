@@ -107,7 +107,13 @@ export default async function Home({ params }: PageProps) {
                 {t("ctaDiscover")}
               </Link>
             </div>
-            <p className="mt-4 text-center">
+            <p className="mt-4 flex flex-col items-center gap-2 text-center sm:flex-row sm:justify-center sm:gap-6">
+              <Link
+                href="/cours-en-ligne"
+                className="text-sm font-semibold text-brandblue underline decoration-brandblue/30 underline-offset-4 transition hover:text-navy dark:hover:text-gold"
+              >
+                {t("ctaOnlineCourses")}
+              </Link>
               <a
                 href="#langues-vivantes"
                 className="text-sm font-semibold text-brandblue underline decoration-brandblue/30 underline-offset-4 transition hover:text-navy hover:decoration-navy dark:text-brandblue dark:hover:text-gold"

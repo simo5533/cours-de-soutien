@@ -6,7 +6,8 @@ import {
   getAppBaseUrl,
   getEleveInscriptionUnitAmount,
   getStripe,
-  getStripePriceIdEleve,
+  getStripePriceIdForElevePlan,
+  type EleveStripePlan,
 } from "@/lib/stripe-server";
 
 export type EleveStripeCheckoutState =
@@ -19,6 +20,7 @@ type EleveRegisterInput = {
   password: string;
   groupe: string;
   anneeScolaire: string;
+  stripePlan?: EleveStripePlan;
 };
 
 export async function startEleveStripeCheckout(
@@ -59,7 +61,7 @@ export async function startEleveStripeCheckout(
   const base = getAppBaseUrl();
   const loc = locale === "ar" ? "ar" : "fr";
 
-  const priceId = getStripePriceIdEleve();
+  const priceId = getStripePriceIdForElevePlan(input.stripePlan ?? "essential");
   const lineItems = priceId
     ? [{ price: priceId, quantity: 1 as const }]
     : [

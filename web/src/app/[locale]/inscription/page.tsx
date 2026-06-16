@@ -1,11 +1,11 @@
 import { Link } from "@/i18n/navigation";
+import { getPaymentProvider } from "@/lib/payment-provider";
 import { InscriptionForm } from "./inscription-form";
 import { SiteHeader } from "@/components/site-header";
 import { Suspense } from "react";
 
 export default function InscriptionPage() {
-  const paymentProvider =
-    process.env.PAYMENT_PROVIDER?.trim().toLowerCase() || "stripe";
+  const paymentProvider = getPaymentProvider();
 
   return (
     <>
