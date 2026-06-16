@@ -32,18 +32,11 @@ function mergeParentDotenvIfMonorepoWeb() {
 }
 mergeParentDotenvIfMonorepoWeb();
 
-/** True uniquement si l’app Next est dans `…/repo/web` (monorepo plein repo), pas si Vercel Root Directory = `web`. */
-const isNestedWebFolderInRepo =
-  path.basename(cwd) === "web" &&
-  fs.existsSync(path.join(parentDir, "package.json")) &&
-  fs.existsSync(path.join(cwd, "package.json"));
-
 /**
- * Déploiement Git depuis la racine du repo : Vercel attend `.next` sous `path0`, pas `path0/web/.next`.
- * Si Root Directory Vercel = `web`, ne pas dévier `distDir` (sinon écriture hors projet).
+ * Ne pas définir distDir: "../.next" sur Vercel : avec Root Directory = web (ou build
+ * depuis web/), la sortie doit rester dans web/.next — sinon « output directory not found ».
  */
 const nextConfig: NextConfig = {
-  ...(process.env.VERCEL === "1" && isNestedWebFolderInRepo ? { distDir: "../.next" } : {}),
   /** Évite que le bundler traite mal Prisma sur Vercel (client + moteur query). */
   serverExternalPackages: ["@prisma/client", "prisma"],
   experimental: {
