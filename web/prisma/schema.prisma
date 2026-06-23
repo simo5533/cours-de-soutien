@@ -151,6 +151,8 @@ model EleveRegistrationPending {
   stripeSessionId     String?   @unique
   /// ID transaction Paddle Billing (txn_…)
   paddleTransactionId String?   @unique
+  /// ID commande Lemon Squeezy
+  lemonSqueezyOrderId String?   @unique
   createdAt           DateTime  @default(now())
   consumedAt          DateTime?
 

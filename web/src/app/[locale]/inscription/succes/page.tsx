@@ -1,4 +1,5 @@
 import { SiteHeader } from "@/components/site-header";
+import { fulfillEleveRegistrationFromLemonSqueezyOrder } from "@/lib/fulfill-eleve-registration-lemon-squeezy";
 import { fulfillEleveRegistrationFromPaddleTransaction } from "@/lib/fulfill-eleve-registration-paddle";
 import { fulfillEleveRegistrationFromStripeSession } from "@/lib/fulfill-eleve-registration";
 import { Link } from "@/i18n/navigation";
@@ -9,6 +10,8 @@ type PageProps = {
     session_id?: string;
     /** Paddle — identifiant transaction après paiement */
     _ptxn?: string;
+    /** Lemon Squeezy — identifiant commande après paiement */
+    order_id?: string;
   }>;
 };
 
@@ -20,17 +23,29 @@ export default async function InscriptionSuccesPage({
   const sp = await searchParams;
   const session_id = sp.session_id;
   const paddleTxn = sp._ptxn?.trim();
+  const lemonOrderId = sp.order_id?.trim();
 
   let title = "Paiement confirmé";
   let message =
     "Votre compte élève est activé. Vous pouvez vous connecter avec l’e-mail et le mot de passe choisis à l’inscription.";
   let ok = true;
 
-  if (!session_id && !paddleTxn) {
+  if (!session_id && !paddleTxn && !lemonOrderId) {
     ok = false;
     title = "Lien incomplet";
     message =
       "Retournez à l’inscription ou ouvrez le lien reçu après le paiement.";
+  } else if (lemonOrderId) {
+    const result =
+      await fulfillEleveRegistrationFromLemonSqueezyOrder(lemonOrderId);
+    if (!result.ok) {
+      ok = false;
+      title = "Finalisation en cours";
+      message =
+        result.error === "Paiement non confirmé."
+          ? "Le paiement n’est pas encore confirmé. Patientez quelques instants puis réessayez, ou contactez le support."
+          : result.error;
+    }
   } else if (paddleTxn) {
     const result =
       await fulfillEleveRegistrationFromPaddleTransaction(paddleTxn);

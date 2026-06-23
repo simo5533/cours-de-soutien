@@ -13,7 +13,7 @@ const roles = [
 ] as const;
 
 export function InscriptionForm({
-  paymentProvider = "paddle",
+  paymentProvider = "lemonsqueezy",
 }: {
   paymentProvider?: string;
 }) {
@@ -24,7 +24,9 @@ export function InscriptionForm({
       ? "Stripe"
       : paymentProvider === "paddle"
         ? "Paddle"
-        : "paiement sécurisé";
+        : paymentProvider === "lemonsqueezy"
+          ? "Lemon Squeezy"
+          : "paiement sécurisé";
   const payCancel = useSearchParams().get("pay") === "cancel";
   const [role, setRole] = useState<string>("ELEVE");
   const [state, formAction, pending] = useActionState(
@@ -108,9 +110,17 @@ export function InscriptionForm({
                 </code>
                 , ajoutez{" "}
                 <code className="rounded bg-slate-100 px-1 dark:bg-slate-800">
+                  LEMONSQUEEZY_API_KEY
+                </code>{" "}
+                (défaut),{" "}
+                <code className="rounded bg-slate-100 px-1 dark:bg-slate-800">
                   PADDLE_API_KEY
                 </code>{" "}
-                (défaut) ou{" "}
+                avec{" "}
+                <code className="rounded bg-slate-100 px-1 dark:bg-slate-800">
+                  PAYMENT_PROVIDER=paddle
+                </code>
+                , ou{" "}
                 <code className="rounded bg-slate-100 px-1 dark:bg-slate-800">
                   STRIPE_SECRET_KEY
                 </code>{" "}

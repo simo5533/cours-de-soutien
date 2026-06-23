@@ -2,9 +2,11 @@
 
 import bcrypt from "bcryptjs";
 import { z } from "zod";
+import { startEleveLemonSqueezyCheckout } from "@/actions/eleve-inscription-lemon-squeezy";
 import { startElevePaddleCheckout } from "@/actions/eleve-inscription-paddle";
 import { startEleveStripeCheckout } from "@/actions/eleve-inscription-stripe";
 import { prisma } from "@/lib/prisma";
+import { isLemonSqueezyConfigured } from "@/lib/lemon-squeezy-server";
 import { getPaddle } from "@/lib/paddle-server";
 import type { ElevePaddlePlan } from "@/lib/paddle-server";
 import { getPaymentProvider } from "@/lib/payment-provider";
@@ -85,7 +87,7 @@ export async function registerAction(
 
     const provider = getPaymentProvider();
 
-    if (!getStripe() && !getPaddle() && devBypass) {
+    if (!getStripe() && !getPaddle() && !isLemonSqueezyConfigured() && devBypass) {
       await prisma.user.create({
         data: {
           name: parsed.data.name,
@@ -107,6 +109,30 @@ export async function registerAction(
         : rawPlan === "family"
           ? "family"
           : "essential";
+
+    if (provider === "lemonsqueezy") {
+      if (!isLemonSqueezyConfigured()) {
+        return {
+          error:
+            "Paiement Lemon Squeezy indisponible : ajoutez LEMONSQUEEZY_API_KEY, LEMONSQUEEZY_STORE_ID et LEMONSQUEEZY_VARIANT_ID_ELEVE_INSCRIPTION (ou par formule) sur le serveur.",
+        };
+      }
+      const checkout = await startEleveLemonSqueezyCheckout(
+        {
+          name: parsed.data.name,
+          email: parsed.data.email,
+          password: parsed.data.password,
+          groupe: parsed.data.groupe!.trim(),
+          anneeScolaire: parsed.data.anneeScolaire!.trim(),
+          lemonPlan: elevePlan,
+        },
+        locale,
+      );
+      if ("error" in checkout) {
+        return { error: checkout.error };
+      }
+      return { checkoutUrl: checkout.checkoutUrl };
+    }
 
     if (provider === "paddle") {
       const paddle = getPaddle();
@@ -137,7 +163,7 @@ export async function registerAction(
     if (!stripe) {
       return {
         error:
-          "Paiement en ligne indisponible : ajoutez PADDLE_API_KEY (PAYMENT_PROVIDER=paddle ou laissez vide) ou STRIPE_SECRET_KEY si PAYMENT_PROVIDER=stripe. En local uniquement, STRIPE_BYPASS_IN_DEV=true permet de créer un compte élève sans paiement.",
+          "Paiement en ligne indisponible : configurez Lemon Squeezy (défaut), Paddle (PAYMENT_PROVIDER=paddle) ou Stripe (PAYMENT_PROVIDER=stripe). En local uniquement, STRIPE_BYPASS_IN_DEV=true permet de créer un compte élève sans paiement.",
       };
     }
 
