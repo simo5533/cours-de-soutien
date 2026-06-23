@@ -45,8 +45,16 @@ type LemonJson = {
   data?: {
     id?: string;
     attributes?: Record<string, unknown>;
+    relationships?: Record<
+      string,
+      { data?: { type?: string; id?: string } | null }
+    >;
   };
-  errors?: { detail?: string; title?: string }[];
+  errors?: {
+    detail?: string;
+    title?: string;
+    source?: { pointer?: string };
+  }[];
 };
 
 async function lemonFetch(
@@ -68,12 +76,58 @@ async function lemonFetch(
 
   const json = (await res.json()) as LemonJson;
   if (!res.ok) {
-    const detail =
-      json.errors?.map((e) => e.detail || e.title).filter(Boolean).join(" ") ||
-      res.statusText;
+    const parts =
+      json.errors?.map((e) => {
+        const ptr = e.source?.pointer ?? "";
+        let hint = "";
+        if (ptr.includes("variant")) {
+          hint =
+            " → vérifiez LEMONSQUEEZY_VARIANT_ID_* (ID après /variants/, pas /products/).";
+        } else if (ptr.includes("store")) {
+          hint = " → vérifiez LEMONSQUEEZY_STORE_ID (ID après /stores/).";
+        }
+        return `${e.detail || e.title || "Erreur"}${hint}`;
+      }) ?? [];
+    const detail = parts.filter(Boolean).join(" ") || res.statusText;
     throw new Error(detail || `Lemon Squeezy HTTP ${res.status}`);
   }
   return json;
+}
+
+/** Vérifie store + variant avant checkout (erreur API plus claire). */
+export async function validateLemonSqueezyResources(
+  storeId: string,
+  variantId: string,
+): Promise<{ ok: true } | { ok: false; error: string }> {
+  try {
+    await lemonFetch(`/stores/${storeId}`);
+  } catch {
+    return {
+      ok: false,
+      error: `Store ID invalide (${storeId}). Dans Lemon : Settings/Store → URL .../stores/123456 → mettez seulement 123456 dans LEMONSQUEEZY_STORE_ID.`,
+    };
+  }
+
+  let variantJson: LemonJson;
+  try {
+    variantJson = await lemonFetch(`/variants/${variantId}`);
+  } catch {
+    return {
+      ok: false,
+      error: `Variant ID invalide (${variantId}). Ouvrez le PRIX dans Lemon (pas la page produit seule) : .../products/1168063/variants/XXXXXX → mettez XXXXXX dans LEMONSQUEEZY_VARIANT_ID_*. Ne mettez pas 1168063 (c'est le product ID).`,
+    };
+  }
+
+  const variantStoreId =
+    variantJson.data?.relationships?.store?.data?.id?.trim();
+  if (variantStoreId && variantStoreId !== storeId.trim()) {
+    return {
+      ok: false,
+      error: `Le variant ${variantId} appartient au store ${variantStoreId}, mais LEMONSQUEEZY_STORE_ID=${storeId}. Utilisez le même store que le produit, ou corrigez le Store ID.`,
+    };
+  }
+
+  return { ok: true };
 }
 
 /** Crée un checkout hébergé et renvoie l’URL de paiement. */

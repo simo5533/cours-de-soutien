@@ -6,6 +6,7 @@ import {
   createLemonSqueezyCheckout,
   getLemonSqueezyStoreId,
   getLemonVariantIdForElevePlan,
+  validateLemonSqueezyResources,
   type EleveLemonPlan,
 } from "@/lib/lemon-squeezy-server";
 import { getAppBaseUrl } from "@/lib/stripe-server";
@@ -68,6 +69,14 @@ export async function startEleveLemonSqueezyCheckout(
 
     let checkoutUrl: string;
     try {
+      const check = await validateLemonSqueezyResources(storeId, variantId);
+      if (!check.ok) {
+        await prisma.eleveRegistrationPending
+          .delete({ where: { id: pending.id } })
+          .catch(() => {});
+        return { error: check.error };
+      }
+
       checkoutUrl = await createLemonSqueezyCheckout({
         variantId,
         storeId,
