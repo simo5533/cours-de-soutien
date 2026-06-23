@@ -7,6 +7,19 @@ function getApiKey(): string | null {
   return key || null;
 }
 
+/** Extrait un ID numérique Lemon (accepte aussi une URL collée par erreur). */
+export function sanitizeLemonNumericId(
+  raw: string | undefined | null,
+  kind: "stores" | "variants" | "products",
+): string | null {
+  const t = raw?.trim();
+  if (!t) return null;
+  const fromPath = t.match(new RegExp(`/${kind}/(\\d+)`));
+  if (fromPath?.[1]) return fromPath[1];
+  if (/^\d+$/.test(t)) return t;
+  return null;
+}
+
 export function isLemonSqueezyConfigured(): boolean {
   return !!(
     getApiKey() &&
@@ -17,20 +30,22 @@ export function isLemonSqueezyConfigured(): boolean {
 }
 
 export function getLemonSqueezyStoreId(): string | null {
-  const id = process.env.LEMONSQUEEZY_STORE_ID?.trim();
-  return id || null;
+  return sanitizeLemonNumericId(process.env.LEMONSQUEEZY_STORE_ID, "stores");
 }
 
 export function getLemonVariantIdForElevePlan(plan: EleveLemonPlan): string | null {
-  const specific =
+  const raw =
     plan === "essential"
-      ? process.env.LEMONSQUEEZY_VARIANT_ID_ELEVE_ESSENTIAL?.trim()
+      ? process.env.LEMONSQUEEZY_VARIANT_ID_ELEVE_ESSENTIAL
       : plan === "bacplus"
-        ? process.env.LEMONSQUEEZY_VARIANT_ID_ELEVE_BAC_PLUS?.trim()
-        : process.env.LEMONSQUEEZY_VARIANT_ID_ELEVE_FAMILY?.trim();
+        ? process.env.LEMONSQUEEZY_VARIANT_ID_ELEVE_BAC_PLUS
+        : process.env.LEMONSQUEEZY_VARIANT_ID_ELEVE_FAMILY;
+  const specific = sanitizeLemonNumericId(raw, "variants");
   if (specific) return specific;
-  const fallback = process.env.LEMONSQUEEZY_VARIANT_ID_ELEVE_INSCRIPTION?.trim();
-  return fallback || null;
+  return sanitizeLemonNumericId(
+    process.env.LEMONSQUEEZY_VARIANT_ID_ELEVE_INSCRIPTION,
+    "variants",
+  );
 }
 
 /** Montant affiché si l’API ne renvoie pas le total (plus petite unité → unité principale). */
@@ -104,7 +119,7 @@ export async function validateLemonSqueezyResources(
   } catch {
     return {
       ok: false,
-      error: `Store ID invalide (${storeId}). Dans Lemon : Settings/Store → URL .../stores/123456 → mettez seulement 123456 dans LEMONSQUEEZY_STORE_ID.`,
+      error: `Store ID invalide (${storeId}). Mettez seulement le nombre, ex. 123456 — pas une URL. Lemon → icône profil (en bas à gauche) → Stores → votre boutique → URL .../stores/123456`,
     };
   }
 
