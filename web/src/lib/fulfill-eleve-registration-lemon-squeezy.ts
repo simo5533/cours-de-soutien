@@ -33,7 +33,7 @@ export async function fulfillEleveRegistrationFromLemonSqueezyOrder(
     return { ok: false, error: "Paiement non confirmé." };
   }
 
-  let pendingId =
+  let pendingId: string | undefined =
     options?.pendingIdFromWebhook ||
     order.pendingId ||
     (await prisma.eleveRegistrationPending.findFirst({
@@ -42,16 +42,15 @@ export async function fulfillEleveRegistrationFromLemonSqueezyOrder(
     }))?.id;
 
   if (!pendingId && order.userEmail) {
-    pendingId = (
-      await prisma.eleveRegistrationPending.findFirst({
+    pendingId =
+      (await prisma.eleveRegistrationPending.findFirst({
         where: {
           email: order.userEmail.toLowerCase(),
           consumedAt: null,
         },
         orderBy: { createdAt: "desc" },
         select: { id: true },
-      })
-    )?.id ?? null;
+      }))?.id;
   }
 
   if (!pendingId) {
