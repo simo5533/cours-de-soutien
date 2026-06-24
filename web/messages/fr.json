@@ -176,7 +176,8 @@
     "trust6": "Support WhatsApp",
     "trust7": "Correction par IA ou professeur",
     "planLabel": "Pack de correction",
-    "studentPaymentNote": "Après validation, vous serez redirigé vers le paiement sécurisé par carte bancaire. Le compte élève est activé après paiement réussi.",
+    "studentPaymentNote": "Après validation, le paiement s’ouvre sur cette page (fenêtre sécurisée). Le compte élève est activé après paiement réussi.",
+    "overlayPaymentHint": "Finalisez votre paiement dans la fenêtre sécurisée. Vous restez sur Cours Soutien — fermez la fenêtre pour modifier vos informations ou réessayer.",
     "freePlanNote": "Pack Découverte : inscription gratuite, 3 corrections IA offertes — sans carte bancaire.",
     "continuePayment": "Continuer vers le paiement",
     "createFree": "Créer mon compte gratuit"

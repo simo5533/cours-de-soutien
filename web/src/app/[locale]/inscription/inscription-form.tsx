@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { useActionState, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { registerAction, type RegisterState } from "@/actions/auth";
+import { LemonSqueezyCheckoutOverlay } from "@/components/lemon-squeezy-checkout-overlay";
 import { ANNEES_SCOLAIRES } from "@/lib/school-years";
 import {
   PRICING_PLANS,
@@ -36,19 +37,30 @@ export function InscriptionForm({
   const [selectedPlanId, setSelectedPlanId] = useState<PricingPlanId>(defaultPricingId);
   const isFreePlan = selectedPlanId === "free";
   const [role, setRole] = useState<string>("ELEVE");
+  const [lemonCheckoutUrl, setLemonCheckoutUrl] = useState<string | null>(null);
+  const useLemonOverlay = paymentProvider === "lemonsqueezy";
+  const successPath = `/${locale === "ar" ? "ar" : "fr"}/inscription/succes`;
   const [state, formAction, pending] = useActionState(
     registerAction,
     undefined as RegisterState,
   );
 
   useEffect(() => {
-    if (state && "checkoutUrl" in state && state.checkoutUrl) {
+    if (!state || !("checkoutUrl" in state) || !state.checkoutUrl) return;
+    if (useLemonOverlay) {
+      setLemonCheckoutUrl(state.checkoutUrl);
+    } else {
       window.location.href = state.checkoutUrl;
     }
-  }, [state]);
+  }, [state, useLemonOverlay]);
 
-  /** Toujours avant `ok` : l’élève doit passer par la page de paiement (Stripe ou Paddle). */
-  if (state && "checkoutUrl" in state && state.checkoutUrl) {
+  /** Paddle / Stripe : redirection vers leur page de paiement. */
+  if (
+    !useLemonOverlay &&
+    state &&
+    "checkoutUrl" in state &&
+    state.checkoutUrl
+  ) {
     return (
       <div className="mx-auto w-full max-w-md px-4 py-16 text-center sm:py-20">
         <div className="card-elevated p-10 shadow-xl shadow-slate-900/5 dark:shadow-black/40">
@@ -56,9 +68,7 @@ export function InscriptionForm({
             Redirection vers le paiement sécurisé…
           </p>
           <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">
-            {isFreePlan
-              ? t("freePlanNote")
-              : t("studentPaymentNote")}
+            {t("studentPaymentNote")}
           </p>
           <p className="mt-4 text-xs text-slate-500 dark:text-slate-500">
             Si rien ne se passe, vérifiez que les pop-ups ou redirections ne sont
@@ -157,6 +167,20 @@ export function InscriptionForm({
 
   return (
     <div className="mx-auto w-full max-w-lg px-4 py-16 sm:py-20">
+      {lemonCheckoutUrl ? (
+        <LemonSqueezyCheckoutOverlay
+          checkoutUrl={lemonCheckoutUrl}
+          successPath={successPath}
+        />
+      ) : null}
+      {lemonCheckoutUrl ? (
+        <p
+          role="status"
+          className="mb-6 rounded-xl border border-brandblue/30 bg-brandblue/5 px-4 py-3 text-sm text-navy dark:border-brandblue/25 dark:bg-brandblue/10 dark:text-brandblue/90"
+        >
+          {t("overlayPaymentHint")}
+        </p>
+      ) : null}
       <div className="card-elevated p-8 shadow-xl shadow-slate-900/5 dark:shadow-black/40">
         <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
           {t("title")}
