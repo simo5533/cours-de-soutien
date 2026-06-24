@@ -15,6 +15,7 @@ export type MethodixHomeBlock = {
   servicesTitle: string;
   servicesSubtitle: string;
   services: { title: string; desc: string }[];
+  valueProposition: string;
   aiTitle: string;
   aiP1: string;
   aiP2: string;
@@ -24,24 +25,26 @@ export type MethodixHomeBlock = {
 };
 
 const fr: MethodixHomeBlock = {
-  badge: "Soutien scolaire en ligne au Maroc",
+  badge: "Correction d'exercices en ligne au Maroc",
   heroTitle:
-    "Le soutien scolaire en ligne au Maroc avec correction d'exercices par intelligence artificielle",
+    "Correction d'exercices en ligne au Maroc avec IA et professeurs",
   heroSubtitle:
-    "Methodix réunit des cours de soutien scolaire complets et un correcteur d'exercices propulsé par l'IA — disponible 24h/24 pour tous les élèves du Maroc, du tronc commun jusqu'au baccalauréat.",
+    "Envoie une photo de ton exercice, reçois une correction détaillée, comprends tes erreurs et progresse plus vite en maths, physique, SVT, français, anglais et matières du programme marocain.",
   heroNote:
-    "3 corrections d'exercices gratuites à l'inscription, sans carte bancaire. Abonnement dès 99 MAD/mois pour l'accès illimité au correcteur IA.",
+    "3 corrections IA offertes à l'inscription — quiz gratuits illimités. Packs dès 69 MAD/mois pour corriger plus souvent avec l'IA ou un professeur.",
   trust: [
-    "Correcteur IA — réponse en moins de 30 secondes",
+    "Quiz gratuits et corrections IA instantanées",
     "Programme officiel marocain (MEN)",
-    "Disponible 24h/24 sur mobile et ordinateur",
+    "Correction par IA, professeur, ou les deux",
   ],
-  whyTitle: "Pourquoi choisir Methodix pour votre soutien scolaire au Maroc ?",
+  valueProposition:
+    "Chez Methodix, tu ne paies pas seulement pour regarder des cours. Tu paies pour comprendre tes erreurs et progresser exercice après exercice.",
+  whyTitle: "Pourquoi choisir Methodix pour corriger tes exercices ?",
   whyP1:
-    "Methodix est la première plateforme de cours de soutien en ligne au Maroc à intégrer l'intelligence artificielle dans la correction d'exercices. Pendant que les autres plateformes vous proposent des vidéos statiques, Methodix analyse vos devoirs, identifie vos erreurs et vous explique comment les corriger — en quelques secondes, à n'importe quelle heure.",
+    "Methodix est une plateforme spécialisée dans la correction d'exercices : tu envoies ton devoir, tu reçois une explication détaillée de tes erreurs, et tu progresses exercice après exercice — avec l'IA, un professeur, ou les deux.",
   whyP2:
-    "Que vous prépariez votre baccalauréat marocain, que vous cherchiez des cours particuliers en ligne, ou que vous souhaitiez simplement progresser en mathématiques, physique ou SVT, Methodix s'adapte à votre niveau et à votre rythme.",
-  subjectsTitle: "Cours de soutien scolaire : toutes les matières du programme marocain",
+    "Que tu prépares le bac marocain ou que tu veuilles simplement comprendre un exercice difficile en maths, physique ou français, Methodix s'adapte à ton niveau avec des quiz gratuits, des corrections IA et l'aide de vrais professeurs.",
+  subjectsTitle: "Correction d'exercices : toutes les matières du programme marocain",
   subjects: [
     {
       title: "Mathématiques",
@@ -76,22 +79,30 @@ const fr: MethodixHomeBlock = {
       desc: "Grammaire, vocabulaire et expression écrite en anglais. Préparation aux épreuves du baccalauréat marocain par IA.",
     },
   ],
-  serviceEyebrow: "Une offre complète",
-  servicesTitle: "Cours, fiches et outils pour réussir",
+  serviceEyebrow: "Nos services",
+  servicesTitle: "Corrige, comprends, progresse",
   servicesSubtitle:
-    "Methodix combine contenus pédagogiques et technologie pour un soutien actif, pas seulement des vidéos à regarder.",
+    "Du quiz gratuit à la session live avec professeur : choisis le format qui t'aide vraiment à avancer.",
   services: [
     {
-      title: "Cours et révision",
-      desc: "Fiches et parcours alignés sur le programme du ministère de l'Éducation nationale du Maroc, du tronc commun au bac.",
+      title: "Quiz gratuits",
+      desc: "Teste ton niveau avec des QCM gratuits par matière, niveau et chapitre.",
     },
     {
-      title: "Correcteur d'exercices par IA",
-      desc: "Envoyez une photo ou du texte : correction détaillée, erreurs identifiées, rappel des règles et pas-à-pas — en moins de 30 secondes.",
+      title: "Correction IA instantanée",
+      desc: "Envoie ton exercice et reçois une correction détaillée étape par étape avec explication des erreurs.",
     },
     {
-      title: "Toujours disponible",
-      desc: "Accès 24h/24 depuis smartphone, tablette ou ordinateur, partout au Maroc. Progressez à votre rythme.",
+      title: "Correction professeur",
+      desc: "Un vrai professeur corrige ton exercice, t'explique tes erreurs et te donne des conseils personnalisés.",
+    },
+    {
+      title: "Correction IA + Professeur",
+      desc: "L'IA prépare une première correction, puis un professeur vérifie, améliore et valide la réponse.",
+    },
+    {
+      title: "Session correction live",
+      desc: "Réserve une courte session avec un professeur pour comprendre un exercice difficile en direct.",
     },
   ],
   aiTitle: "Notre correcteur d'exercices par intelligence artificielle : une première au Maroc",
@@ -101,7 +112,7 @@ const fr: MethodixHomeBlock = {
     "Cette fonctionnalité exclusive est disponible pour les abonnés Methodix. Elle couvre toutes les matières du programme officiel marocain : mathématiques, physique-chimie, SVT, français, philosophie, histoire-géographie, arabe, anglais et autres enseignements du lycée.",
   aiP3:
     "Nos élèves abonnés bénéficient d'un accès illimité au correcteur IA, leur permettant de soumettre autant d'exercices qu'ils le souhaitent et de progresser à leur rythme.",
-  faqTitle: "Questions fréquentes sur le soutien scolaire en ligne au Maroc",
+  faqTitle: "Questions fréquentes sur la correction d'exercices en ligne au Maroc",
   faq: [
     {
       q: "Qu'est-ce que Methodix et à qui s'adresse cette plateforme ?",
@@ -155,17 +166,19 @@ const fr: MethodixHomeBlock = {
 };
 
 const ar: MethodixHomeBlock = {
-  badge: "دعم مدرسي عبر الإنترنت في المغرب",
-  heroTitle: "ميثوديكس — دعم مدرسي أونلاين في المغرب مع تصحيح التمارين بالذكاء الاصطناعي",
+  badge: "تصحيح التمارين أونلاين في المغرب",
+  heroTitle: "تصحيح التمارين أونلاين في المغرب بالذكاء الاصطناعي والأساتذة",
   heroSubtitle:
-    "تجمع ميثوديكس بين دروس الدعم الكاملة ومصحح تمارين يعتمد على الذكاء الاصطناعي، متاح على مدار الساعة لجميع التلامذة في المغرب من المشترك إلى البكالوريا.",
+    "أرسل صورة تمرينك، احصل على تصحيح مفصل، افهم أخطاءك وتقدم أسرع في الرياضيات والفيزياء وعلوم الحياة والفرنسية والإنجليزية ومواد المنهاج المغربي.",
   heroNote:
-    "ثلاث تصحيحات مجانية عند التسجيل دون بطاقة بنكية. اشتراك من 99 درهم شهرياً للوصول غير المحدود لمصحح الذكاء الاصطناعي.",
+    "3 تصحيحات بالذكاء الاصطناعي عند التسجيل — اختبارات مجانية غير محدودة. باقات من 69 درهم شهرياً.",
   trust: [
-    "مصحح ذكاء اصطناعي — أقل من 30 ثانية",
+    "اختبارات مجانية وتصحيح فوري بالذكاء الاصطناعي",
     "منهاج وزاري مغربي رسمي",
-    "متاح 24/7 على الهاتف والحاسوب",
+    "تصحيح بالذكاء الاصطناعي أو الأستاذ أو كلاهما",
   ],
+  valueProposition:
+    "في ميثوديكس، لا تدفع فقط لمشاهدة الدروس. تدفع لفهم أخطائك والتقدم تمريناً بعد تمرين.",
   whyTitle: "لماذا تختار ميثوديكس لدعمك المدرسي في المغرب؟",
   whyP1:
     "ميثوديكس من أوائل المنصات في المغرب التي تدمج الذكاء الاصطناعي في تصحيح التمارين: تحليل الواجب، توضيح الأخطاء وشرح التصحيح في ثوانٍ، في أي وقت.",
@@ -206,21 +219,29 @@ const ar: MethodixHomeBlock = {
       desc: "قواعد، مفردات وتعبير كتابي. تحضير اختبارات البكالوريا المغربية بالذكاء الاصطناعي.",
     },
   ],
-  serviceEyebrow: "عرض متكامل",
-  servicesTitle: "دروس، بطاقات وأدوات للنجاح",
-  servicesSubtitle: "ميثوديكس يجمع بين المحتوى التربوي والتقنية لدعم فعّال.",
+  serviceEyebrow: "خدماتنا",
+  servicesTitle: "صحّح، افهم، تقدّم",
+  servicesSubtitle: "من الاختبار المجاني إلى الجلسة المباشرة مع الأستاذ.",
   services: [
     {
-      title: "الدروس والمراجعة",
-      desc: "بطاقات ومسارات متوافقة مع برنامج وزارة التربية الوطنية في المغرب.",
+      title: "اختبارات مجانية",
+      desc: "اختبر مستواك بأسئلة اختيار من متعدد مجانية حسب المادة والمستوى.",
     },
     {
-      title: "مصحح التمارين بالذكاء الاصطناعي",
-      desc: "أرسل صورة أو نصاً: تصحيح مفصل وخطوات الحل في أقل من 30 ثانية.",
+      title: "تصحيح فوري بالذكاء الاصطناعي",
+      desc: "أرسل تمرينك واحصل على تصحيح مفصل خطوة بخطوة مع شرح الأخطاء.",
     },
     {
-      title: "متاح دائماً",
-      desc: "وصول على مدار الساعة من الهاتف أو الجهاز اللوحي أو الحاسوب في كل المغرب.",
+      title: "تصحيح من الأستاذ",
+      desc: "أستاذ حقيقي يصحح تمرينك ويشرح أخطاءك ويعطيك نصائح شخصية.",
+    },
+    {
+      title: "ذكاء اصطناعي + أستاذ",
+      desc: "الذكاء الاصطناعي يجهز تصحيحاً أولياً ثم الأستاذ يتحقق ويحسّنه.",
+    },
+    {
+      title: "جلسة تصحيح مباشرة",
+      desc: "احجز جلسة قصيرة مع أستاذ لفهم تمرين صعب مباشرة.",
     },
   ],
   aiTitle: "مصحح التمارين بالذكاء الاصطناعي — ميزة رائدة في المغرب",

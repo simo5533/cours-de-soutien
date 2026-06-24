@@ -217,20 +217,14 @@ export function ConnexionForm() {
           Inscription
         </Link>
       </p>
-      <p className="mt-8 border-t border-slate-200 pt-6 text-center text-xs leading-relaxed text-slate-500 dark:border-slate-700 dark:text-slate-400">
-        Comptes de démonstration :{" "}
-        <span className="rounded bg-slate-100 px-1 font-mono text-slate-800 dark:bg-slate-800 dark:text-slate-200">
-          eleve@demo.fr
-        </span>{" "}
-        / eleve123 —{" "}
-        <span className="rounded bg-slate-100 px-1 font-mono dark:bg-slate-800">
-          prof@demo.fr
-        </span>{" "}
-        / prof123 —{" "}
-        <span className="rounded bg-slate-100 px-1 font-mono dark:bg-slate-800">
-          admin@demo.fr
-        </span>{" "}
-        / admin123
+      <p className="mt-8 border-t border-slate-200 pt-6 text-center text-sm text-slate-600 dark:border-slate-700 dark:text-slate-400">
+        Vous souhaitez tester Methodix ?{" "}
+        <Link
+          href="/inscription"
+          className="font-semibold text-navy underline-offset-4 hover:underline dark:text-brandblue"
+        >
+          Demander une démo
+        </Link>
       </p>
     </>
   );

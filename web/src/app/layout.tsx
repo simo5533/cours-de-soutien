@@ -9,9 +9,9 @@ const geistSans = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "Methodix — Soutien scolaire en ligne au Maroc",
+  title: "Correction d'exercices en ligne au Maroc | IA & Professeurs - Methodix",
   description:
-    "Cours du programme marocain et correcteur d'exercices par intelligence artificielle. Tronc commun au bac.",
+    "Methodix aide les élèves à corriger leurs exercices en ligne avec l'IA et des professeurs. Quiz gratuits, corrections détaillées, préparation Bac et programme marocain.",
   icons: {
     icon: [{ url: "/methodix-logo.png", type: "image/png" }],
     apple: "/methodix-logo.png",

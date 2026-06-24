@@ -103,6 +103,21 @@ export async function registerAction(
 
     const locale = String(formData.get("locale") || "fr");
     const rawPlan = formData.get("elevePlan");
+
+    if (rawPlan === "free") {
+      await prisma.user.create({
+        data: {
+          name: parsed.data.name,
+          email: parsed.data.email,
+          passwordHash: await bcrypt.hash(parsed.data.password, 10),
+          role: "ELEVE",
+          groupe: parsed.data.groupe!.trim(),
+          anneeScolaire: parsed.data.anneeScolaire!.trim(),
+        },
+      });
+      return { ok: true };
+    }
+
     const elevePlan: ElevePaddlePlan =
       rawPlan === "bacplus"
         ? "bacplus"

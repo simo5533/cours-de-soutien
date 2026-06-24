@@ -2,10 +2,15 @@
 
 import { Link } from "@/i18n/navigation";
 import { useLocale, useTranslations } from "next-intl";
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { registerAction, type RegisterState } from "@/actions/auth";
 import { ANNEES_SCOLAIRES } from "@/lib/school-years";
+import {
+  PRICING_PLANS,
+  legacyPlanFromPricingId,
+  type PricingPlanId,
+} from "@/config/methodix-pricing";
 
 const roles = [
   { value: "ELEVE", label: "Élève" },
@@ -18,16 +23,18 @@ export function InscriptionForm({
   paymentProvider?: string;
 }) {
   const locale = useLocale();
-  const tHome = useTranslations("HomePage");
-  const paymentLabel =
-    paymentProvider === "stripe"
-      ? "Stripe"
-      : paymentProvider === "paddle"
-        ? "Paddle"
-        : paymentProvider === "lemonsqueezy"
-          ? "Lemon Squeezy"
-          : "paiement sécurisé";
+  const t = useTranslations("InscriptionPage");
   const payCancel = useSearchParams().get("pay") === "cancel";
+  const planParam = useSearchParams().get("plan");
+  const defaultPricingId = useMemo((): PricingPlanId => {
+    const ids = PRICING_PLANS.map((p) => p.id);
+    if (planParam && ids.includes(planParam as PricingPlanId)) {
+      return planParam as PricingPlanId;
+    }
+    return "free";
+  }, [planParam]);
+  const [selectedPlanId, setSelectedPlanId] = useState<PricingPlanId>(defaultPricingId);
+  const isFreePlan = selectedPlanId === "free";
   const [role, setRole] = useState<string>("ELEVE");
   const [state, formAction, pending] = useActionState(
     registerAction,
@@ -49,8 +56,9 @@ export function InscriptionForm({
             Redirection vers le paiement sécurisé…
           </p>
           <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">
-            Vous allez être redirigé vers le paiement sécurisé ({paymentLabel}).
-            Complétez le paiement pour activer votre compte élève.
+            {isFreePlan
+              ? t("freePlanNote")
+              : t("studentPaymentNote")}
           </p>
           <p className="mt-4 text-xs text-slate-500 dark:text-slate-500">
             Si rien ne se passe, vérifiez que les pop-ups ou redirections ne sont
@@ -148,15 +156,27 @@ export function InscriptionForm({
   }
 
   return (
-    <div className="mx-auto w-full max-w-md px-4 py-16 sm:py-20">
+    <div className="mx-auto w-full max-w-lg px-4 py-16 sm:py-20">
       <div className="card-elevated p-8 shadow-xl shadow-slate-900/5 dark:shadow-black/40">
         <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
-          Inscription
+          {t("title")}
         </h1>
         <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-          Compte élève ou professeur. Les élèves renseignent la classe et
-          l’année scolaire pour afficher les bons cours.
+          {t("subtitle")}
         </p>
+        <ul className="mt-6 grid gap-2 sm:grid-cols-2">
+          {(["trust1", "trust2", "trust3", "trust4", "trust5", "trust6", "trust7"] as const).map(
+            (key) => (
+              <li
+                key={key}
+                className="flex items-start gap-2 text-xs text-slate-600 dark:text-slate-400"
+              >
+                <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-brandblue" />
+                {t(key)}
+              </li>
+            ),
+          )}
+        </ul>
         {payCancel ? (
           <p
             role="status"
@@ -167,11 +187,7 @@ export function InscriptionForm({
         ) : null}
         {role === "ELEVE" ? (
           <p className="mt-4 rounded-xl border border-brandblue/25 bg-brandblue/5 px-4 py-3 text-sm text-navy dark:border-brandblue/20 dark:bg-brandblue/10 dark:text-brandblue/90">
-            <strong className="font-semibold">Élève :</strong> après validation du
-            formulaire, vous allez être{" "}
-            <strong className="font-semibold">redirigé vers le paiement sécurisé</strong>{" "}
-            ({paymentLabel}). Le compte élève n’est activé qu’après paiement réussi ;
-            vous pourrez alors vous connecter.
+            {isFreePlan ? t("freePlanNote") : t("studentPaymentNote")}
           </p>
         ) : null}
         <form className="mt-8 flex flex-col gap-5" action={formAction}>
@@ -241,24 +257,26 @@ export function InscriptionForm({
             <>
               <label className="flex flex-col gap-2 text-sm">
                 <span className="font-medium text-slate-700 dark:text-slate-300">
-                  Formule
+                  {t("planLabel")}
                 </span>
                 <select
-                  name="elevePlan"
+                  name="pricingPlanId"
                   required
-                  defaultValue="essential"
+                  value={selectedPlanId}
+                  onChange={(e) => setSelectedPlanId(e.target.value as PricingPlanId)}
                   className="input-field"
                 >
-                  <option value="essential">
-                    {tHome("planEssentialName")} — {tHome("planEssentialPrice")}
-                  </option>
-                  <option value="bacplus">
-                    {tHome("planBacPlusName")} — {tHome("planBacPlusPrice")}
-                  </option>
-                  <option value="family">
-                    {tHome("planFamilyName")} — {tHome("planFamilyPrice")}
-                  </option>
+                  {PRICING_PLANS.map((plan) => (
+                    <option key={plan.id} value={plan.id}>
+                      {plan.name} — {plan.price === 0 ? "0 MAD" : `${plan.price} MAD/mois`}
+                    </option>
+                  ))}
                 </select>
+                <input
+                  type="hidden"
+                  name="elevePlan"
+                  value={legacyPlanFromPricingId(selectedPlanId)}
+                />
               </label>
               <label className="flex flex-col gap-2 text-sm">
                 <span className="font-medium text-slate-700 dark:text-slate-300">
@@ -297,10 +315,14 @@ export function InscriptionForm({
           >
             {pending
               ? role === "ELEVE"
-                ? "Préparation du paiement…"
+                ? isFreePlan
+                  ? "Création…"
+                  : "Préparation du paiement…"
                 : "Création…"
               : role === "ELEVE"
-                ? "Continuer vers le paiement"
+                ? isFreePlan
+                  ? t("createFree")
+                  : t("continuePayment")
                 : "Créer mon compte"}
           </button>
         </form>

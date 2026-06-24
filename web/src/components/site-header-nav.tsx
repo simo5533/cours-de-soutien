@@ -38,7 +38,37 @@ export function SiteHeaderNav({ user }: { user: HeaderUser | null }) {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
+
   const langAnchor = `/${locale}#langues-vivantes`;
+
+  const navItems = (
+    <>
+      <Link href="/cours" className={navLinkClass()}>
+        {t("quizFree")}
+      </Link>
+      <Link href="/inscription?plan=essential_ai" className={navLinkClass()}>
+        {t("correctionAi")}
+      </Link>
+      <Link href="/inscription?plan=success_ai_teacher" className={navLinkClass()}>
+        {t("correctionTeacher")}
+      </Link>
+      <a href={langAnchor} className={navLinkClass()}>
+        {t("languages")}
+      </a>
+      <Link href="/blog" className={navLinkClass()}>
+        {t("blog")}
+      </Link>
+      <Link href="/tarifs" className={navLinkClass()}>
+        {t("pricing")}
+      </Link>
+    </>
+  );
 
   return (
     <>
@@ -49,21 +79,7 @@ export function SiteHeaderNav({ user }: { user: HeaderUser | null }) {
           className="hidden flex-wrap items-center gap-1 md:flex lg:gap-2"
           aria-label="Principal"
         >
-          <a href={langAnchor} className={navLinkClass()}>
-            {t("languages")}
-          </a>
-          <Link href="/blog" className={navLinkClass()}>
-            {t("blog")}
-          </Link>
-          <Link href="/cours" className={navLinkClass()}>
-            {t("catalog")}
-          </Link>
-          <Link href="/cours-gratuits-langues" className={navLinkClass()}>
-            {t("freeLangCourses")}
-          </Link>
-          <Link href="/cours-en-ligne" className={navLinkClass()}>
-            {t("onlineCourses")}
-          </Link>
+          {navItems}
           {user ? (
             <>
               <Link
@@ -111,138 +127,98 @@ export function SiteHeaderNav({ user }: { user: HeaderUser | null }) {
           onClick={() => setMobileOpen((o) => !o)}
         >
           {mobileOpen ? (
-            <svg
-              className="h-6 w-6 shrink-0"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              aria-hidden
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
+            <svg className="h-6 w-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           ) : (
-            <svg
-              className="h-6 w-6 shrink-0"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              aria-hidden
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
+            <svg className="h-6 w-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           )}
         </button>
       </div>
 
       {mobileOpen ? (
-        <>
-          <button
-            type="button"
-            className="fixed inset-x-0 bottom-0 top-[var(--header-h)] z-40 bg-black/40 md:hidden"
-            aria-hidden
-            tabIndex={-1}
-            onClick={() => setMobileOpen(false)}
-          />
-          <div
-            id="mobile-site-nav"
-            className="fixed left-0 right-0 top-[var(--header-h)] z-[60] border-b border-gold/25 bg-navy px-4 py-4 shadow-xl md:hidden"
-          >
-            <nav className="flex flex-col gap-1" aria-label="Principal mobile">
-              <a
-                href={langAnchor}
-                className={navLinkClass(true)}
-                onClick={() => setMobileOpen(false)}
-              >
-                {t("languages")}
-              </a>
-              <Link
-                href="/blog"
-                className={navLinkClass(true)}
-                onClick={() => setMobileOpen(false)}
-              >
-                {t("blog")}
-              </Link>
-              <Link
-                href="/cours"
-                className={navLinkClass(true)}
-                onClick={() => setMobileOpen(false)}
-              >
-                {t("catalog")}
-              </Link>
-              <Link
-                href="/cours-gratuits-langues"
-                className={navLinkClass(true)}
-                onClick={() => setMobileOpen(false)}
-              >
-                {t("freeLangCourses")}
-              </Link>
-              <Link
-                href="/cours-en-ligne"
-                className={navLinkClass(true)}
-                onClick={() => setMobileOpen(false)}
-              >
-                {t("onlineCourses")}
-              </Link>
-              {user ? (
-                <>
-                  <Link
-                    href={
-                      user.role === "ELEVE"
-                        ? "/eleve"
-                        : user.role === "PROFESSEUR"
-                          ? "/professeur"
-                          : "/admin"
-                    }
-                    className={navLinkClass(true)}
-                    onClick={() => setMobileOpen(false)}
+        <div
+          id="mobile-site-nav"
+          className="fixed inset-0 top-[var(--header-h)] z-[60] flex flex-col bg-navy px-4 py-6 md:hidden"
+          role="dialog"
+          aria-modal="true"
+        >
+          <nav className="flex flex-col gap-2" aria-label="Principal mobile">
+            <Link href="/cours" className={navLinkClass(true)} onClick={() => setMobileOpen(false)}>
+              {t("quizFree")}
+            </Link>
+            <Link
+              href="/inscription?plan=essential_ai"
+              className={navLinkClass(true)}
+              onClick={() => setMobileOpen(false)}
+            >
+              {t("correctionAi")}
+            </Link>
+            <Link
+              href="/inscription?plan=success_ai_teacher"
+              className={navLinkClass(true)}
+              onClick={() => setMobileOpen(false)}
+            >
+              {t("correctionTeacher")}
+            </Link>
+            <a href={langAnchor} className={navLinkClass(true)} onClick={() => setMobileOpen(false)}>
+              {t("languages")}
+            </a>
+            <Link href="/blog" className={navLinkClass(true)} onClick={() => setMobileOpen(false)}>
+              {t("blog")}
+            </Link>
+            <Link href="/tarifs" className={navLinkClass(true)} onClick={() => setMobileOpen(false)}>
+              {t("pricing")}
+            </Link>
+            {user ? (
+              <>
+                <Link
+                  href={
+                    user.role === "ELEVE"
+                      ? "/eleve"
+                      : user.role === "PROFESSEUR"
+                        ? "/professeur"
+                        : "/admin"
+                  }
+                  className={navLinkClass(true)}
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {t("mySpace")}
+                </Link>
+                {user.name ? (
+                  <span className="truncate px-3 py-1 text-xs text-white/60">{user.name}</span>
+                ) : null}
+                <form action={logoutAction} className="pt-2">
+                  <button
+                    type="submit"
+                    className="w-full rounded-lg border border-white/25 bg-white/5 px-3 py-3 text-left text-sm font-medium text-white transition hover:bg-white/10"
                   >
-                    {t("mySpace")}
-                  </Link>
-                  {user.name ? (
-                    <span className="truncate px-3 py-1 text-xs text-white/60">
-                      {user.name}
-                    </span>
-                  ) : null}
-                  <form action={logoutAction} className="pt-1">
-                    <button
-                      type="submit"
-                      className="w-full rounded-lg border border-white/25 bg-white/5 px-3 py-2.5 text-left text-sm font-medium text-white transition hover:bg-white/10"
-                    >
-                      {t("logout")}
-                    </button>
-                  </form>
-                </>
-              ) : (
-                <>
-                  <Link
-                    href="/connexion"
-                    className={navLinkClass(true)}
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    {t("login")}
-                  </Link>
-                  <Link
-                    href="/inscription"
-                    className="btn-primary mt-1 text-center !py-2.5 !text-sm"
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    {t("signup")}
-                  </Link>
-                </>
-              )}
-            </nav>
-          </div>
-        </>
+                    {t("logout")}
+                  </button>
+                </form>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/connexion"
+                  className={navLinkClass(true)}
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {t("login")}
+                </Link>
+                <Link
+                  href="/inscription"
+                  className="btn-primary mt-2 text-center !py-3 !text-base"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {t("signup")}
+                </Link>
+              </>
+            )}
+          </nav>
+        </div>
       ) : null}
     </>
   );
