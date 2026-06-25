@@ -1,6 +1,6 @@
 import { Link } from "@/i18n/navigation";
 import { PublicQuizCatalog } from "@/components/public-quiz-catalog";
-import { SiteHeader } from "@/components/site-header";
+import { PublicPageShell } from "@/components/public-page-shell";
 import {
   CATALOG_LANGUAGE_MATIERES,
   CATALOG_MATIERE_I18N_KEY,
@@ -50,11 +50,10 @@ export default async function CoursPublicPage({ params }: PageProps) {
 
   const groups = groupQuizzesForCatalog(catalogRows);
   const quizCount = catalogRows.length;
+  const popular = catalogRows.slice(0, 6);
 
   return (
-    <>
-      <SiteHeader />
-      <main className="page-bg mx-auto flex w-full max-w-6xl flex-1 flex-col px-4 pb-20 pt-8 sm:px-6 sm:pt-12">
+    <PublicPageShell>
         {/* Hero */}
         <section className="relative overflow-hidden rounded-3xl border border-navy/10 bg-gradient-to-br from-white via-white to-brandblue/[0.07] px-6 py-10 shadow-lg shadow-navy/[0.06] ring-1 ring-gold/20 dark:border-slate-700/80 dark:from-slate-900/90 dark:via-slate-900/70 dark:to-brandblue/[0.08] dark:shadow-black/30 dark:ring-gold/25 sm:px-10 sm:py-12">
           <div
@@ -91,8 +90,8 @@ export default async function CoursPublicPage({ params }: PageProps) {
                 </span>
                 {t("qcmPublished")}
               </span>
-              <Link href="/inscription" className="btn-secondary !py-2.5">
-                {t("createStudentAccount")}
+              <Link href="/cours" className="btn-primary !py-2.5">
+                {t("startFreeQuiz")}
               </Link>
             </div>
           </div>
@@ -283,7 +282,34 @@ export default async function CoursPublicPage({ params }: PageProps) {
           </div>
         </section>
 
-        {/* Liste QCM par langue */}
+        {/* Quiz populaires */}
+        {popular.length > 0 ? (
+          <section className="mt-14" aria-labelledby="popular-quiz-heading">
+            <h2 id="popular-quiz-heading" className="text-xl font-bold text-navy dark:text-white">
+              {t("popularTitle")}
+            </h2>
+            <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">{t("popularSubtitle")}</p>
+            <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {popular.map((q) => (
+                <li key={q.id}>
+                  <Link
+                    href={`/quiz/${q.id}`}
+                    className="card-elevated flex h-full flex-col rounded-2xl p-5 transition hover:-translate-y-0.5 hover:shadow-lg"
+                  >
+                    <span className="text-xs font-bold uppercase tracking-wide text-brandblue">QCM</span>
+                    <h3 className="mt-2 font-bold text-navy dark:text-white">{q.title}</h3>
+                    <p className="mt-2 text-xs text-slate-500">
+                      {q.matiere} · {q.niveau}
+                    </p>
+                    <span className="mt-4 text-sm font-semibold text-brandblue">{t("startFreeQuiz")} →</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
+
+        {/* Liste QCM */}
         <section className="mt-16" aria-labelledby="liste-qcm-heading">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
@@ -324,7 +350,6 @@ export default async function CoursPublicPage({ params }: PageProps) {
             </Link>
           </div>
         </section>
-      </main>
-    </>
+    </PublicPageShell>
   );
 }

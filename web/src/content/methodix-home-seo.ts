@@ -26,12 +26,11 @@ export type MethodixHomeBlock = {
 
 const fr: MethodixHomeBlock = {
   badge: "Correction d'exercices en ligne au Maroc",
-  heroTitle:
-    "Correction d'exercices en ligne au Maroc avec IA et professeurs",
+  heroTitle: "Corrige tes exercices en ligne avec l'IA",
   heroSubtitle:
-    "Envoie une photo de ton exercice, reçois une correction détaillée, comprends tes erreurs et progresse plus vite en maths, physique, SVT, français, anglais et matières du programme marocain.",
+    "Envoie une photo de ton exercice. Methodix te donne une correction détaillée étape par étape, avec la possibilité de demander l'aide d'un professeur.",
   heroNote:
-    "3 corrections IA offertes à l'inscription — quiz gratuits illimités. Packs dès 69 MAD/mois pour corriger plus souvent avec l'IA ou un professeur.",
+    "3 corrections gratuites — sans carte bancaire. Quiz gratuits illimités.",
   trust: [
     "Quiz gratuits et corrections IA instantanées",
     "Programme officiel marocain (MEN)",
@@ -167,11 +166,11 @@ const fr: MethodixHomeBlock = {
 
 const ar: MethodixHomeBlock = {
   badge: "تصحيح التمارين أونلاين في المغرب",
-  heroTitle: "تصحيح التمارين أونلاين في المغرب بالذكاء الاصطناعي والأساتذة",
+  heroTitle: "صحّح تمارينك أونلاين بالذكاء الاصطناعي",
   heroSubtitle:
-    "أرسل صورة تمرينك، احصل على تصحيح مفصل، افهم أخطاءك وتقدم أسرع في الرياضيات والفيزياء وعلوم الحياة والفرنسية والإنجليزية ومواد المنهاج المغربي.",
+    "أرسل صورة تمرينك. Methodix يقدّم تصحيحًا مفصّلًا خطوة بخطوة، مع إمكانية طلب مساعدة أستاذ.",
   heroNote:
-    "3 تصحيحات بالذكاء الاصطناعي عند التسجيل — اختبارات مجانية غير محدودة. باقات من 69 درهم شهرياً.",
+    "3 تصحيحات مجانية — بدون بطاقة بنكية. اختبارات مجانية بلا حدود.",
   trust: [
     "اختبارات مجانية وتصحيح فوري بالذكاء الاصطناعي",
     "منهاج وزاري مغربي رسمي",

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { logoutAction } from "@/actions/logout";
 import { LanguageSwitcher } from "@/components/language-switcher";
@@ -22,7 +22,6 @@ function navLinkClass(activeMobile?: boolean) {
 
 export function SiteHeaderNav({ user }: { user: HeaderUser | null }) {
   const t = useTranslations("SiteHeader");
-  const locale = useLocale();
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -45,24 +44,16 @@ export function SiteHeaderNav({ user }: { user: HeaderUser | null }) {
     };
   }, [mobileOpen]);
 
-  const langAnchor = `/${locale}#langues-vivantes`;
-
   const navItems = (
     <>
-      <Link href="/cours" className={navLinkClass()}>
-        {t("quizFree")}
-      </Link>
-      <Link href="/inscription?plan=essential_ai" className={navLinkClass()}>
+      <Link href="/inscription" className={navLinkClass()}>
         {t("correctionAi")}
       </Link>
-      <Link href="/inscription?plan=success_ai_teacher" className={navLinkClass()}>
-        {t("correctionTeacher")}
+      <Link href="/cours-en-ligne" className={navLinkClass()}>
+        {t("teacherLive")}
       </Link>
-      <a href={langAnchor} className={navLinkClass()}>
-        {t("languages")}
-      </a>
-      <Link href="/blog" className={navLinkClass()}>
-        {t("blog")}
+      <Link href="/cours" className={navLinkClass()}>
+        {t("quizFree")}
       </Link>
       <Link href="/tarifs" className={navLinkClass()}>
         {t("pricing")}
@@ -112,7 +103,7 @@ export function SiteHeaderNav({ user }: { user: HeaderUser | null }) {
                 {t("login")}
               </Link>
               <Link href="/inscription" className="btn-primary !py-2 !text-sm">
-                {t("signup")}
+                {t("tryFree")}
               </Link>
             </>
           )}
@@ -146,28 +137,18 @@ export function SiteHeaderNav({ user }: { user: HeaderUser | null }) {
           aria-modal="true"
         >
           <nav className="flex flex-col gap-2" aria-label="Principal mobile">
-            <Link href="/cours" className={navLinkClass(true)} onClick={() => setMobileOpen(false)}>
-              {t("quizFree")}
-            </Link>
-            <Link
-              href="/inscription?plan=essential_ai"
-              className={navLinkClass(true)}
-              onClick={() => setMobileOpen(false)}
-            >
+            <Link href="/inscription" className={navLinkClass(true)} onClick={() => setMobileOpen(false)}>
               {t("correctionAi")}
             </Link>
             <Link
-              href="/inscription?plan=success_ai_teacher"
+              href="/cours-en-ligne"
               className={navLinkClass(true)}
               onClick={() => setMobileOpen(false)}
             >
-              {t("correctionTeacher")}
+              {t("teacherLive")}
             </Link>
-            <a href={langAnchor} className={navLinkClass(true)} onClick={() => setMobileOpen(false)}>
-              {t("languages")}
-            </a>
-            <Link href="/blog" className={navLinkClass(true)} onClick={() => setMobileOpen(false)}>
-              {t("blog")}
+            <Link href="/cours" className={navLinkClass(true)} onClick={() => setMobileOpen(false)}>
+              {t("quizFree")}
             </Link>
             <Link href="/tarifs" className={navLinkClass(true)} onClick={() => setMobileOpen(false)}>
               {t("pricing")}
@@ -213,7 +194,7 @@ export function SiteHeaderNav({ user }: { user: HeaderUser | null }) {
                   className="btn-primary mt-2 text-center !py-3 !text-base"
                   onClick={() => setMobileOpen(false)}
                 >
-                  {t("signup")}
+                  {t("tryFree")}
                 </Link>
               </>
             )}

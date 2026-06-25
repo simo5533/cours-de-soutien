@@ -19,6 +19,7 @@ export function PublicQuizCatalog({ groups }: { groups: QuizCatalogGroup[] }) {
   const tCat = useTranslations("CatalogPage");
   const [query, setQuery] = useState("");
   const [matiereFilter, setMatiereFilter] = useState("");
+  const [niveauFilter, setNiveauFilter] = useState("");
 
   const scopedGroups = useMemo(() => {
     if (!matiereFilter) return groups;
@@ -32,25 +33,37 @@ export function PublicQuizCatalog({ groups }: { groups: QuizCatalogGroup[] }) {
 
   const filteredGroups = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return scopedGroups;
     return scopedGroups
       .map((g) => ({
         ...g,
         subgroups: g.subgroups
           .map((sg) => ({
             ...sg,
-            items: sg.items.filter(
-              (it) =>
+            items: sg.items.filter((it) => {
+              if (niveauFilter && it.niveau !== niveauFilter) return false;
+              if (!q) return true;
+              return (
                 it.title.toLowerCase().includes(q) ||
                 it.chapitre.toLowerCase().includes(q) ||
                 it.niveau.toLowerCase().includes(q) ||
-                it.matiere.toLowerCase().includes(q),
-            ),
+                it.matiere.toLowerCase().includes(q)
+              );
+            }),
           }))
           .filter((sg) => sg.items.length > 0),
       }))
       .filter((g) => g.subgroups.length > 0);
-  }, [scopedGroups, query]);
+  }, [scopedGroups, query, niveauFilter]);
+
+  const allNiveaux = useMemo(() => {
+    const set = new Set<string>();
+    for (const g of groups) {
+      for (const sg of g.subgroups) {
+        for (const it of sg.items) set.add(it.niveau);
+      }
+    }
+    return [...set].sort();
+  }, [groups]);
 
   const filteredCount = useMemo(
     () => filteredGroups.reduce((n, g) => n + groupItemCount(g), 0),
@@ -93,6 +106,21 @@ export function PublicQuizCatalog({ groups }: { groups: QuizCatalogGroup[] }) {
             {groups.map((g) => (
               <option key={g.label} value={g.label}>
                 {groupHeading(g.label)}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="flex min-w-[10rem] flex-1 flex-col gap-1 text-xs font-semibold text-navy dark:text-gold/90">
+          {t("filterNiveauLabel")}
+          <select
+            value={niveauFilter}
+            onChange={(e) => setNiveauFilter(e.target.value)}
+            className="select-field py-2"
+          >
+            <option value="">{t("filterAllNiveaux")}</option>
+            {allNiveaux.map((n) => (
+              <option key={n} value={n}>
+                {n}
               </option>
             ))}
           </select>

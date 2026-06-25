@@ -22,28 +22,14 @@ const registerSchema = z
     anneeScolaire: z.string().optional(),
   })
   .superRefine((data, ctx) => {
-    if (data.role === "ELEVE") {
-      if (!data.groupe?.trim()) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: "Indiquez votre groupe ou classe.",
-          path: ["groupe"],
-        });
-      }
-      if (!data.anneeScolaire?.trim()) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: "Choisissez l’année scolaire.",
-          path: ["anneeScolaire"],
-        });
-      }
-    }
+    if (data.role === "PROFESSEUR") return;
+    // Groupe / année complétés plus tard dans le profil élève.
   });
 
 /** État formulaire inscription — `paymentSkippedInDev` = élève créé sans paiement (mode dev uniquement). */
 export type RegisterState =
   | { error?: string }
-  | { ok: true; paymentSkippedInDev?: boolean }
+  | { ok: true; paymentSkippedInDev?: boolean; redirectTo?: string }
   | { checkoutUrl: string }
   | undefined;
 
@@ -87,6 +73,11 @@ export async function registerAction(
 
     const provider = getPaymentProvider();
 
+    const eleveDefaults = {
+      groupe: parsed.data.groupe?.trim() || "À compléter",
+      anneeScolaire: parsed.data.anneeScolaire?.trim() || "2025-2026",
+    };
+
     if (!getStripe() && !getPaddle() && !isLemonSqueezyConfigured() && devBypass) {
       await prisma.user.create({
         data: {
@@ -94,11 +85,10 @@ export async function registerAction(
           email: parsed.data.email,
           passwordHash: await bcrypt.hash(parsed.data.password, 10),
           role: "ELEVE",
-          groupe: parsed.data.groupe!.trim(),
-          anneeScolaire: parsed.data.anneeScolaire!.trim(),
+          ...eleveDefaults,
         },
       });
-      return { ok: true, paymentSkippedInDev: true };
+      return { ok: true, paymentSkippedInDev: true, redirectTo: "/eleve/aide-scolaire" };
     }
 
     const locale = String(formData.get("locale") || "fr");
@@ -111,11 +101,10 @@ export async function registerAction(
           email: parsed.data.email,
           passwordHash: await bcrypt.hash(parsed.data.password, 10),
           role: "ELEVE",
-          groupe: parsed.data.groupe!.trim(),
-          anneeScolaire: parsed.data.anneeScolaire!.trim(),
+          ...eleveDefaults,
         },
       });
-      return { ok: true };
+      return { ok: true, redirectTo: "/eleve/aide-scolaire" };
     }
 
     const elevePlan: ElevePaddlePlan =
@@ -137,8 +126,8 @@ export async function registerAction(
           name: parsed.data.name,
           email: parsed.data.email,
           password: parsed.data.password,
-          groupe: parsed.data.groupe!.trim(),
-          anneeScolaire: parsed.data.anneeScolaire!.trim(),
+          groupe: eleveDefaults.groupe,
+          anneeScolaire: eleveDefaults.anneeScolaire,
           lemonPlan: elevePlan,
         },
         locale,
@@ -162,8 +151,8 @@ export async function registerAction(
           name: parsed.data.name,
           email: parsed.data.email,
           password: parsed.data.password,
-          groupe: parsed.data.groupe!.trim(),
-          anneeScolaire: parsed.data.anneeScolaire!.trim(),
+          groupe: eleveDefaults.groupe,
+          anneeScolaire: eleveDefaults.anneeScolaire,
           paddlePlan: elevePlan,
         },
         locale,

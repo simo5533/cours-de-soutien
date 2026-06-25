@@ -4,26 +4,20 @@ import { revalidatePathAllLocales } from "@/lib/revalidate-i18n";
 import { generateMeetingRoomId } from "@/lib/online-lessons";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
+import { randomBytes } from "crypto";
 import { z } from "zod";
 
-const demandeSchema = z
-  .object({
-    name: z.string().min(2),
-    email: z.string().email(),
-    phone: z.string().min(8),
-    password: z.string().min(6),
-    passwordConfirm: z.string().min(6),
-    langue: z.string().min(1),
-    matiere: z.string().optional(),
-    preferredDate: z.string().min(1),
-    preferredTime: z.string().min(1),
-    durationMinutes: z.coerce.number().int().min(30).max(180).default(60),
-    message: z.string().optional(),
-  })
-  .refine((d) => d.password === d.passwordConfirm, {
-    message: "Les mots de passe ne correspondent pas.",
-    path: ["passwordConfirm"],
-  });
+const demandeSchema = z.object({
+  name: z.string().min(2),
+  email: z.string().email().optional().or(z.literal("")),
+  phone: z.string().min(8),
+  langue: z.string().min(1),
+  niveau: z.string().min(1),
+  preferredDate: z.string().min(1),
+  preferredTime: z.string().min(1),
+  durationMinutes: z.coerce.number().int().min(30).max(180).default(60),
+  message: z.string().min(10),
+});
 
 export type DemandeCoursEnLigneState =
   | { error: string }
@@ -36,27 +30,24 @@ export async function submitCoursEnLigneDemandeAction(
 ): Promise<DemandeCoursEnLigneState> {
   const parsed = demandeSchema.safeParse({
     name: formData.get("name"),
-    email: formData.get("email"),
+    email: (formData.get("email") as string) || undefined,
     phone: formData.get("phone"),
-    password: formData.get("password"),
-    passwordConfirm: formData.get("passwordConfirm"),
     langue: formData.get("langue"),
-    matiere: (formData.get("matiere") as string) || undefined,
+    niveau: formData.get("niveau"),
     preferredDate: formData.get("preferredDate"),
     preferredTime: formData.get("preferredTime"),
     durationMinutes: formData.get("durationMinutes") || 60,
-    message: (formData.get("message") as string) || undefined,
+    message: formData.get("message"),
   });
 
   if (!parsed.success) {
-    const msg =
-      parsed.error.flatten().fieldErrors.passwordConfirm?.[0] ||
-      parsed.error.flatten().fieldErrors.password?.[0] ||
-      "Vérifiez tous les champs obligatoires.";
-    return { error: msg };
+    return { error: "Vérifiez tous les champs obligatoires." };
   }
 
-  const email = parsed.data.email.trim().toLowerCase();
+  const phoneDigits = parsed.data.phone.replace(/\D/g, "");
+  const email =
+    parsed.data.email?.trim().toLowerCase() ||
+    `wa-${phoneDigits}@demande.methodix`;
 
   const existingUser = await prisma.user.findUnique({ where: { email } });
   if (existingUser?.role === "ELEVE") {
@@ -91,20 +82,19 @@ export async function submitCoursEnLigneDemandeAction(
   }
 
   const time = parsed.data.preferredTime.slice(0, 5);
-  const pendingPasswordHash = await bcrypt.hash(parsed.data.password, 10);
 
   const demande = await prisma.coursEnLigneDemande.create({
     data: {
       name: parsed.data.name.trim(),
       email,
       phone: parsed.data.phone.trim(),
-      pendingPasswordHash,
+      pendingPasswordHash: null,
       langue: parsed.data.langue.trim(),
-      matiere: parsed.data.matiere?.trim() || null,
+      matiere: `${parsed.data.niveau.trim()} — ${parsed.data.message.trim().slice(0, 200)}`,
       preferredDate,
       preferredTime: time,
       durationMinutes: parsed.data.durationMinutes,
-      message: parsed.data.message?.trim() || null,
+      message: parsed.data.message.trim(),
       status: "EN_ATTENTE_ADMIN",
     },
   });
@@ -140,7 +130,19 @@ async function resolveStudentIdForDemande(demande: {
   }
 
   if (!demande.pendingPasswordHash) {
-    return { error: "Mot de passe manquant sur la demande." };
+    const tempPassword = randomBytes(8).toString("base64url").slice(0, 12);
+    const passwordHash = await bcrypt.hash(tempPassword, 10);
+    const user = await prisma.user.create({
+      data: {
+        email: demande.email,
+        name: demande.name,
+        passwordHash,
+        role: "ELEVE",
+        groupe: "À compléter",
+        anneeScolaire: "2025-2026",
+      },
+    });
+    return { studentId: user.id };
   }
 
   const user = await prisma.user.create({
