@@ -16,8 +16,8 @@ export async function SiteFooter() {
   ] as const;
 
   return (
-    <footer className="mt-auto border-t border-white/10 bg-navy text-white">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-4 py-12 sm:px-6">
+    <footer className="mt-auto border-t border-white/10 bg-[#061B4E] text-[#F8FBFF]">
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-10 sm:px-6">
         <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
           <div className="max-w-sm">
             <Image
@@ -27,7 +27,7 @@ export async function SiteFooter() {
               height={56}
               className="h-10 w-auto brightness-0 invert"
             />
-            <p className="mt-4 text-sm leading-relaxed text-white/70">
+            <p className="mt-3 text-sm leading-relaxed text-[#F8FBFF]/75">
               {t("tagline")}
             </p>
             <Link
@@ -45,14 +45,14 @@ export async function SiteFooter() {
               <Link
                 key={l.href}
                 href={l.href}
-                className="font-medium text-white/70 transition hover:text-cyan-ai"
+                className="font-medium text-[#F8FBFF]/75 transition hover:text-cyan-ai"
               >
                 {l.label}
               </Link>
             ))}
           </nav>
         </div>
-        <div className="flex flex-col gap-3 border-t border-white/10 pt-6 text-xs text-white/50 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-3 border-t border-white/10 pt-5 text-xs text-[#F8FBFF]/55 sm:flex-row sm:items-center sm:justify-between">
           <p>{t("copyright", { year: new Date().getFullYear() })}</p>
           <div className="flex flex-wrap gap-4">
             <Link href="/connexion" className="transition hover:text-cyan-ai">

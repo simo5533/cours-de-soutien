@@ -132,7 +132,7 @@ export function SiteHeaderNav({ user }: { user: HeaderUser | null }) {
       {mobileOpen ? (
         <div
           id="mobile-site-nav"
-          className="fixed inset-0 top-[var(--header-h)] z-[60] flex flex-col bg-white/95 px-4 py-6 backdrop-blur-xl md:hidden dark:bg-navy/95"
+          className="fixed inset-0 top-[var(--header-h)] z-[60] flex flex-col bg-white/97 px-4 py-6 backdrop-blur-xl md:hidden"
           role="dialog"
           aria-modal="true"
         >

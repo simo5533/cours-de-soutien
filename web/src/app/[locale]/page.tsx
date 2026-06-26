@@ -1,3 +1,4 @@
+import { CtaPremiumSection } from "@/components/cta-premium-section";
 import { PricingSection } from "@/components/pricing-section";
 import {
   HomeHelpTypeCards,
@@ -135,24 +136,14 @@ export default async function Home({ params }: PageProps) {
         </div>
       </section>
 
-      {/* CTA final */}
-      <section className="mt-20 overflow-hidden rounded-[24px] border border-white/10 bg-gradient-to-br from-navy via-premium to-navy px-6 py-12 text-center text-white shadow-xl shadow-navy/20 sm:px-10">
-        <h2 className="font-display text-2xl font-bold sm:text-3xl">
-          <span className="text-gradient-ai !bg-gradient-to-r !from-cyan-ai !to-white">{t("finalCtaTitle")}</span>
-        </h2>
-        <p className="mx-auto mt-3 max-w-xl text-white/75">{t("finalCtaSubtitle")}</p>
-        <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:justify-center">
-          <Link href="/inscription" className="btn-primary inline-flex justify-center px-8 py-3.5 text-base">
-            {t("ctaFreeCorrections")}
-          </Link>
-          <Link
-            href="/connexion"
-            className="inline-flex justify-center rounded-full border border-white/25 bg-white/10 px-8 py-3.5 text-base font-semibold text-white backdrop-blur transition hover:bg-white/15"
-          >
-            {t("ctaLogin")}
-          </Link>
-        </div>
-      </section>
+      <CtaPremiumSection
+        title={t("finalCtaTitle")}
+        subtitle={t("finalCtaSubtitle")}
+        primaryHref="/inscription"
+        primaryLabel={t("ctaFreeCorrections")}
+        secondaryHref="/connexion"
+        secondaryLabel={t("ctaLogin")}
+      />
     </PublicPageShell>
   );
 }

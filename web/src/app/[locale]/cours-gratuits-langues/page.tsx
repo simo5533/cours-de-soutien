@@ -1,3 +1,4 @@
+import { CtaPremiumSection } from "@/components/cta-premium-section";
 import { SiteHeader } from "@/components/site-header";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
@@ -18,19 +19,19 @@ type LangBlock = {
 };
 
 const LANG_LAYOUT = [
-  { key: "french", slug: "francais", accent: "from-navy to-brandblue" },
-  { key: "spanish", slug: "espagnol", accent: "from-brandblue to-navy" },
-  { key: "english", slug: "anglais", accent: "from-gold/90 to-navy" },
+  { key: "french", slug: "francais", accent: "from-premium to-electric" },
+  { key: "spanish", slug: "espagnol", accent: "from-electric to-cyan-ai" },
+  { key: "english", slug: "anglais", accent: "from-cyan-ai to-electric" },
   {
     key: "englishUS",
     slug: "anglais-americain",
-    accent: "from-brandblue via-navy to-brandblue",
+    accent: "from-electric via-premium to-cyan-ai",
   },
-  { key: "german", slug: "allemand", accent: "from-navy via-gold/70 to-navy" },
+  { key: "german", slug: "allemand", accent: "from-premium via-electric to-cyan-ai" },
   {
     key: "chinese",
     slug: "chinois-mandarin",
-    accent: "from-red-700/90 via-gold to-navy",
+    accent: "from-red-600/90 via-electric to-cyan-ai",
   },
 ] as const;
 
@@ -38,18 +39,18 @@ const STEM_LAYOUT = [
   {
     key: "mathematics",
     slug: "mathematiques",
-    accent: "from-violet-600 to-brandblue",
+    accent: "from-violet-500 to-electric",
   },
   {
     key: "physics",
     slug: "physique-chimie",
-    accent: "from-cyan-600 to-slate-800",
+    accent: "from-cyan-500 to-electric",
   },
-  { key: "svt", slug: "svt", accent: "from-emerald-600 to-teal-900" },
+  { key: "svt", slug: "svt", accent: "from-success to-cyan-ai" },
   {
     key: "historyGeo",
     slug: "histoire-geographie",
-    accent: "from-amber-600 to-rose-900",
+    accent: "from-amber-500 to-electric",
   },
 ] as const;
 
@@ -143,30 +144,30 @@ export default async function CoursGratuitsLanguesPage({ params }: PageProps) {
   const packsStem = freeBlock?.stemSubjects;
 
   return (
-    <>
+    <div className="site-bg flex min-h-full flex-col">
       <SiteHeader />
-      <main className="page-bg mx-auto flex w-full max-w-3xl flex-1 flex-col px-4 pb-24 pt-8 sm:px-6 sm:pt-12">
+      <main className="page-bg mx-auto flex w-full max-w-3xl flex-1 flex-col px-4 pb-16 pt-8 sm:px-6 sm:pt-12">
         <article
-          className="relative overflow-hidden rounded-3xl border border-navy/10 bg-gradient-to-br from-white via-white to-brandblue/[0.06] px-6 py-10 shadow-lg shadow-navy/[0.05] ring-1 ring-gold/15 dark:border-slate-700/80 dark:from-slate-900/90 dark:via-slate-900/75 dark:to-brandblue/[0.08] sm:px-10 sm:py-12"
+          className="relative overflow-hidden rounded-[24px] border border-border-soft bg-white/[0.74] px-6 py-10 shadow-md backdrop-blur-md sm:px-10 sm:py-12"
           itemScope
           itemType="https://schema.org/Article"
         >
           <div
-            className="pointer-events-none absolute -end-24 -top-20 h-72 w-72 rounded-full bg-brandblue/12 blur-3xl dark:bg-brandblue/10"
+            className="pointer-events-none absolute -end-24 -top-20 h-72 w-72 rounded-full bg-cyan-ai/12 blur-3xl"
             aria-hidden
           />
-          <header className="relative border-b border-slate-200/80 pb-8 dark:border-slate-700/80">
-            <p className="text-[11px] font-bold uppercase tracking-wider text-brandblue dark:text-gold">
+          <header className="relative border-b border-border-soft pb-8">
+            <p className="brand-section-title">
               {t("kicker")}
             </p>
             <h1
-              className="mt-3 text-2xl font-extrabold tracking-tight text-navy dark:text-white sm:text-3xl sm:leading-tight"
+              className="font-display mt-3 text-2xl font-extrabold tracking-tight text-navy sm:text-3xl sm:leading-tight"
               itemProp="headline"
             >
               {t("title")}
             </h1>
             <p
-              className="mt-5 text-base leading-relaxed text-slate-700 dark:text-slate-300"
+              className="mt-5 text-base leading-relaxed text-muted-text"
               itemProp="description"
             >
               {t("lead")}
@@ -259,26 +260,16 @@ export default async function CoursGratuitsLanguesPage({ params }: PageProps) {
           </p>
         </article>
 
-        <section className="mt-12 overflow-hidden rounded-3xl border border-gold/30 bg-navy px-6 py-10 text-center shadow-xl sm:px-10">
-          <h2 className="text-xl font-bold text-gold sm:text-2xl">
-            {t("ctaTitle")}
-          </h2>
-          <p className="mx-auto mt-3 max-w-xl text-sm text-white/85">
-            {t("ctaBody")}
-          </p>
-          <div className="mt-6 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:justify-center">
-            <Link href="/inscription" className="btn-primary !px-8">
-              {t("ctaRegister")}
-            </Link>
-            <Link
-              href="/cours"
-              className="inline-flex items-center justify-center rounded-xl border border-white/30 bg-white/10 px-8 py-2.5 text-sm font-semibold text-white backdrop-blur transition hover:bg-white/15"
-            >
-              {t("ctaCatalog")}
-            </Link>
-          </div>
-        </section>
+        <CtaPremiumSection
+          className="mt-12"
+          title={t("ctaTitle")}
+          subtitle={t("ctaBody")}
+          primaryHref="/inscription"
+          primaryLabel={t("ctaRegister")}
+          secondaryHref="/cours"
+          secondaryLabel={t("ctaCatalog")}
+        />
       </main>
-    </>
+    </div>
   );
 }

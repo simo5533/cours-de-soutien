@@ -89,29 +89,29 @@ export default async function PublicQuizPage({ params }: PageProps) {
   }
 
   return (
-    <>
+    <div className="site-bg flex min-h-full flex-col">
       <SiteHeader />
       <main className="page-bg mx-auto flex w-full max-w-2xl flex-1 flex-col px-4 pb-20 pt-8 sm:px-6 sm:pt-12">
         <nav className="mb-6 text-sm">
           <Link
             href="/cours"
-            className="font-medium text-brandblue hover:underline dark:text-brandblue"
+            className="font-medium text-electric hover:underline"
           >
             {t("backToQuizzes")}
           </Link>
         </nav>
 
-        <div className="rounded-2xl border border-navy/10 bg-white/90 p-6 shadow-md dark:border-slate-700 dark:bg-slate-900/60 sm:p-8">
-          <p className="text-[11px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
+        <div className="card-elevated p-6 sm:p-8">
+          <p className="text-[11px] font-bold uppercase tracking-wider text-success">
             {t("badge")}
           </p>
-          <h1 className="mt-2 text-xl font-bold text-navy dark:text-white sm:text-2xl">
+          <h1 className="font-display mt-2 text-xl font-bold text-navy sm:text-2xl">
             {exercise.title}
           </h1>
-          <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
+          <p className="mt-1 text-sm text-muted-text">
             {matiereLabel} · {niveauLabel} · {exercise.chapitre}
           </p>
-          <p className="mt-4 text-xs text-slate-500 dark:text-slate-500">
+          <p className="mt-4 text-xs text-muted-text">
             {t("noteBody")}
           </p>
 
@@ -123,6 +123,6 @@ export default async function PublicQuizPage({ params }: PageProps) {
           </div>
         </div>
       </main>
-    </>
+    </div>
   );
 }

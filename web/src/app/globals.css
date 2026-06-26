@@ -2,12 +2,12 @@
 
 @source "../**/*.{js,ts,jsx,tsx}";
 
-/* CorrecteurPlus — palette premium EdTech IA */
+/* CorrecteurPlus — palette premium EdTech IA (interface claire) */
 :root {
   --background: #f4f9ff;
   --background-secondary: #eaf4ff;
   --foreground: #061b4e;
-  --surface: rgba(255, 255, 255, 0.72);
+  --surface: rgba(255, 255, 255, 0.74);
   --surface-elevated: rgba(255, 255, 255, 0.85);
   --muted: #64748b;
   --border: #d8e8ff;
@@ -23,22 +23,8 @@
   --brand-muted: rgba(10, 108, 255, 0.08);
   --ring: rgba(21, 216, 255, 0.35);
   --header-h: 4.25rem;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #061b4e;
-    --background-secondary: #0a2558;
-    --foreground: #f4f9ff;
-    --surface: rgba(10, 37, 88, 0.75);
-    --surface-elevated: rgba(10, 37, 88, 0.9);
-    --muted: #94a3b8;
-    --border: rgba(216, 232, 255, 0.15);
-    --brand: #15d8ff;
-    --brand-hover: #0a6cff;
-    --brand-muted: rgba(21, 216, 255, 0.12);
-    --ring: rgba(21, 216, 255, 0.35);
-  }
+  --footer-bg: #061b4e;
+  --footer-text: #f8fbff;
 }
 
 @theme inline {
@@ -63,6 +49,7 @@
 
 html {
   scroll-behavior: smooth;
+  color-scheme: light;
 }
 
 body {
@@ -72,27 +59,18 @@ body {
   font-feature-settings: "rlig" 1, "calt" 1;
 }
 
-/* Fond global doux — radial cyan + vert + gradient vertical */
+/* Fond global — toujours clair et doux */
 .site-bg {
   background-color: var(--background);
   background-image:
-    radial-gradient(ellipse 80% 60% at 0% 0%, rgba(21, 216, 255, 0.12), transparent 55%),
-    radial-gradient(ellipse 70% 50% at 100% 0%, rgba(46, 230, 107, 0.08), transparent 50%),
-    linear-gradient(180deg, var(--background-secondary) 0%, var(--background) 45%, #f8fbff 100%);
+    radial-gradient(circle at top left, rgba(21, 216, 255, 0.16), transparent 34%),
+    radial-gradient(circle at top right, rgba(46, 230, 107, 0.08), transparent 30%),
+    linear-gradient(180deg, #f4f9ff 0%, #eaf4ff 45%, #f8fbff 100%);
   min-height: 100dvh;
 }
 
 .page-bg {
   background: transparent;
-}
-
-@media (prefers-color-scheme: dark) {
-  .site-bg {
-    background-image:
-      radial-gradient(ellipse 80% 60% at 0% 0%, rgba(21, 216, 255, 0.1), transparent 55%),
-      radial-gradient(ellipse 70% 50% at 100% 0%, rgba(46, 230, 107, 0.06), transparent 50%),
-      linear-gradient(180deg, #061b4e 0%, #0a2558 50%, #061b4e 100%);
-  }
 }
 
 @layer components {
@@ -108,7 +86,7 @@ body {
   }
 
   .input-field {
-    @apply w-full rounded-2xl border border-border-soft bg-white/80 px-3.5 py-2.5 text-sm text-navy shadow-sm backdrop-blur-sm transition-[border-color,box-shadow] placeholder:text-muted-text focus:border-electric/50 focus:outline-none focus:ring-2 focus:ring-cyan-ai/25 dark:border-slate-700 dark:bg-slate-900/80 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:border-cyan-ai/50 dark:focus:ring-cyan-ai/20;
+    @apply w-full rounded-2xl border border-border-soft bg-white/80 px-3.5 py-2.5 text-sm text-navy shadow-sm backdrop-blur-sm transition-[border-color,box-shadow] placeholder:text-muted-text focus:border-electric/50 focus:outline-none focus:ring-2 focus:ring-cyan-ai/25;
   }
 
   .btn-primary {
@@ -116,42 +94,57 @@ body {
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center rounded-full border border-border-soft bg-white/60 px-5 py-2.5 text-sm font-semibold text-navy shadow-sm backdrop-blur-sm transition hover:border-electric/30 hover:bg-background-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-ai/30 dark:border-slate-600 dark:bg-slate-800/60 dark:text-slate-100 dark:hover:border-cyan-ai/30 dark:hover:bg-slate-800;
+    @apply inline-flex items-center justify-center rounded-full border border-border-soft bg-white/60 px-5 py-2.5 text-sm font-semibold text-navy shadow-sm backdrop-blur-sm transition hover:border-electric/30 hover:bg-background-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-ai/30;
   }
 
   .card-elevated {
-    @apply rounded-[22px] border border-border-soft bg-white/70 shadow-md shadow-electric/[0.06] backdrop-blur-md transition duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-electric/10 dark:border-slate-700/80 dark:bg-slate-900/50 dark:shadow-black/20;
+    @apply rounded-[22px] border border-border-soft bg-white/[0.74] shadow-md shadow-electric/[0.06] backdrop-blur-md transition duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-electric/10;
   }
 
   .glass-card {
-    @apply rounded-[22px] border border-border-soft bg-white/65 shadow-md shadow-electric/[0.06] backdrop-blur-lg dark:border-slate-700/80 dark:bg-slate-900/45;
+    @apply rounded-[22px] border border-border-soft bg-white/[0.74] shadow-md shadow-electric/[0.06] backdrop-blur-lg;
   }
 
   .brand-card {
-    @apply rounded-[22px] border border-border-soft bg-gradient-to-br from-white/80 via-white/70 to-electric/[0.04] shadow-md shadow-electric/[0.08] backdrop-blur-md dark:border-slate-700/90 dark:from-slate-900/90 dark:via-slate-900/70 dark:to-cyan-ai/[0.06];
+    @apply rounded-[22px] border border-border-soft bg-gradient-to-br from-white/[0.84] via-white/[0.74] to-electric/[0.04] shadow-md shadow-electric/[0.08] backdrop-blur-md;
   }
 
   .brand-card-inner {
-    @apply border-s-4 border-cyan-ai/50 ps-4 dark:border-cyan-ai/40;
+    @apply border-s-4 border-cyan-ai/50 ps-4;
   }
 
   .brand-section-title {
-    @apply text-[11px] font-bold uppercase tracking-[0.22em] text-electric dark:text-cyan-ai;
+    @apply text-[11px] font-bold uppercase tracking-[0.22em] text-electric;
   }
 
   .brand-section-subtitle {
-    @apply mt-1 text-sm leading-relaxed text-muted-text dark:text-slate-400;
+    @apply mt-1 text-sm leading-relaxed text-muted-text;
   }
 
   .brand-list-item {
-    @apply rounded-2xl border border-border-soft bg-white/70 px-4 py-3 shadow-sm backdrop-blur-sm transition hover:border-electric/25 hover:shadow-md hover:shadow-electric/5 dark:border-slate-700/80 dark:bg-slate-900/40 dark:hover:border-cyan-ai/30;
+    @apply rounded-2xl border border-border-soft bg-white/[0.74] px-4 py-3 shadow-sm backdrop-blur-sm transition hover:border-electric/25 hover:shadow-md hover:shadow-electric/5;
   }
 
   .select-field {
-    @apply min-h-[42px] w-full rounded-2xl border border-border-soft bg-white/80 px-3.5 py-2 text-sm text-navy shadow-sm backdrop-blur-sm transition-[border-color,box-shadow] focus:border-electric/50 focus:outline-none focus:ring-2 focus:ring-cyan-ai/25 dark:border-slate-700 dark:bg-slate-900/80 dark:text-slate-100 dark:focus:border-cyan-ai/50 dark:focus:ring-cyan-ai/20;
+    @apply min-h-[42px] w-full rounded-2xl border border-border-soft bg-white/80 px-3.5 py-2 text-sm text-navy shadow-sm backdrop-blur-sm transition-[border-color,box-shadow] focus:border-electric/50 focus:outline-none focus:ring-2 focus:ring-cyan-ai/25;
   }
 
   .header-glass {
-    @apply sticky top-0 z-40 border-b border-border-soft/80 bg-white/55 shadow-sm shadow-electric/[0.04] backdrop-blur-xl dark:border-slate-700/50 dark:bg-navy/70;
+    @apply sticky top-0 z-40 border-b border-border-soft/80 bg-white/55 shadow-sm shadow-electric/[0.04] backdrop-blur-xl;
+  }
+
+  /** CTA final — card premium claire, sans fond navy */
+  .cta-premium-card {
+    @apply relative overflow-hidden rounded-[24px] border border-border-soft bg-white/[0.74] px-6 py-10 text-center shadow-lg shadow-electric/10 backdrop-blur-md sm:px-10 sm:py-12;
+  }
+
+  .cta-premium-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 0% 0%, rgba(21, 216, 255, 0.14), transparent 42%),
+      radial-gradient(circle at 100% 0%, rgba(46, 230, 107, 0.08), transparent 38%);
   }
 }

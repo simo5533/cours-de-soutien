@@ -93,7 +93,7 @@ export function PublicQuizCatalog({ groups }: { groups: QuizCatalogGroup[] }) {
 
   return (
     <div className="space-y-10">
-      <div className="flex flex-col gap-3 rounded-2xl border border-navy/10 bg-white/85 p-4 dark:border-slate-700 dark:bg-slate-900/55 sm:flex-row sm:flex-wrap sm:items-end">
+      <div className="flex flex-col gap-3 rounded-2xl border border-border-soft bg-white/[0.74] p-4 backdrop-blur-sm sm:flex-row sm:flex-wrap sm:items-end">
         <label className="flex min-w-[12rem] flex-1 flex-col gap-1 text-xs font-semibold text-navy dark:text-gold/90">
           {t("filterMatiereLabel")}
           <select

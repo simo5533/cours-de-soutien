@@ -85,7 +85,7 @@ export function LanguageSwitcher({
         </button>
         {open ? (
           <ul
-            className="absolute end-0 z-[70] mt-2 min-w-[11rem] overflow-hidden rounded-xl border border-border-soft bg-white py-1 text-sm shadow-xl shadow-electric/10 backdrop-blur-xl dark:border-slate-600 dark:bg-navy"
+            className="absolute end-0 z-[70] mt-2 min-w-[11rem] overflow-hidden rounded-xl border border-border-soft bg-white py-1 text-sm shadow-xl shadow-electric/10 backdrop-blur-xl"
             role="listbox"
             aria-label={t("chooseLanguage")}
           >

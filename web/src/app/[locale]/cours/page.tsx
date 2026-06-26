@@ -1,3 +1,4 @@
+import { CtaPremiumSection } from "@/components/cta-premium-section";
 import { Link } from "@/i18n/navigation";
 import { PublicQuizCatalog } from "@/components/public-quiz-catalog";
 import { PublicPageShell } from "@/components/public-page-shell";
@@ -99,25 +100,25 @@ export default async function CoursPublicPage({ params }: PageProps) {
 
         {/* Langues — article partie gratuite */}
         <section
-          className="relative mt-14 overflow-hidden rounded-3xl border border-brandblue/20 bg-gradient-to-br from-white via-brandblue/[0.04] to-white px-6 py-8 shadow-md ring-1 ring-gold/10 dark:border-slate-700/80 dark:from-slate-900/80 dark:via-brandblue/[0.06] dark:to-slate-900/70 sm:px-8"
+          className="relative mt-14 overflow-hidden rounded-[24px] border border-border-soft bg-white/[0.74] px-6 py-8 shadow-md backdrop-blur-md sm:px-8"
           aria-labelledby="langues-gratuit-heading"
         >
           <div
-            className="pointer-events-none absolute -end-16 -top-12 h-40 w-40 rounded-full bg-brandblue/10 blur-2xl dark:bg-brandblue/15"
+            className="pointer-events-none absolute -end-16 -top-12 h-40 w-40 rounded-full bg-cyan-ai/10 blur-2xl"
             aria-hidden
           />
           <h2
             id="langues-gratuit-heading"
-            className="relative text-lg font-bold text-navy dark:text-white sm:text-xl"
+            className="relative text-lg font-bold text-navy sm:text-xl"
           >
             {ta("catalogTeaserTitle")}
           </h2>
-          <p className="relative mt-2 max-w-2xl text-sm leading-relaxed text-slate-600 dark:text-slate-400 sm:text-base">
+          <p className="relative mt-2 max-w-2xl text-sm leading-relaxed text-muted-text sm:text-base">
             {ta("catalogTeaserBody")}
           </p>
           <Link
             href="/cours-gratuits-langues"
-            className="relative mt-4 inline-flex items-center rounded-xl bg-navy px-5 py-2.5 text-sm font-semibold text-gold shadow-md transition hover:bg-navy/90 dark:bg-brandblue dark:text-white dark:hover:bg-brandblue/90"
+            className="btn-primary relative mt-4 inline-flex items-center !py-2.5"
           >
             {ta("catalogTeaserCta")}
           </Link>
@@ -136,7 +137,7 @@ export default async function CoursPublicPage({ params }: PageProps) {
               <div className="brand-card-inner border-s-4 border-gold/50 ps-4">
                 <h3 className="flex items-center gap-2 text-sm font-bold text-navy dark:text-gold">
                   <span
-                    className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-brandblue to-navy text-white shadow-md"
+                    className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-electric to-cyan-ai text-white shadow-md"
                     aria-hidden
                   >
                     <svg
@@ -240,7 +241,7 @@ export default async function CoursPublicPage({ params }: PageProps) {
               <div className="brand-card-inner border-s-4 border-gold/50 ps-4">
                 <h3 className="flex items-center gap-2 text-sm font-bold text-navy dark:text-gold">
                   <span
-                    className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-navy to-brandblue text-white shadow-md"
+                    className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-premium to-electric text-white shadow-md"
                     aria-hidden
                   >
                     <svg
@@ -330,26 +331,15 @@ export default async function CoursPublicPage({ params }: PageProps) {
           </div>
         </section>
 
-        {/* CTA bandeau */}
-        <section className="mt-16 overflow-hidden rounded-3xl border border-gold/30 bg-navy px-6 py-10 text-center shadow-xl sm:px-10">
-          <h2 className="text-xl font-bold text-gold sm:text-2xl">
-            {t("ctaTitle")}
-          </h2>
-          <p className="mx-auto mt-3 max-w-lg text-sm text-white/80">
-            {t("ctaBody")}
-          </p>
-          <div className="mt-6 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:justify-center">
-            <Link href="/connexion" className="btn-primary !px-8">
-              {t("ctaLogin")}
-            </Link>
-            <Link
-              href="/inscription"
-              className="inline-flex items-center justify-center rounded-xl border border-white/30 bg-white/10 px-8 py-2.5 text-sm font-semibold text-white backdrop-blur transition hover:bg-white/15"
-            >
-              {t("ctaSignup")}
-            </Link>
-          </div>
-        </section>
+        <CtaPremiumSection
+          className="mt-16"
+          title={t("ctaTitle")}
+          subtitle={t("ctaBody")}
+          primaryHref="/connexion"
+          primaryLabel={t("ctaLogin")}
+          secondaryHref="/inscription"
+          secondaryLabel={t("ctaSignup")}
+        />
     </PublicPageShell>
   );
 }

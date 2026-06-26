@@ -102,37 +102,37 @@ export function PublicQcmRunner({
         </fieldset>
       ))}
       {message ? (
-        <div className="space-y-4 rounded-xl border border-brandblue/20 bg-brandblue/10 px-4 py-4 dark:border-brandblue/25 dark:bg-brandblue/10">
-          <p className="text-sm font-medium text-navy dark:text-brandblue/95">{message}</p>
-          <p className="text-xs text-slate-600 dark:text-slate-400">{t("freeNote")}</p>
+        <div className="space-y-4 rounded-xl border border-border-soft bg-white/[0.74] px-4 py-4 backdrop-blur-sm">
+          <p className="text-sm font-medium text-navy">{message}</p>
+          <p className="text-xs text-muted-text">{t("freeNote")}</p>
           {result && result.errorCount > 0 ? (
             <div className="flex flex-col gap-3 pt-2 sm:flex-row">
               <Link
                 href="/inscription?plan=free"
-                className="inline-flex justify-center rounded-full bg-navy px-5 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-navy/90 dark:bg-brandblue"
+                className="btn-primary inline-flex justify-center !py-2.5"
               >
                 {t("correctErrorsCta")}
               </Link>
               <Link
                 href="/tarifs"
-                className="inline-flex justify-center rounded-full border border-navy/30 bg-white px-5 py-2.5 text-center text-sm font-semibold text-navy transition hover:bg-slate-50 dark:border-brandblue/40 dark:bg-slate-900 dark:text-brandblue"
+                className="btn-secondary inline-flex justify-center !py-2.5"
               >
                 {t("teacherValidationCta")}
               </Link>
             </div>
           ) : null}
           {result && result.errorCount > 0 ? (
-            <p className="text-xs text-slate-600 dark:text-slate-400">{t("teacherValidationHint")}</p>
+            <p className="text-xs text-muted-text">{t("teacherValidationHint")}</p>
           ) : null}
           {result ? (
-            <p className="text-xs text-slate-500">{t("signupForAi")}</p>
+            <p className="text-xs text-muted-text">{t("signupForAi")}</p>
           ) : null}
         </div>
       ) : null}
       <button
         type="submit"
         disabled={pending}
-        className="rounded-full bg-navy px-5 py-2 text-sm font-medium text-white disabled:opacity-60"
+        className="btn-primary disabled:opacity-60"
       >
         {pending ? t("submitting") : t("submit")}
       </button>
