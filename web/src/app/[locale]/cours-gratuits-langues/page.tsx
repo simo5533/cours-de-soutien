@@ -1,5 +1,5 @@
 import { CtaPremiumSection } from "@/components/cta-premium-section";
-import { SiteHeader } from "@/components/site-header";
+import { PublicPageFrame } from "@/components/public-page-frame";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 import type { Metadata } from "next";
@@ -144,9 +144,7 @@ export default async function CoursGratuitsLanguesPage({ params }: PageProps) {
   const packsStem = freeBlock?.stemSubjects;
 
   return (
-    <div className="site-bg flex min-h-full flex-col">
-      <SiteHeader />
-      <main className="page-bg mx-auto flex w-full max-w-3xl flex-1 flex-col px-4 pb-16 pt-8 sm:px-6 sm:pt-12">
+    <PublicPageFrame mainClassName="page-bg mx-auto flex w-full max-w-3xl flex-1 flex-col px-4 pb-16 pt-8 sm:px-6 sm:pt-12">
         <article
           className="relative overflow-hidden rounded-[24px] border border-border-soft bg-white/[0.74] px-6 py-10 shadow-md backdrop-blur-md sm:px-10 sm:py-12"
           itemScope
@@ -269,7 +267,6 @@ export default async function CoursGratuitsLanguesPage({ params }: PageProps) {
           secondaryHref="/cours"
           secondaryLabel={t("ctaCatalog")}
         />
-      </main>
-    </div>
+    </PublicPageFrame>
   );
 }

@@ -1,4 +1,4 @@
-import { SiteHeader } from "@/components/site-header";
+import { PublicPageFrame } from "@/components/public-page-frame";
 import { getAllBlogPostsSorted } from "@/content/blog-posts";
 import type { BlogLocale } from "@/content/blog-posts";
 import { Link } from "@/i18n/navigation";
@@ -29,9 +29,7 @@ export default async function BlogIndexPage({ params }: Props) {
   const posts = getAllBlogPostsSorted();
 
   return (
-    <div className="site-bg flex min-h-full flex-col">
-      <SiteHeader />
-      <main className="page-bg mx-auto flex w-full max-w-6xl flex-1 flex-col px-4 pb-20 pt-8 sm:px-6 sm:pt-12">
+    <PublicPageFrame>
         <header className="relative overflow-hidden rounded-[24px] border border-border-soft bg-white/[0.74] px-6 py-10 shadow-md backdrop-blur-md sm:px-10 sm:py-12">
           <div
             className="pointer-events-none absolute -end-20 -top-20 h-64 w-64 rounded-full bg-cyan-ai/15 blur-3xl"
@@ -98,7 +96,6 @@ export default async function BlogIndexPage({ params }: Props) {
             </Link>
           </div>
         </section>
-      </main>
-    </div>
+      </PublicPageFrame>
   );
 }

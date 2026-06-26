@@ -1,4 +1,4 @@
-import { SiteHeader } from "@/components/site-header";
+import { PublicPageFrame } from "@/components/public-page-frame";
 import {
   BLOG_POSTS,
   getBlogPostBySlug,
@@ -42,22 +42,20 @@ export default async function BlogArticlePage({ params }: Props) {
   const paragraphs = post.paragraphs[lang];
 
   return (
-    <>
-      <SiteHeader />
-      <main className="page-bg mx-auto flex w-full max-w-3xl flex-1 flex-col px-4 pb-20 pt-8 sm:px-6 sm:pt-12">
+    <PublicPageFrame mainClassName="page-bg mx-auto flex w-full max-w-3xl flex-1 flex-col px-4 pb-16 pt-8 sm:px-6 sm:pt-12">
         <p>
           <Link
             href="/blog"
-            className="text-sm font-semibold text-brandblue underline-offset-2 hover:underline dark:text-gold"
+            className="text-sm font-semibold text-electric underline-offset-2 hover:underline"
           >
             {t("back")}
           </Link>
         </p>
 
-        <article className="mt-6 rounded-3xl border border-navy/10 bg-white/90 px-6 py-10 shadow-sm dark:border-slate-700 dark:bg-slate-900/60 sm:px-10">
+        <article className="card-elevated mt-6 px-6 py-10 sm:px-10">
           <time
             dateTime={post.publishedAt}
-            className="text-xs font-semibold uppercase tracking-wide text-brandblue dark:text-brandblue/90"
+            className="text-xs font-semibold uppercase tracking-wide text-electric"
           >
             {new Date(post.publishedAt + "T12:00:00").toLocaleDateString(
               lang === "ar" ? "ar-MA" : "fr-FR",
@@ -68,21 +66,21 @@ export default async function BlogArticlePage({ params }: Props) {
               },
             )}
           </time>
-          <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-navy dark:text-white sm:text-4xl">
+          <h1 className="font-display mt-4 text-3xl font-extrabold tracking-tight text-navy sm:text-4xl">
             {post.title[lang]}
           </h1>
-          <p className="mt-4 text-lg font-medium text-slate-600 dark:text-slate-300">
+          <p className="mt-4 text-lg font-medium text-muted-text">
             {post.excerpt[lang]}
           </p>
-          <div className="mt-8 space-y-4 text-base leading-relaxed text-slate-700 dark:text-slate-300">
+          <div className="mt-8 space-y-4 text-base leading-relaxed text-navy/90">
             {paragraphs.map((p, i) => (
               <p key={i}>{p}</p>
             ))}
           </div>
 
-          <div className="mt-10 border-t border-navy/10 pt-8 dark:border-slate-700">
-            <p className="font-semibold text-navy dark:text-gold">{t("ctaTitle")}</p>
-            <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
+          <div className="mt-10 border-t border-border-soft pt-8">
+            <p className="font-semibold text-navy">{t("ctaTitle")}</p>
+            <p className="mt-2 text-sm text-muted-text">
               {t("ctaBody")}
             </p>
             <Link href="/inscription" className="btn-primary mt-4 inline-flex">
@@ -90,7 +88,6 @@ export default async function BlogArticlePage({ params }: Props) {
             </Link>
           </div>
         </article>
-      </main>
-    </>
+    </PublicPageFrame>
   );
 }

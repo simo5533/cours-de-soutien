@@ -1,4 +1,4 @@
-import { SiteHeader } from "@/components/site-header";
+import { PublicPageFrame } from "@/components/public-page-frame";
 import { PublicQcmRunner } from "@/components/public-qcm-runner";
 import { Link } from "@/i18n/navigation";
 import { prisma } from "@/lib/prisma";
@@ -89,9 +89,7 @@ export default async function PublicQuizPage({ params }: PageProps) {
   }
 
   return (
-    <div className="site-bg flex min-h-full flex-col">
-      <SiteHeader />
-      <main className="page-bg mx-auto flex w-full max-w-2xl flex-1 flex-col px-4 pb-20 pt-8 sm:px-6 sm:pt-12">
+    <PublicPageFrame mainClassName="page-bg mx-auto flex w-full max-w-2xl flex-1 flex-col px-4 pb-16 pt-8 sm:px-6 sm:pt-12">
         <nav className="mb-6 text-sm">
           <Link
             href="/cours"
@@ -122,7 +120,6 @@ export default async function PublicQuizPage({ params }: PageProps) {
             />
           </div>
         </div>
-      </main>
-    </div>
+    </PublicPageFrame>
   );
 }

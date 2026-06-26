@@ -1,4 +1,4 @@
-import { SiteHeader } from "@/components/site-header";
+import { PublicPageFrame } from "@/components/public-page-frame";
 import { fulfillEleveRegistrationFromLemonSqueezyOrder } from "@/lib/fulfill-eleve-registration-lemon-squeezy";
 import { fulfillEleveRegistrationFromPaddleTransaction } from "@/lib/fulfill-eleve-registration-paddle";
 import { fulfillEleveRegistrationFromStripeSession } from "@/lib/fulfill-eleve-registration";
@@ -70,15 +70,14 @@ export default async function InscriptionSuccesPage({
   }
 
   return (
-    <>
-      <SiteHeader />
-      <div className="mx-auto w-full max-w-md px-4 py-16 text-center sm:py-20">
-        <div className="card-elevated p-10 shadow-xl shadow-slate-900/5 dark:shadow-black/40">
+    <PublicPageFrame mainClassName="page-bg mx-auto flex w-full max-w-md flex-1 flex-col px-4 pb-16 pt-8 sm:px-6 sm:pt-12">
+      <div className="py-8 text-center sm:py-12">
+        <div className="card-elevated p-10 shadow-xl shadow-electric/[0.06]">
           <div
             className={`mx-auto flex h-14 w-14 items-center justify-center rounded-full ${
               ok
-                ? "bg-brandblue/15 text-navy dark:bg-brandblue/20 dark:text-brandblue"
-                : "bg-amber-500/15 text-amber-800 dark:bg-amber-500/20 dark:text-amber-200"
+                ? "bg-success/15 text-success"
+                : "bg-amber-500/15 text-amber-800"
             }`}
           >
             {ok ? (
@@ -111,10 +110,10 @@ export default async function InscriptionSuccesPage({
               </svg>
             )}
           </div>
-          <p className="mt-6 text-lg font-bold text-slate-900 dark:text-white">
+          <p className="mt-6 text-lg font-bold text-navy">
             {title}
           </p>
-          <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+          <p className="mt-2 text-sm leading-relaxed text-muted-text">
             {message}
           </p>
           {ok ? (
@@ -134,14 +133,14 @@ export default async function InscriptionSuccesPage({
           )}
         </div>
       </div>
-      <p className="pb-10 text-center text-sm">
+      <p className="pb-4 text-center text-sm">
         <Link
           href="/"
-          className="font-medium text-slate-600 underline-offset-4 transition hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
+          className="font-medium text-electric underline-offset-4 transition hover:text-premium"
         >
           ← Retour à l’accueil
         </Link>
       </p>
-    </>
+    </PublicPageFrame>
   );
 }

@@ -134,8 +134,8 @@ export default async function CoursPublicPage({ params }: PageProps) {
           </p>
           <div className="mt-8 grid gap-5 md:grid-cols-3">
             <div className="brand-card p-5">
-              <div className="brand-card-inner border-s-4 border-gold/50 ps-4">
-                <h3 className="flex items-center gap-2 text-sm font-bold text-navy dark:text-gold">
+              <div className="brand-card-inner border-s-4 border-cyan-ai/40 ps-4">
+                <h3 className="flex items-center gap-2 text-sm font-bold text-navy">
                   <span
                     className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-electric to-cyan-ai text-white shadow-md"
                     aria-hidden
@@ -158,8 +158,8 @@ export default async function CoursPublicPage({ params }: PageProps) {
                 </h3>
                 <ul className="mt-4 space-y-4">
                   {CATALOG_LANGUAGE_MATIERES.map((m) => (
-                    <li key={m} className="text-sm text-slate-700 dark:text-slate-300">
-                      <div className="flex items-center gap-2 font-semibold text-navy dark:text-slate-100">
+                    <li key={m} className="text-sm text-muted-text">
+                      <div className="flex items-center gap-2 font-semibold text-navy">
                         <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-brandblue" />
                         {t(
                           `matieres.${CATALOG_MATIERE_I18N_KEY[m]}` as Parameters<
@@ -167,11 +167,11 @@ export default async function CoursPublicPage({ params }: PageProps) {
                           >[0],
                         )}
                       </div>
-                      <ul className="ms-5 mt-2 space-y-1 border-s border-brandblue/25 ps-3 dark:border-brandblue/35">
+                      <ul className="ms-5 mt-2 space-y-1 border-s border-brandblue/25 ps-3">
                         {LANGUAGE_LEVEL_KEYS.map((lv) => (
                           <li
                             key={`${m}-${lv}`}
-                            className="text-xs leading-relaxed text-slate-600 dark:text-slate-400"
+                            className="text-xs leading-relaxed text-muted-text"
                           >
                             {t(
                               `langLevels.${lv}` as Parameters<typeof t>[0],
@@ -185,8 +185,8 @@ export default async function CoursPublicPage({ params }: PageProps) {
               </div>
             </div>
             <div className="brand-card p-5">
-              <div className="brand-card-inner border-s-4 border-gold/50 ps-4">
-                <h3 className="flex items-center gap-2 text-sm font-bold text-navy dark:text-gold">
+              <div className="brand-card-inner border-s-4 border-cyan-ai/40 ps-4">
+                <h3 className="flex items-center gap-2 text-sm font-bold text-navy">
                   <span
                     className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-violet-600 to-brandblue text-white shadow-md"
                     aria-hidden
@@ -209,8 +209,8 @@ export default async function CoursPublicPage({ params }: PageProps) {
                 </h3>
                 <ul className="mt-4 space-y-4">
                   {CATALOG_STEM_MATIERES.map((m) => (
-                    <li key={m} className="text-sm text-slate-700 dark:text-slate-300">
-                      <div className="flex items-center gap-2 font-semibold text-navy dark:text-slate-100">
+                    <li key={m} className="text-sm text-muted-text">
+                      <div className="flex items-center gap-2 font-semibold text-navy">
                         <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-violet-500" />
                         {t(
                           `matieres.${CATALOG_STEM_MATIERE_I18N_KEY[m]}` as Parameters<
@@ -218,11 +218,11 @@ export default async function CoursPublicPage({ params }: PageProps) {
                           >[0],
                         )}
                       </div>
-                      <ul className="ms-5 mt-2 space-y-1 border-s border-violet-400/35 ps-3 dark:border-violet-500/40">
+                      <ul className="ms-5 mt-2 space-y-1 border-s border-violet-400/35 ps-3">
                         {STEM_LEVEL_KEYS.map((lv) => (
                           <li
                             key={`${m}-${lv}`}
-                            className="text-xs leading-relaxed text-slate-600 dark:text-slate-400"
+                            className="text-xs leading-relaxed text-muted-text"
                           >
                             {t(
                               `niveaux.${NIVEAU_CATALOG_I18N_KEY[lv]}` as Parameters<
@@ -238,8 +238,8 @@ export default async function CoursPublicPage({ params }: PageProps) {
               </div>
             </div>
             <div className="brand-card p-5">
-              <div className="brand-card-inner border-s-4 border-gold/50 ps-4">
-                <h3 className="flex items-center gap-2 text-sm font-bold text-navy dark:text-gold">
+              <div className="brand-card-inner border-s-4 border-cyan-ai/40 ps-4">
+                <h3 className="flex items-center gap-2 text-sm font-bold text-navy">
                   <span
                     className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-premium to-electric text-white shadow-md"
                     aria-hidden
@@ -264,7 +264,7 @@ export default async function CoursPublicPage({ params }: PageProps) {
                   {NIVEAUX.map((n) => (
                     <li
                       key={n}
-                      className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300"
+                      className="flex items-center gap-2 text-sm text-muted-text"
                     >
                       <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-gold" />
                       {t(
@@ -275,7 +275,7 @@ export default async function CoursPublicPage({ params }: PageProps) {
                     </li>
                   ))}
                 </ul>
-                <p className="mt-4 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                <p className="mt-4 text-sm leading-relaxed text-muted-text">
                   {t("chapterHint")}
                 </p>
               </div>
@@ -286,10 +286,10 @@ export default async function CoursPublicPage({ params }: PageProps) {
         {/* Quiz populaires */}
         {popular.length > 0 ? (
           <section className="mt-14" aria-labelledby="popular-quiz-heading">
-            <h2 id="popular-quiz-heading" className="text-xl font-bold text-navy dark:text-white">
+            <h2 id="popular-quiz-heading" className="text-xl font-bold text-navy">
               {t("popularTitle")}
             </h2>
-            <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">{t("popularSubtitle")}</p>
+            <p className="mt-1 text-sm text-muted-text">{t("popularSubtitle")}</p>
             <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {popular.map((q) => (
                 <li key={q.id}>
@@ -298,8 +298,8 @@ export default async function CoursPublicPage({ params }: PageProps) {
                     className="card-elevated flex h-full flex-col rounded-2xl p-5 transition hover:-translate-y-0.5 hover:shadow-lg"
                   >
                     <span className="text-xs font-bold uppercase tracking-wide text-brandblue">QCM</span>
-                    <h3 className="mt-2 font-bold text-navy dark:text-white">{q.title}</h3>
-                    <p className="mt-2 text-xs text-slate-500">
+                    <h3 className="mt-2 font-bold text-navy">{q.title}</h3>
+                    <p className="mt-2 text-xs text-muted-text">
                       {q.matiere} · {q.niveau}
                     </p>
                     <span className="mt-4 text-sm font-semibold text-brandblue">{t("startFreeQuiz")} →</span>
@@ -316,11 +316,11 @@ export default async function CoursPublicPage({ params }: PageProps) {
             <div>
               <h2
                 id="liste-qcm-heading"
-                className="text-xl font-bold tracking-tight text-navy dark:text-white sm:text-2xl"
+                className="text-xl font-bold tracking-tight text-navy sm:text-2xl"
               >
                 {t("listTitle")}
               </h2>
-              <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
+              <p className="mt-1 text-sm text-muted-text">
                 {t("listSubtitle")}
               </p>
             </div>

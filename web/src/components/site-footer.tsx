@@ -25,7 +25,7 @@ export async function SiteFooter() {
               alt="CorrecteurPlus"
               width={200}
               height={56}
-              className="h-10 w-auto brightness-0 invert"
+              className="h-10 w-auto object-contain object-left"
             />
             <p className="mt-3 text-sm leading-relaxed text-[#F8FBFF]/75">
               {t("tagline")}
