@@ -12,7 +12,7 @@ export default async function CoursEnLignePublicPage({ params }: PageProps) {
 
   return (
     <PublicPageShell>
-      <Link href="/" className="text-sm font-medium text-brandblue hover:underline">
+      <Link href="/" className="text-sm font-medium text-electric hover:underline">
         ← {t("backHome")}
       </Link>
 
@@ -20,10 +20,10 @@ export default async function CoursEnLignePublicPage({ params }: PageProps) {
         <p className="text-xs font-semibold uppercase tracking-wider text-brandblue">
           {t("eyebrow")}
         </p>
-        <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-navy dark:text-white sm:text-4xl">
+        <h1 className="font-display mt-2 text-3xl font-extrabold tracking-tight text-navy sm:text-4xl">
           {t("title")}
         </h1>
-        <p className="mt-4 text-base leading-relaxed text-slate-600 dark:text-slate-300">
+        <p className="mt-4 text-base leading-relaxed text-muted-text">
           {t("intro")}
         </p>
       </header>
@@ -38,19 +38,19 @@ export default async function CoursEnLignePublicPage({ params }: PageProps) {
             key={s.n}
             className="card-elevated rounded-2xl p-5"
           >
-            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-navy text-sm font-bold text-white">
+            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-electric to-cyan-ai text-sm font-bold text-white">
               {s.n}
             </span>
             <h2 className="mt-3 font-semibold text-navy dark:text-white">{s.title}</h2>
-            <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">{s.desc}</p>
+            <p className="mt-2 text-sm text-muted-text">{s.desc}</p>
           </div>
         ))}
       </section>
 
-      <ul className="mt-8 grid gap-2 text-sm text-slate-600 dark:text-slate-400 sm:grid-cols-3">
-        <li>✓ {t("bullet1")}</li>
-        <li>✓ {t("bullet2")}</li>
-        <li>✓ {t("bullet3")}</li>
+      <ul className="mt-8 grid gap-2 text-sm text-muted-text sm:grid-cols-3">
+        <li className="flex items-center gap-2"><span className="text-success">✓</span> {t("bullet1")}</li>
+        <li className="flex items-center gap-2"><span className="text-success">✓</span> {t("bullet2")}</li>
+        <li className="flex items-center gap-2"><span className="text-success">✓</span> {t("bullet3")}</li>
       </ul>
 
       <div className="mt-10">

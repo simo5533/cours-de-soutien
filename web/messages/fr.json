@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "title": "Correction d'exercices en ligne au Maroc | IA & Professeurs - Methodix",
-    "description": "Methodix aide les élèves à corriger leurs exercices en ligne avec l'IA et des professeurs. Quiz gratuits, corrections détaillées, préparation Bac et programme marocain."
+    "title": "Correction d'exercices en ligne au Maroc | IA & Professeurs - CorrecteurPlus",
+    "description": "CorrecteurPlus aide les élèves à corriger leurs exercices en ligne avec l'IA et des professeurs. Quiz gratuits, corrections détaillées, préparation Bac et programme marocain."
   },
   "HomePage": {
     "badge": "Correction d'exercices — IA et professeurs",
@@ -23,7 +23,7 @@
     "step1Title": "Prends une photo",
     "step1Desc": "Photographie ton exercice ou envoie ton devoir en PDF.",
     "step2Title": "L'IA analyse",
-    "step2Desc": "Methodix lit la question et identifie tes erreurs.",
+    "step2Desc": "CorrecteurPlus lit la question et identifie tes erreurs.",
     "step3Title": "Correction expliquée",
     "step3Desc": "Tu reçois une correction détaillée, étape par étape.",
     "step4Title": "Aide professeur",
@@ -39,15 +39,15 @@
     "helpquizTitle": "Quiz gratuits",
     "helpquizDesc": "Entraîne-toi par matière, niveau et difficulté.",
     "helpquizCta": "Voir les quiz",
-    "whyTitle": "Pourquoi choisir Methodix ?",
-    "trustATitle": "Correction rapide",
-    "trustADesc": "Résultat en quelques minutes avec l'IA.",
-    "trustBTitle": "Étape par étape",
-    "trustBDesc": "Chaque erreur est expliquée clairement.",
-    "trustCTitle": "Programme marocain",
-    "trustCDesc": "Adapté au bac et au lycée au Maroc.",
-    "trustDTitle": "IA + professeur",
-    "trustDDesc": "Passe à l'humain quand tu en as besoin.",
+    "whyTitle": "Pourquoi choisir CorrecteurPlus ?",
+    "trustATitle": "Correction expliquée étape par étape",
+    "trustADesc": "Chaque erreur est détaillée avec la méthode à suivre.",
+    "trustBTitle": "Adapté au programme marocain",
+    "trustBDesc": "Contenu aligné sur le bac et le lycée au Maroc.",
+    "trustCTitle": "IA rapide + aide professeur",
+    "trustCDesc": "Correction instantanée, puis un prof si tu bloques.",
+    "trustDTitle": "Paiement sécurisé",
+    "trustDDesc": "Transactions protégées et sans engagement.",
     "mockupStep1": "Étape 1",
     "mockupPhoto": "Photo de l'exercice",
     "mockupStep2": "Correction IA",
@@ -146,7 +146,7 @@
     }
   },
   "SiteHeader": {
-    "brandTitle": "Methodix",
+    "brandTitle": "CorrecteurPlus",
     "quizFree": "Quiz gratuits",
     "correctionAi": "Correction IA",
     "correctionTeacher": "Correction professeur",
@@ -177,7 +177,7 @@
     "contact": "Contact",
     "ctaFree": "Essayer 3 corrections gratuites",
     "navLabel": "Liens du site",
-    "copyright": "© {year} Methodix. Tous droits réservés.",
+    "copyright": "© {year} CorrecteurPlus. Tous droits réservés.",
     "legal": "Mentions légales",
     "privacy": "Politique de confidentialité"
   },

@@ -28,7 +28,7 @@ const fr: MethodixHomeBlock = {
   badge: "Correction d'exercices en ligne au Maroc",
   heroTitle: "Corrige tes exercices en ligne avec l'IA",
   heroSubtitle:
-    "Envoie une photo de ton exercice. Methodix te donne une correction détaillée étape par étape, avec la possibilité de demander l'aide d'un professeur.",
+    "Envoie une photo de ton exercice. CorrecteurPlus t'explique la correction étape par étape, avec l'aide d'un professeur si besoin.",
   heroNote:
     "3 corrections gratuites — sans carte bancaire. Quiz gratuits illimités.",
   trust: [

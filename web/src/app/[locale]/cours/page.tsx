@@ -55,35 +55,35 @@ export default async function CoursPublicPage({ params }: PageProps) {
   return (
     <PublicPageShell>
         {/* Hero */}
-        <section className="relative overflow-hidden rounded-3xl border border-navy/10 bg-gradient-to-br from-white via-white to-brandblue/[0.07] px-6 py-10 shadow-lg shadow-navy/[0.06] ring-1 ring-gold/20 dark:border-slate-700/80 dark:from-slate-900/90 dark:via-slate-900/70 dark:to-brandblue/[0.08] dark:shadow-black/30 dark:ring-gold/25 sm:px-10 sm:py-12">
+        <section className="relative overflow-hidden rounded-[24px] border border-border-soft bg-white/50 px-6 py-10 shadow-md shadow-electric/[0.06] backdrop-blur-md sm:px-10 sm:py-12">
           <div
-            className="pointer-events-none absolute -end-20 -top-20 h-64 w-64 rounded-full bg-brandblue/15 blur-3xl dark:bg-brandblue/10"
+            className="pointer-events-none absolute -end-20 -top-20 h-64 w-64 rounded-full bg-cyan-ai/15 blur-3xl"
             aria-hidden
           />
           <div
-            className="pointer-events-none absolute -bottom-12 -start-16 h-48 w-48 rounded-full bg-gold/12 blur-3xl dark:bg-gold/10"
+            className="pointer-events-none absolute -bottom-12 -start-16 h-48 w-48 rounded-full bg-success/10 blur-3xl"
             aria-hidden
           />
           <div className="relative">
-            <p className="inline-flex items-center rounded-full border border-navy/15 bg-navy/[0.04] px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-navy dark:border-gold/30 dark:bg-gold/10 dark:text-gold">
+            <p className="brand-section-title inline-flex items-center rounded-full border border-border-soft bg-white/70 px-3 py-1">
               {t("heroBadge")}
             </p>
-            <h1 className="mt-5 text-3xl font-extrabold tracking-tight text-navy dark:text-white sm:text-4xl sm:leading-tight">
+            <h1 className="font-display mt-5 text-3xl font-extrabold tracking-tight text-navy sm:text-4xl sm:leading-tight">
               {t("heroTitle")}
             </h1>
-            <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-600 dark:text-slate-300">
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-text">
               {t.rich("heroLead", {
                 highlight: (chunks) => (
-                  <strong className="font-semibold text-navy dark:text-white">
+                  <strong className="font-semibold text-navy">
                     {chunks}
                   </strong>
                 ),
               })}
             </p>
             <div className="mt-6 flex flex-wrap items-center gap-4 text-sm">
-              <span className="inline-flex items-center gap-2 rounded-xl border border-brandblue/20 bg-brandblue/5 px-4 py-2 font-medium text-navy dark:border-brandblue/25 dark:bg-brandblue/10 dark:text-brandblue">
+              <span className="inline-flex items-center gap-2 rounded-full border border-border-soft bg-white/70 px-4 py-2 font-medium text-navy backdrop-blur-sm">
                 <span
-                  className="flex h-8 w-8 items-center justify-center rounded-lg bg-navy text-sm font-bold text-gold"
+                  className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-electric to-cyan-ai text-sm font-bold text-white"
                   aria-hidden
                 >
                   {quizCount}

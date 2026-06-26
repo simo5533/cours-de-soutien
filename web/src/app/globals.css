@@ -1,51 +1,64 @@
 @import "tailwindcss";
 
-/* Indispensable en Tailwind v4 : analyse explicite des sources pour générer les classes utilitaires */
 @source "../**/*.{js,ts,jsx,tsx}";
 
-/* Charte METHODIX — fond #0A1F44, sections #F5F7FA, CTA #1E90FF, premium #D4AF37 */
+/* CorrecteurPlus — palette premium EdTech IA */
 :root {
-  --background: #f5f7fa;
-  --foreground: #111827;
-  --surface: #ffffff;
-  --surface-elevated: #f5f7fa;
+  --background: #f4f9ff;
+  --background-secondary: #eaf4ff;
+  --foreground: #061b4e;
+  --surface: rgba(255, 255, 255, 0.72);
+  --surface-elevated: rgba(255, 255, 255, 0.85);
   --muted: #64748b;
-  --border: rgba(10, 31, 68, 0.12);
-  --navy: #0a1f44;
-  --gold: #d4af37;
-  --brandblue: #1e90ff;
-  --brand: var(--navy);
-  --brand-hover: #071730;
-  --brand-muted: rgba(10, 31, 68, 0.08);
-  --ring: rgba(30, 144, 255, 0.35);
-  --header-h: 4rem;
+  --border: #d8e8ff;
+  --navy: #061b4e;
+  --premium-blue: #0b3d91;
+  --electric-blue: #0a6cff;
+  --cyan-ai: #15d8ff;
+  --success-green: #2ee66b;
+  --brandblue: #0a6cff;
+  --gold: #15d8ff;
+  --brand: var(--premium-blue);
+  --brand-hover: #0b3d91;
+  --brand-muted: rgba(10, 108, 255, 0.08);
+  --ring: rgba(21, 216, 255, 0.35);
+  --header-h: 4.25rem;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a1f44;
-    --foreground: #ffffff;
-    --surface: #0d2548;
-    --surface-elevated: #102752;
+    --background: #061b4e;
+    --background-secondary: #0a2558;
+    --foreground: #f4f9ff;
+    --surface: rgba(10, 37, 88, 0.75);
+    --surface-elevated: rgba(10, 37, 88, 0.9);
     --muted: #94a3b8;
-    --border: rgba(30, 144, 255, 0.15);
-    --brand: #1e90ff;
-    --brand-hover: #4da6ff;
-    --brand-muted: rgba(30, 144, 255, 0.12);
-    --ring: rgba(212, 175, 55, 0.35);
+    --border: rgba(216, 232, 255, 0.15);
+    --brand: #15d8ff;
+    --brand-hover: #0a6cff;
+    --brand-muted: rgba(21, 216, 255, 0.12);
+    --ring: rgba(21, 216, 255, 0.35);
   }
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-background-secondary: var(--background-secondary);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display);
   --font-mono: var(--font-geist-mono);
   --color-brand: var(--brand);
   --color-surface: var(--surface);
-  --color-navy: #0a1f44;
-  --color-gold: #d4af37;
-  --color-brandblue: #1e90ff;
+  --color-navy: #061b4e;
+  --color-premium: #0b3d91;
+  --color-electric: #0a6cff;
+  --color-cyan-ai: #15d8ff;
+  --color-success: #2ee66b;
+  --color-gold: #15d8ff;
+  --color-brandblue: #0a6cff;
+  --color-border-soft: #d8e8ff;
+  --color-muted-text: #64748b;
 }
 
 html {
@@ -55,131 +68,90 @@ html {
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--font-body), system-ui, sans-serif;
   font-feature-settings: "rlig" 1, "calt" 1;
 }
 
-/* Fond bleu charte : dégradé marine → bleu vif + touches or */
-.page-bg {
+/* Fond global doux — radial cyan + vert + gradient vertical */
+.site-bg {
   background-color: var(--background);
   background-image:
-    linear-gradient(
-      165deg,
-      rgba(10, 31, 68, 0.07) 0%,
-      var(--background) 38%,
-      rgba(30, 144, 255, 0.12) 100%
-    ),
-    radial-gradient(
-      ellipse 130% 90% at 50% -15%,
-      rgba(30, 144, 255, 0.22),
-      transparent 52%
-    ),
-    radial-gradient(
-      ellipse 70% 55% at 100% 0%,
-      rgba(10, 31, 68, 0.09),
-      transparent 50%
-    ),
-    radial-gradient(
-      ellipse 55% 40% at 0% 100%,
-      rgba(212, 175, 55, 0.08),
-      transparent 55%
-    ),
-    linear-gradient(to bottom, transparent, var(--background) 340px),
-    linear-gradient(rgba(10, 31, 68, 0.055) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(10, 31, 68, 0.055) 1px, transparent 1px);
-  background-size:
-    100% 100%,
-    100% 100%,
-    100% 100%,
-    100% 100%,
-    100% 100%,
-    64px 64px,
-    64px 64px;
-  background-position: center, center top, top right, bottom left, center, 0 0, 0 0;
+    radial-gradient(ellipse 80% 60% at 0% 0%, rgba(21, 216, 255, 0.12), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 100% 0%, rgba(46, 230, 107, 0.08), transparent 50%),
+    linear-gradient(180deg, var(--background-secondary) 0%, var(--background) 45%, #f8fbff 100%);
+  min-height: 100dvh;
+}
+
+.page-bg {
+  background: transparent;
 }
 
 @media (prefers-color-scheme: dark) {
-  .page-bg {
+  .site-bg {
     background-image:
-      linear-gradient(
-        165deg,
-        #0a1f44 0%,
-        var(--background) 45%,
-        rgba(30, 144, 255, 0.14) 100%
-      ),
-      radial-gradient(
-        ellipse 100% 70% at 50% -5%,
-        rgba(30, 144, 255, 0.18),
-        transparent 58%
-      ),
-      radial-gradient(
-        ellipse 50% 45% at 100% 15%,
-        rgba(10, 31, 68, 0.5),
-        transparent 55%
-      ),
-      radial-gradient(
-        ellipse 45% 35% at 0% 95%,
-        rgba(212, 175, 55, 0.06),
-        transparent 60%
-      ),
-      linear-gradient(to bottom, transparent, var(--background) 380px),
-      linear-gradient(rgba(30, 144, 255, 0.07) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(30, 144, 255, 0.07) 1px, transparent 1px);
-    background-size:
-      100% 100%,
-      100% 100%,
-      100% 100%,
-      100% 100%,
-      100% 100%,
-      48px 48px,
-      48px 48px;
-    background-position: center, center top, top right, bottom left, center, 0 0, 0 0;
+      radial-gradient(ellipse 80% 60% at 0% 0%, rgba(21, 216, 255, 0.1), transparent 55%),
+      radial-gradient(ellipse 70% 50% at 100% 0%, rgba(46, 230, 107, 0.06), transparent 50%),
+      linear-gradient(180deg, #061b4e 0%, #0a2558 50%, #061b4e 100%);
   }
 }
 
 @layer components {
-  .input-field {
-    @apply w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 shadow-sm transition-[border-color,box-shadow] placeholder:text-slate-400 focus:border-brandblue/60 focus:outline-none focus:ring-2 focus:ring-brandblue/25 dark:border-slate-700 dark:bg-slate-900/80 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:border-brandblue/50 dark:focus:ring-brandblue/20;
+  .font-display {
+    font-family: var(--font-display), system-ui, sans-serif;
   }
 
-  /* CTA principal : or sur fond clair */
+  .text-gradient-ai {
+    background: linear-gradient(135deg, var(--electric-blue) 0%, var(--cyan-ai) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .input-field {
+    @apply w-full rounded-2xl border border-border-soft bg-white/80 px-3.5 py-2.5 text-sm text-navy shadow-sm backdrop-blur-sm transition-[border-color,box-shadow] placeholder:text-muted-text focus:border-electric/50 focus:outline-none focus:ring-2 focus:ring-cyan-ai/25 dark:border-slate-700 dark:bg-slate-900/80 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:border-cyan-ai/50 dark:focus:ring-cyan-ai/20;
+  }
+
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-xl bg-gold px-5 py-2.5 text-sm font-semibold text-navy shadow-md shadow-navy/15 transition hover:brightness-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)] dark:bg-gold dark:text-navy dark:shadow-navy/25 dark:hover:brightness-105;
+    @apply inline-flex items-center justify-center rounded-full bg-gradient-to-r from-electric to-cyan-ai px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-electric/25 transition hover:shadow-xl hover:shadow-cyan-ai/30 hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-ai/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)];
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center rounded-xl border border-navy/20 bg-white px-5 py-2.5 text-sm font-semibold text-navy shadow-sm transition hover:border-navy/35 hover:bg-navy/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brandblue/30 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100 dark:hover:border-slate-500 dark:hover:bg-slate-700;
+    @apply inline-flex items-center justify-center rounded-full border border-border-soft bg-white/60 px-5 py-2.5 text-sm font-semibold text-navy shadow-sm backdrop-blur-sm transition hover:border-electric/30 hover:bg-background-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-ai/30 dark:border-slate-600 dark:bg-slate-800/60 dark:text-slate-100 dark:hover:border-cyan-ai/30 dark:hover:bg-slate-800;
   }
 
   .card-elevated {
-    @apply rounded-2xl border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.04] dark:border-slate-700/80 dark:bg-slate-900/50 dark:shadow-black/20;
+    @apply rounded-[22px] border border-border-soft bg-white/70 shadow-md shadow-electric/[0.06] backdrop-blur-md transition duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-electric/10 dark:border-slate-700/80 dark:bg-slate-900/50 dark:shadow-black/20;
   }
 
-  /** Carte identité centre (marine + filet or + touche bleu vif) */
+  .glass-card {
+    @apply rounded-[22px] border border-border-soft bg-white/65 shadow-md shadow-electric/[0.06] backdrop-blur-lg dark:border-slate-700/80 dark:bg-slate-900/45;
+  }
+
   .brand-card {
-    @apply rounded-2xl border border-navy/10 bg-gradient-to-br from-white via-white to-brandblue/[0.04] shadow-md shadow-navy/[0.06] ring-1 ring-gold/20 dark:border-slate-700/90 dark:from-slate-900/90 dark:via-slate-900/70 dark:to-brandblue/[0.06] dark:shadow-black/25 dark:ring-gold/25;
+    @apply rounded-[22px] border border-border-soft bg-gradient-to-br from-white/80 via-white/70 to-electric/[0.04] shadow-md shadow-electric/[0.08] backdrop-blur-md dark:border-slate-700/90 dark:from-slate-900/90 dark:via-slate-900/70 dark:to-cyan-ai/[0.06];
   }
 
   .brand-card-inner {
-    @apply border-s-4 border-gold/40 ps-4 dark:border-gold/35;
+    @apply border-s-4 border-cyan-ai/50 ps-4 dark:border-cyan-ai/40;
   }
 
-  /** Titres de section (tableaux de bord / admin) */
   .brand-section-title {
-    @apply text-[11px] font-bold uppercase tracking-[0.22em] text-navy dark:text-gold;
+    @apply text-[11px] font-bold uppercase tracking-[0.22em] text-electric dark:text-cyan-ai;
   }
 
   .brand-section-subtitle {
-    @apply mt-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400;
+    @apply mt-1 text-sm leading-relaxed text-muted-text dark:text-slate-400;
   }
 
-  /** Ligne liste avec accent bleu vif */
   .brand-list-item {
-    @apply rounded-xl border border-navy/8 bg-white/80 px-4 py-3 shadow-sm transition hover:border-brandblue/25 hover:shadow-md hover:shadow-brandblue/5 dark:border-slate-700/80 dark:bg-slate-900/40 dark:hover:border-brandblue/30;
+    @apply rounded-2xl border border-border-soft bg-white/70 px-4 py-3 shadow-sm backdrop-blur-sm transition hover:border-electric/25 hover:shadow-md hover:shadow-electric/5 dark:border-slate-700/80 dark:bg-slate-900/40 dark:hover:border-cyan-ai/30;
   }
 
-  /** Sélecteurs (même traitement que .input-field) */
   .select-field {
-    @apply min-h-[42px] w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-sm text-navy shadow-sm transition-[border-color,box-shadow] focus:border-brandblue/60 focus:outline-none focus:ring-2 focus:ring-brandblue/25 dark:border-slate-700 dark:bg-slate-900/80 dark:text-slate-100 dark:focus:border-brandblue/50 dark:focus:ring-brandblue/20;
+    @apply min-h-[42px] w-full rounded-2xl border border-border-soft bg-white/80 px-3.5 py-2 text-sm text-navy shadow-sm backdrop-blur-sm transition-[border-color,box-shadow] focus:border-electric/50 focus:outline-none focus:ring-2 focus:ring-cyan-ai/25 dark:border-slate-700 dark:bg-slate-900/80 dark:text-slate-100 dark:focus:border-cyan-ai/50 dark:focus:ring-cyan-ai/20;
+  }
+
+  .header-glass {
+    @apply sticky top-0 z-40 border-b border-border-soft/80 bg-white/55 shadow-sm shadow-electric/[0.04] backdrop-blur-xl dark:border-slate-700/50 dark:bg-navy/70;
   }
 }

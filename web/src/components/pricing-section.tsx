@@ -21,27 +21,27 @@ function PlanCard({ plan }: { plan: PricingPlan }) {
 
   return (
     <div
-      className={`relative flex flex-col rounded-2xl border p-6 ${
+      className={`relative flex flex-col rounded-[22px] border p-6 transition duration-300 hover:-translate-y-1 ${
         plan.highlighted
-          ? "z-10 scale-[1.02] border-brandblue/60 bg-gradient-to-b from-brandblue/12 to-white shadow-xl shadow-navy/15 ring-2 ring-brandblue/35 dark:from-navy/50 dark:to-slate-900 dark:ring-brandblue/30 sm:p-7"
-          : "border-slate-200/80 bg-white dark:border-slate-700 dark:bg-slate-900/40"
+          ? "z-10 scale-[1.02] border-electric/40 bg-gradient-to-b from-electric/10 to-white/80 shadow-xl shadow-electric/15 ring-2 ring-cyan-ai/30 sm:p-7"
+          : "card-elevated border-border-soft bg-white/70"
       }`}
     >
       {plan.badge ? (
         <span
           className={`absolute -top-3 start-1/2 w-max max-w-[90%] -translate-x-1/2 rounded-full px-3 py-1 text-center text-xs font-bold text-white shadow-md ${
-            plan.highlighted ? "bg-navy dark:bg-brandblue" : "bg-brandblue/90"
+            plan.highlighted ? "bg-gradient-to-r from-electric to-cyan-ai" : "bg-premium"
           }`}
         >
           {plan.badge}
         </span>
       ) : null}
-      <h3 className="text-lg font-bold text-slate-900 dark:text-white">{plan.name}</h3>
-      <p className="mt-1 text-2xl font-extrabold text-brandblue dark:text-brandblue/90">
+      <h3 className="text-lg font-bold text-navy">{plan.name}</h3>
+      <p className="mt-1 text-2xl font-extrabold text-electric">
         {formatPrice(plan)}
       </p>
-      <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">{plan.forWho}</p>
-      <ul className="mt-5 flex flex-1 flex-col gap-2.5 text-sm text-slate-600 dark:text-slate-300">
+      <p className="mt-2 text-sm text-muted-text">{plan.forWho}</p>
+      <ul className="mt-5 flex flex-1 flex-col gap-2.5 text-sm text-muted-text">
         {plan.features.map((f) => (
           <li key={f} className="flex gap-2">
             <CheckIcon />
@@ -50,7 +50,7 @@ function PlanCard({ plan }: { plan: PricingPlan }) {
         ))}
       </ul>
       {plan.limits.length > 0 ? (
-        <ul className="mt-4 flex flex-col gap-1.5 border-t border-slate-200/80 pt-4 text-xs text-slate-500 dark:border-slate-700 dark:text-slate-500">
+        <ul className="mt-4 flex flex-col gap-1.5 border-t border-border-soft pt-4 text-xs text-muted-text">
           {plan.limits.map((l) => (
             <li key={l}>— {l}</li>
           ))}
@@ -58,10 +58,10 @@ function PlanCard({ plan }: { plan: PricingPlan }) {
       ) : null}
       <Link
         href={inscriptionHref}
-        className={`mt-8 block w-full rounded-xl py-3.5 text-center text-sm font-semibold transition ${
+        className={`mt-8 block w-full rounded-full py-3.5 text-center text-sm font-semibold transition ${
           plan.highlighted
-            ? "bg-navy text-white shadow-lg hover:bg-navy/90 dark:bg-brandblue dark:hover:bg-brandblue/90"
-            : "border border-slate-300 bg-white text-slate-900 hover:bg-slate-50 dark:border-slate-600 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700"
+            ? "btn-primary !w-full"
+            : "btn-secondary !w-full"
         }`}
       >
         {plan.cta}
@@ -73,7 +73,7 @@ function PlanCard({ plan }: { plan: PricingPlan }) {
 function CheckIcon() {
   return (
     <svg
-      className="mt-0.5 h-5 w-5 shrink-0 text-brandblue"
+      className="mt-0.5 h-5 w-5 shrink-0 text-success"
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"
@@ -108,13 +108,13 @@ export function PricingSection({
       <div className="text-center">
         <h2
           id="pricing-heading"
-          className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-3xl"
+          className="font-display text-2xl font-bold tracking-tight text-navy sm:text-3xl"
         >
           {title}
         </h2>
-        <p className="mx-auto mt-3 max-w-2xl text-slate-600 dark:text-slate-400">{subtitle}</p>
+        <p className="mx-auto mt-3 max-w-2xl text-muted-text">{subtitle}</p>
         {showValueProp ? (
-          <p className="mx-auto mt-6 max-w-3xl rounded-xl border border-gold/30 bg-gold/5 px-5 py-4 text-base font-medium leading-relaxed text-navy dark:border-gold/25 dark:bg-gold/10 dark:text-gold/95">
+          <p className="mx-auto mt-6 max-w-3xl rounded-[22px] border border-border-soft bg-white/60 px-5 py-4 text-base font-medium leading-relaxed text-navy backdrop-blur-sm">
             {VALUE_PROPOSITION}
           </p>
         ) : null}
@@ -140,11 +140,11 @@ export function PricingSection({
       ) : null}
 
       {showCredits ? (
-        <div className="mt-16 rounded-2xl border border-slate-200/80 bg-white p-6 dark:border-slate-700 dark:bg-slate-900/40 sm:p-8">
-          <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+        <div className="mt-16 card-elevated p-6 sm:p-8">
+          <h3 className="text-lg font-bold text-navy">
             Comment fonctionnent les crédits professeur ?
           </h3>
-          <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+          <p className="mt-3 text-sm leading-relaxed text-muted-text">
             Les crédits professeur permettent de demander une correction humaine détaillée. Un
             exercice simple consomme peu de crédits, tandis qu&apos;un devoir long ou un sujet
             complet peut consommer plusieurs crédits.
@@ -152,16 +152,16 @@ export function PricingSection({
           <div className="mt-6 overflow-x-auto">
             <table className="w-full min-w-[280px] text-left text-sm">
               <thead>
-                <tr className="border-b border-slate-200 dark:border-slate-700">
-                  <th className="pb-3 font-semibold text-slate-900 dark:text-white">Type</th>
-                  <th className="pb-3 font-semibold text-slate-900 dark:text-white">Crédits</th>
+                <tr className="border-b border-border-soft">
+                  <th className="pb-3 font-semibold text-navy">Type</th>
+                  <th className="pb-3 font-semibold text-navy">Crédits</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+              <tbody className="divide-y divide-border-soft">
                 {TEACHER_CREDIT_ROWS.map((row) => (
                   <tr key={row.label}>
-                    <td className="py-2.5 text-slate-600 dark:text-slate-400">{row.label}</td>
-                    <td className="py-2.5 font-medium text-navy dark:text-brandblue">{row.credits}</td>
+                    <td className="py-2.5 text-muted-text">{row.label}</td>
+                    <td className="py-2.5 font-medium text-electric">{row.credits}</td>
                   </tr>
                 ))}
               </tbody>
@@ -175,18 +175,18 @@ export function PricingSection({
       ) : null}
 
       {showOneShot ? (
-        <div className="mt-12 rounded-2xl border border-dashed border-brandblue/30 bg-brandblue/5 p-6 dark:border-brandblue/20 dark:bg-brandblue/10 sm:p-8">
-          <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+        <div className="mt-12 rounded-[22px] border border-dashed border-cyan-ai/40 bg-cyan-ai/5 p-6 sm:p-8">
+          <h3 className="text-lg font-bold text-navy">
             Besoin d&apos;une correction sans abonnement ?
           </h3>
           <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {ONE_SHOT_OFFERS.map((offer) => (
               <li
                 key={offer.id}
-                className="flex items-center justify-between rounded-xl border border-white/60 bg-white/80 px-4 py-3 text-sm dark:border-slate-700 dark:bg-slate-900/60"
+                className="flex items-center justify-between rounded-xl border border-border-soft bg-white/70 px-4 py-3 text-sm backdrop-blur-sm"
               >
-                <span className="font-medium text-slate-800 dark:text-slate-200">{offer.name}</span>
-                <span className="font-bold text-brandblue">{offer.price} MAD</span>
+                <span className="font-medium text-navy">{offer.name}</span>
+                <span className="font-bold text-electric">{offer.price} MAD</span>
               </li>
             ))}
           </ul>

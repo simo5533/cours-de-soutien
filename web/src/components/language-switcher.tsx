@@ -76,7 +76,7 @@ export function LanguageSwitcher({
         <button
           type="button"
           onClick={() => setOpen((o) => !o)}
-          className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/25 bg-white/10 text-white shadow-sm backdrop-blur-sm transition hover:bg-white/15 aria-expanded:bg-white/20"
+          className="flex h-9 w-9 items-center justify-center rounded-full border border-border-soft bg-white/60 text-navy shadow-sm backdrop-blur-sm transition hover:bg-background-secondary aria-expanded:bg-background-secondary"
           aria-expanded={open}
           aria-haspopup="listbox"
           aria-label={t("chooseLanguage")}
@@ -85,7 +85,7 @@ export function LanguageSwitcher({
         </button>
         {open ? (
           <ul
-            className="absolute end-0 z-[70] mt-2 min-w-[11rem] overflow-hidden rounded-xl border border-white/20 bg-navy py-1 text-sm shadow-xl shadow-black/40"
+            className="absolute end-0 z-[70] mt-2 min-w-[11rem] overflow-hidden rounded-xl border border-border-soft bg-white py-1 text-sm shadow-xl shadow-electric/10 backdrop-blur-xl dark:border-slate-600 dark:bg-navy"
             role="listbox"
             aria-label={t("chooseLanguage")}
           >
@@ -93,16 +93,16 @@ export function LanguageSwitcher({
               <li key={loc} role="option" aria-selected={locale === loc}>
                 <button
                   type="button"
-                  className={`flex w-full items-center justify-between px-3 py-2.5 text-start transition hover:bg-white/10 ${
+                  className={`flex w-full items-center justify-between px-3 py-2.5 text-start transition hover:bg-background-secondary dark:hover:bg-white/10 ${
                     locale === loc
-                      ? "bg-white/15 font-semibold text-gold"
-                      : "text-white/90"
+                      ? "bg-electric/10 font-semibold text-electric dark:text-cyan-ai"
+                      : "text-navy dark:text-white/90"
                   }`}
                   onClick={() => onChange(loc)}
                 >
                   <span>{loc === "fr" ? t("fr") : t("ar")}</span>
                   {locale === loc ? (
-                    <span className="text-gold" aria-hidden>
+                    <span className="text-electric dark:text-cyan-ai" aria-hidden>
                       ✓
                     </span>
                   ) : null}

@@ -21,7 +21,7 @@ export default function InscriptionPage() {
       <p className="mt-6 text-center text-sm">
         <Link
           href="/"
-          className="font-medium text-slate-600 underline-offset-4 transition hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
+          className="font-medium text-electric underline-offset-4 transition hover:text-premium"
         >
           ← Retour à l’accueil
         </Link>

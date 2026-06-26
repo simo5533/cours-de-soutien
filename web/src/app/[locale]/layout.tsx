@@ -1,15 +1,22 @@
 import { DocumentLang } from "@/components/document-lang";
 import { routing } from "@/i18n/routing";
 import { Providers } from "@/app/providers";
-import { Geist, Geist_Mono, Noto_Sans_Arabic } from "next/font/google";
+import { Geist_Mono, Noto_Sans_Arabic, Plus_Jakarta_Sans, Space_Grotesk } from "next/font/google";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-display",
   subsets: ["latin"],
+  weight: ["500", "600", "700"],
+});
+
+const plusJakarta = Plus_Jakarta_Sans({
+  variable: "--font-body",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 const geistMono = Geist_Mono({
@@ -57,7 +64,7 @@ export default async function LocaleLayout({ children, params }: Props) {
       <DocumentLang />
       <Providers>
         <div
-          className={`${geistSans.variable} ${geistMono.variable} ${notoArabic.variable} font-sans`}
+          className={`${spaceGrotesk.variable} ${plusJakarta.variable} ${geistMono.variable} ${notoArabic.variable} font-sans`}
         >
           {children}
         </div>

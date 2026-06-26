@@ -13,10 +13,10 @@ type HeaderUser = {
 
 function navLinkClass(activeMobile?: boolean) {
   return (
-    "rounded-lg px-3 py-2.5 text-sm font-medium transition hover:bg-white/10 hover:text-gold " +
+    "rounded-full px-3 py-2 text-sm font-medium transition " +
     (activeMobile
-      ? "text-white border border-white/15 bg-white/5"
-      : "text-white/90")
+      ? "bg-electric/10 text-navy"
+      : "text-navy/80 hover:bg-background-secondary hover:text-navy")
   );
 }
 
@@ -85,13 +85,13 @@ export function SiteHeaderNav({ user }: { user: HeaderUser | null }) {
               >
                 {t("mySpace")}
               </Link>
-              <span className="hidden max-w-[140px] truncate text-sm text-white/70 lg:inline">
+              <span className="hidden max-w-[140px] truncate text-sm text-muted-text lg:inline">
                 {user.name}
               </span>
               <form action={logoutAction} className="inline">
                 <button
                   type="submit"
-                  className="rounded-lg border border-white/25 bg-white/5 px-3 py-2 text-sm font-medium text-white transition hover:bg-white/10"
+                  className="rounded-full border border-border-soft bg-white/50 px-3 py-2 text-sm font-medium text-navy transition hover:bg-background-secondary"
                 >
                   {t("logout")}
                 </button>
@@ -111,7 +111,7 @@ export function SiteHeaderNav({ user }: { user: HeaderUser | null }) {
 
         <button
           type="button"
-          className="inline-flex items-center justify-center rounded-lg p-2 text-white transition hover:bg-white/10 md:hidden"
+          className="inline-flex items-center justify-center rounded-full p-2 text-navy transition hover:bg-background-secondary md:hidden"
           aria-expanded={mobileOpen}
           aria-controls="mobile-site-nav"
           aria-label={mobileOpen ? t("closeMenu") : t("openMenu")}
@@ -132,7 +132,7 @@ export function SiteHeaderNav({ user }: { user: HeaderUser | null }) {
       {mobileOpen ? (
         <div
           id="mobile-site-nav"
-          className="fixed inset-0 top-[var(--header-h)] z-[60] flex flex-col bg-navy px-4 py-6 md:hidden"
+          className="fixed inset-0 top-[var(--header-h)] z-[60] flex flex-col bg-white/95 px-4 py-6 backdrop-blur-xl md:hidden dark:bg-navy/95"
           role="dialog"
           aria-modal="true"
         >
@@ -169,12 +169,12 @@ export function SiteHeaderNav({ user }: { user: HeaderUser | null }) {
                   {t("mySpace")}
                 </Link>
                 {user.name ? (
-                  <span className="truncate px-3 py-1 text-xs text-white/60">{user.name}</span>
+                  <span className="truncate px-3 py-1 text-xs text-muted-text">{user.name}</span>
                 ) : null}
                 <form action={logoutAction} className="pt-2">
                   <button
                     type="submit"
-                    className="w-full rounded-lg border border-white/25 bg-white/5 px-3 py-3 text-left text-sm font-medium text-white transition hover:bg-white/10"
+                    className="w-full rounded-2xl border border-border-soft bg-white/60 px-3 py-3 text-left text-sm font-medium text-navy transition hover:bg-background-secondary"
                   >
                     {t("logout")}
                   </button>

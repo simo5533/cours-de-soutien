@@ -88,7 +88,7 @@ export function InscriptionForm({
     return (
       <div className="mx-auto w-full max-w-md px-4 py-16 text-center">
         <div className="card-elevated p-10 shadow-xl shadow-slate-900/5 dark:shadow-black/40">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-brandblue/15 text-navy dark:bg-brandblue/20 dark:text-brandblue">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-success/15 text-success">
             <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
@@ -129,11 +129,11 @@ export function InscriptionForm({
           {t("overlayPaymentHint")}
         </p>
       ) : null}
-      <div className="card-elevated p-8 shadow-xl shadow-slate-900/5 dark:shadow-black/40">
-        <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+      <div className="card-elevated p-8 shadow-xl shadow-electric/[0.06]">
+        <h1 className="font-display text-2xl font-bold tracking-tight text-navy">
           {t("title")}
         </h1>
-        <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+        <p className="mt-2 text-sm leading-relaxed text-muted-text">
           {t("subtitle")}
         </p>
         <ul className="mt-6 grid gap-2 sm:grid-cols-2">
@@ -141,9 +141,9 @@ export function InscriptionForm({
             (key) => (
               <li
                 key={key}
-                className="flex items-start gap-2 text-xs text-slate-600 dark:text-slate-400"
+                className="flex items-start gap-2 text-xs text-muted-text"
               >
-                <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-brandblue" />
+                <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-success" />
                 {t(key)}
               </li>
             ),

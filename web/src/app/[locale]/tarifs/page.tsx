@@ -24,10 +24,10 @@ export default async function TarifsPage({ params }: PageProps) {
     <PublicPageShell>
       <div className="mx-auto max-w-3xl text-center">
         <p className="brand-section-title">{t("eyebrow")}</p>
-        <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
+        <h1 className="font-display mt-2 text-3xl font-extrabold tracking-tight text-navy sm:text-4xl">
           {t("title")}
         </h1>
-        <p className="mt-4 text-base leading-relaxed text-slate-600 dark:text-slate-400">
+        <p className="mt-4 text-base leading-relaxed text-muted-text">
           {t("lead")}
         </p>
       </div>

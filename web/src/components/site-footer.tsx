@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { getTranslations } from "next-intl/server";
 
@@ -15,15 +16,24 @@ export async function SiteFooter() {
   ] as const;
 
   return (
-    <footer className="mt-auto border-t border-slate-200/80 bg-white/90 dark:border-slate-800 dark:bg-slate-950/80">
+    <footer className="mt-auto border-t border-white/10 bg-navy text-white">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-4 py-12 sm:px-6">
         <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
           <div className="max-w-sm">
-            <p className="text-lg font-bold text-navy dark:text-white">Methodix</p>
-            <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+            <Image
+              src="/brand/correcteurplus-logo.png"
+              alt="CorrecteurPlus"
+              width={200}
+              height={56}
+              className="h-10 w-auto brightness-0 invert"
+            />
+            <p className="mt-4 text-sm leading-relaxed text-white/70">
               {t("tagline")}
             </p>
-            <Link href="/inscription" className="btn-primary mt-5 inline-flex text-sm">
+            <Link
+              href="/inscription"
+              className="mt-5 inline-flex rounded-full border border-white/20 bg-white/10 px-5 py-2.5 text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white/15"
+            >
               {t("ctaFree")}
             </Link>
           </div>
@@ -35,17 +45,17 @@ export async function SiteFooter() {
               <Link
                 key={l.href}
                 href={l.href}
-                className="font-medium text-slate-600 transition hover:text-navy dark:text-slate-400 dark:hover:text-brandblue"
+                className="font-medium text-white/70 transition hover:text-cyan-ai"
               >
                 {l.label}
               </Link>
             ))}
           </nav>
         </div>
-        <div className="flex flex-col gap-3 border-t border-slate-200/80 pt-6 text-xs text-slate-500 dark:border-slate-800 dark:text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-3 border-t border-white/10 pt-6 text-xs text-white/50 sm:flex-row sm:items-center sm:justify-between">
           <p>{t("copyright", { year: new Date().getFullYear() })}</p>
           <div className="flex flex-wrap gap-4">
-            <Link href="/connexion" className="hover:text-navy dark:hover:text-brandblue">
+            <Link href="/connexion" className="transition hover:text-cyan-ai">
               {t("contact")}
             </Link>
           </div>

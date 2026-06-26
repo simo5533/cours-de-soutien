@@ -9,25 +9,20 @@ export async function SiteHeader() {
   const t = await getTranslations("SiteHeader");
 
   return (
-    <header className="sticky top-0 z-40 border-b border-gold/25 bg-navy text-white shadow-md shadow-navy/30">
+    <header className="header-glass">
       <div className="relative mx-auto flex h-[var(--header-h)] max-w-6xl items-center justify-between gap-3 px-4 sm:gap-4 sm:px-6">
         <Link
           href="/"
-          className="group flex min-w-0 max-w-[min(100%,260px)] items-center gap-2 sm:max-w-none sm:gap-3"
+          className="group flex min-w-0 max-w-[min(100%,280px)] items-center gap-2 sm:max-w-none sm:gap-3"
         >
           <Image
-            src="/methodix-logo.png"
+            src="/brand/correcteurplus-logo.png"
             alt={t("brandTitle")}
-            width={220}
+            width={240}
             height={72}
             priority
-            className="h-8 w-auto max-h-8 shrink-0 object-contain object-left drop-shadow-sm sm:h-9 sm:max-h-9"
+            className="h-9 w-auto max-h-9 shrink-0 object-contain object-left sm:h-10 sm:max-h-10"
           />
-          <span className="hidden min-w-0 flex-col leading-tight md:flex">
-            <span className="text-[11px] font-medium text-white/80">
-              {t("brandSubtitle")}
-            </span>
-          </span>
         </Link>
         <SiteHeaderNav
           user={
