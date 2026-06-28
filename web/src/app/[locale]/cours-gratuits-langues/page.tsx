@@ -144,7 +144,7 @@ export default async function CoursGratuitsLanguesPage({ params }: PageProps) {
   const packsStem = freeBlock?.stemSubjects;
 
   return (
-    <PublicPageFrame mainClassName="page-bg mx-auto flex w-full max-w-3xl flex-1 flex-col px-4 pb-16 pt-8 sm:px-6 sm:pt-12">
+    <PublicPageFrame mainClassName="page-bg page-x mx-auto flex w-full max-w-3xl flex-1 flex-col pb-12 pb-safe pt-6 sm:pb-16 sm:pt-12">
         <article
           className="relative overflow-hidden rounded-[24px] border border-border-soft bg-white/[0.74] px-6 py-10 shadow-md backdrop-blur-md sm:px-10 sm:py-12"
           itemScope

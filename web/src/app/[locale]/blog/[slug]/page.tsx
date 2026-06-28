@@ -42,7 +42,7 @@ export default async function BlogArticlePage({ params }: Props) {
   const paragraphs = post.paragraphs[lang];
 
   return (
-    <PublicPageFrame mainClassName="page-bg mx-auto flex w-full max-w-3xl flex-1 flex-col px-4 pb-16 pt-8 sm:px-6 sm:pt-12">
+    <PublicPageFrame mainClassName="page-bg page-x mx-auto flex w-full max-w-3xl flex-1 flex-col pb-12 pb-safe pt-6 sm:pb-16 sm:pt-12">
         <p>
           <Link
             href="/blog"

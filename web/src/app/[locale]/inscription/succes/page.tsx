@@ -70,7 +70,7 @@ export default async function InscriptionSuccesPage({
   }
 
   return (
-    <PublicPageFrame mainClassName="page-bg mx-auto flex w-full max-w-md flex-1 flex-col px-4 pb-16 pt-8 sm:px-6 sm:pt-12">
+    <PublicPageFrame mainClassName="page-bg page-x mx-auto flex w-full max-w-md flex-1 flex-col pb-12 pb-safe pt-6 sm:pb-16 sm:pt-12">
       <div className="py-8 text-center sm:py-12">
         <div className="card-elevated p-10 shadow-xl shadow-electric/[0.06]">
           <div

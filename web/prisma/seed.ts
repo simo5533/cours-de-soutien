@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import { CATALOG_SEED_QCMS } from "./seed-catalog-quizzes";
 import { STEM_CATALOG_SEED_QCMS } from "./seed-catalog-stem";
 import { FILL_CATALOG_SEED_QCMS } from "./seed-catalog-fill";
+import { PDFMATH_CATALOG_SEED_QCMS } from "./seed-catalog-pdfmath";
 
 const prisma = new PrismaClient();
 
@@ -141,6 +142,7 @@ async function main() {
     ...CATALOG_SEED_QCMS,
     ...STEM_CATALOG_SEED_QCMS,
     ...FILL_CATALOG_SEED_QCMS,
+    ...PDFMATH_CATALOG_SEED_QCMS,
   ];
 
   for (const qcm of allCatalogQcms) {

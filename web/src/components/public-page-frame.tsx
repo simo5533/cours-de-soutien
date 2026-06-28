@@ -4,7 +4,7 @@ import { SiteHeader } from "@/components/site-header";
 /** Pages publiques avec header + footer, sans contrainte max-w-6xl sur le main */
 export function PublicPageFrame({
   children,
-  mainClassName = "page-bg mx-auto flex w-full max-w-6xl flex-1 flex-col px-4 pb-16 pt-8 sm:px-6 sm:pt-12",
+  mainClassName = "page-bg page-x mx-auto flex w-full max-w-6xl flex-1 flex-col pb-12 pb-safe pt-6 sm:pb-16 sm:pt-12",
 }: {
   children: React.ReactNode;
   mainClassName?: string;

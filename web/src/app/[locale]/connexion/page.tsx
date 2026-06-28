@@ -6,9 +6,9 @@ import { PublicPageShell } from "@/components/public-page-shell";
 export default function ConnexionPage() {
   return (
     <PublicPageShell>
-      <div className="mx-auto flex max-w-md flex-col justify-center py-8">
-        <div className="card-elevated p-8 shadow-xl shadow-electric/[0.06]">
-          <h1 className="font-display text-2xl font-bold tracking-tight text-navy">
+      <div className="mx-auto flex max-w-md flex-col justify-center py-4 sm:py-8">
+        <div className="card-elevated p-5 shadow-xl shadow-electric/[0.06] sm:p-8">
+          <h1 className="font-display text-xl font-bold tracking-tight text-navy sm:text-2xl">
             Connexion
           </h1>
           <p className="mt-2 text-sm leading-relaxed text-muted-text">

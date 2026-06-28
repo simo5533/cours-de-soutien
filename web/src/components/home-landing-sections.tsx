@@ -19,12 +19,12 @@ export async function HomeHeroMockup() {
   const t = await getTranslations("HomePage");
 
   return (
-    <div className="relative mx-auto mt-10 max-w-lg lg:absolute lg:end-6 lg:top-1/2 lg:mt-0 lg:max-w-[420px] lg:-translate-y-1/2 xl:end-10">
+    <div className="relative mx-auto mt-8 max-w-sm sm:mt-10 sm:max-w-lg lg:absolute lg:end-6 lg:top-1/2 lg:mt-0 lg:max-w-[420px] lg:-translate-y-1/2 xl:end-10">
       <div
         className="pointer-events-none absolute -inset-4 rounded-[32px] bg-gradient-to-br from-cyan-ai/25 via-electric/10 to-success/10 blur-2xl"
         aria-hidden
       />
-      <div className="glass-card relative overflow-hidden p-5">
+      <div className="glass-card relative overflow-hidden p-4 sm:p-5">
         <div className="absolute end-4 top-4 flex items-center gap-1.5 rounded-full border border-cyan-ai/30 bg-cyan-ai/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-premium">
           <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-cyan-ai" />
           Analyse IA
@@ -82,16 +82,16 @@ export async function HomeHowItWorks() {
   const variants: ("blue" | "cyan" | "green")[] = ["blue", "cyan", "green", "blue"];
 
   return (
-    <section className="mt-20" aria-labelledby="how-heading">
+    <section className="section-stack" aria-labelledby="how-heading">
       <div className="text-center">
         <p className="brand-section-title">{t("howEyebrow")}</p>
         <h2 id="how-heading" className="font-display mt-2 text-2xl font-bold text-navy sm:text-3xl">
           {t("howTitle")}
         </h2>
       </div>
-      <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-8 grid gap-4 sm:mt-10 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
         {steps.map((key, i) => (
-          <div key={key} className="card-elevated flex flex-col p-6">
+          <div key={key} className="card-elevated flex flex-col p-5 sm:p-6">
             <StepIcon variant={variants[i]}>{icons[i]}</StepIcon>
             <h3 className="mt-4 font-bold text-navy">{t(`${key}Title`)}</h3>
             <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-text">
@@ -100,8 +100,8 @@ export async function HomeHowItWorks() {
           </div>
         ))}
       </div>
-      <div className="mt-10 text-center">
-        <Link href="/inscription" className="btn-primary inline-flex px-8 py-3">
+      <div className="mt-8 text-center sm:mt-10">
+        <Link href="/inscription" className="btn-primary inline-flex w-full justify-center px-6 py-3 text-sm sm:w-auto sm:px-8 sm:text-base">
           {t("ctaFreeCorrections")}
         </Link>
       </div>
@@ -118,7 +118,7 @@ export async function HomeHelpTypeCards() {
   ];
 
   return (
-    <section className="mt-20" aria-labelledby="help-heading">
+    <section className="section-stack" aria-labelledby="help-heading">
       <div className="text-center">
         <p className="brand-section-title">{t("helpEyebrow")}</p>
         <h2 id="help-heading" className="font-display mt-2 text-2xl font-bold text-navy sm:text-3xl">
@@ -159,7 +159,7 @@ export async function HomeTrustSection() {
 
   return (
     <section
-      className="mt-20 rounded-[24px] border border-border-soft bg-gradient-to-br from-white/60 via-background-secondary/50 to-cyan-ai/5 px-6 py-10 backdrop-blur-sm sm:px-10"
+      className="section-stack rounded-2xl border border-border-soft bg-gradient-to-br from-white/60 via-background-secondary/50 to-cyan-ai/5 px-4 py-8 backdrop-blur-sm sm:rounded-[24px] sm:px-10 sm:py-10"
       aria-labelledby="trust-heading"
     >
       <h2 id="trust-heading" className="font-display text-center text-2xl font-bold text-navy sm:text-3xl">
@@ -167,7 +167,7 @@ export async function HomeTrustSection() {
       </h2>
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {points.map(({ key, variant }) => (
-          <div key={key} className="glass-card p-5 transition hover:-translate-y-1">
+          <div key={key} className="glass-card p-4 transition md:hover:-translate-y-1 sm:p-5">
             <span
               className={`flex h-9 w-9 items-center justify-center rounded-xl ${
                 variant === "green"

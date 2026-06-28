@@ -21,9 +21,9 @@ function PlanCard({ plan }: { plan: PricingPlan }) {
 
   return (
     <div
-      className={`relative flex flex-col rounded-[22px] border p-6 transition duration-300 hover:-translate-y-1 ${
+      className={`relative flex flex-col rounded-2xl border p-5 transition duration-300 sm:rounded-[22px] sm:p-6 md:hover:-translate-y-1 ${
         plan.highlighted
-          ? "z-10 scale-[1.02] border-electric/40 bg-gradient-to-b from-electric/10 to-white/80 shadow-xl shadow-electric/15 ring-2 ring-cyan-ai/30 sm:p-7"
+          ? "z-10 border-electric/40 bg-gradient-to-b from-electric/10 to-white/80 shadow-xl shadow-electric/15 ring-2 ring-cyan-ai/30 sm:scale-[1.02] sm:p-7"
           : "card-elevated border-border-soft bg-white/70"
       }`}
     >
@@ -120,7 +120,7 @@ export function PricingSection({
         ) : null}
       </div>
 
-      <div className="mt-10 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+      <div className="mt-8 grid gap-6 sm:mt-10 sm:gap-8 md:grid-cols-2 xl:grid-cols-3">
         {MAIN_PRICING_PLANS.map((plan) => (
           <PlanCard key={plan.id} plan={plan} />
         ))}
@@ -128,7 +128,7 @@ export function PricingSection({
 
       {showSecondary && SECONDARY_PRICING_PLANS.length > 0 ? (
         <div className="mt-16">
-          <h3 className="text-center text-lg font-semibold text-slate-700 dark:text-slate-300">
+          <h3 className="text-center text-base font-semibold text-navy sm:text-lg">
             Besoin d&apos;un accompagnement plus avancé ?
           </h3>
           <div className="mt-8 grid gap-6 md:grid-cols-2">
@@ -167,7 +167,7 @@ export function PricingSection({
               </tbody>
             </table>
           </div>
-          <p className="mt-4 text-xs text-slate-500 dark:text-slate-500">
+          <p className="mt-4 text-xs text-muted-text">
             Un crédit professeur correspond à la correction détaillée d&apos;un exercice standard.
             Les devoirs longs ou sujets complets peuvent consommer plusieurs crédits.
           </p>

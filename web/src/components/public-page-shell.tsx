@@ -9,7 +9,7 @@ export function PublicPageShell({
   return (
     <div className="site-bg flex min-h-full flex-col">
       <SiteHeader />
-      <main className="page-bg mx-auto flex w-full max-w-6xl flex-1 flex-col px-4 pb-16 pt-8 sm:px-6 sm:pt-12">
+      <main className="page-bg page-x mx-auto flex w-full max-w-6xl flex-1 flex-col pb-12 pb-safe pt-6 sm:pb-16 sm:pt-12">
         {children}
       </main>
       <SiteFooter />

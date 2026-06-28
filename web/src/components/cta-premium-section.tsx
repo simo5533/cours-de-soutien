@@ -17,7 +17,7 @@ export function CtaPremiumSection({
   primaryLabel,
   secondaryHref,
   secondaryLabel,
-  className = "mt-20",
+  className = "section-stack",
 }: CtaPremiumSectionProps) {
   return (
     <section className={`cta-premium-card ${className}`}>

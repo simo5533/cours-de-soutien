@@ -11,13 +11,16 @@ type HeaderUser = {
   role: string;
 };
 
-function navLinkClass(activeMobile?: boolean) {
-  return (
-    "rounded-full px-3 py-2 text-sm font-medium transition " +
+function navLinkClass(activeMobile?: boolean, mobile?: boolean) {
+  const base =
+    "rounded-full font-medium transition " +
     (activeMobile
       ? "bg-electric/10 text-navy"
-      : "text-navy/80 hover:bg-background-secondary hover:text-navy")
-  );
+      : "text-navy/80 hover:bg-background-secondary hover:text-navy");
+  if (mobile) {
+    return `${base} flex min-h-[44px] items-center px-4 py-3 text-base`;
+  }
+  return `${base} px-3 py-2 text-sm`;
 }
 
 export function SiteHeaderNav({ user }: { user: HeaderUser | null }) {
@@ -111,7 +114,7 @@ export function SiteHeaderNav({ user }: { user: HeaderUser | null }) {
 
         <button
           type="button"
-          className="inline-flex items-center justify-center rounded-full p-2 text-navy transition hover:bg-background-secondary md:hidden"
+          className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full p-2 text-navy transition hover:bg-background-secondary md:hidden"
           aria-expanded={mobileOpen}
           aria-controls="mobile-site-nav"
           aria-label={mobileOpen ? t("closeMenu") : t("openMenu")}
@@ -132,25 +135,28 @@ export function SiteHeaderNav({ user }: { user: HeaderUser | null }) {
       {mobileOpen ? (
         <div
           id="mobile-site-nav"
-          className="fixed inset-0 top-[var(--header-h)] z-[60] flex flex-col bg-white/97 px-4 py-6 backdrop-blur-xl md:hidden"
+          className="fixed inset-0 top-[var(--header-h)] z-[60] flex flex-col bg-white/97 backdrop-blur-xl md:hidden"
           role="dialog"
           aria-modal="true"
         >
-          <nav className="flex flex-col gap-2" aria-label="Principal mobile">
-            <Link href="/inscription" className={navLinkClass(true)} onClick={() => setMobileOpen(false)}>
+          <nav
+            className="flex flex-1 flex-col gap-1 overflow-y-auto px-3 py-4 pb-safe"
+            aria-label="Principal mobile"
+          >
+            <Link href="/inscription" className={navLinkClass(true, true)} onClick={() => setMobileOpen(false)}>
               {t("correctionAi")}
             </Link>
             <Link
               href="/cours-en-ligne"
-              className={navLinkClass(true)}
+              className={navLinkClass(true, true)}
               onClick={() => setMobileOpen(false)}
             >
               {t("teacherLive")}
             </Link>
-            <Link href="/cours" className={navLinkClass(true)} onClick={() => setMobileOpen(false)}>
+            <Link href="/cours" className={navLinkClass(true, true)} onClick={() => setMobileOpen(false)}>
               {t("quizFree")}
             </Link>
-            <Link href="/tarifs" className={navLinkClass(true)} onClick={() => setMobileOpen(false)}>
+            <Link href="/tarifs" className={navLinkClass(true, true)} onClick={() => setMobileOpen(false)}>
               {t("pricing")}
             </Link>
             {user ? (
@@ -163,18 +169,18 @@ export function SiteHeaderNav({ user }: { user: HeaderUser | null }) {
                         ? "/professeur"
                         : "/admin"
                   }
-                  className={navLinkClass(true)}
+                  className={navLinkClass(true, true)}
                   onClick={() => setMobileOpen(false)}
                 >
                   {t("mySpace")}
                 </Link>
                 {user.name ? (
-                  <span className="truncate px-3 py-1 text-xs text-muted-text">{user.name}</span>
+                  <span className="truncate px-4 py-1 text-xs text-muted-text">{user.name}</span>
                 ) : null}
                 <form action={logoutAction} className="pt-2">
                   <button
                     type="submit"
-                    className="w-full rounded-2xl border border-border-soft bg-white/60 px-3 py-3 text-left text-sm font-medium text-navy transition hover:bg-background-secondary"
+                    className="flex min-h-[44px] w-full items-center rounded-2xl border border-border-soft bg-white/60 px-4 py-3 text-left text-base font-medium text-navy transition hover:bg-background-secondary"
                   >
                     {t("logout")}
                   </button>
@@ -184,21 +190,25 @@ export function SiteHeaderNav({ user }: { user: HeaderUser | null }) {
               <>
                 <Link
                   href="/connexion"
-                  className={navLinkClass(true)}
+                  className={navLinkClass(true, true)}
                   onClick={() => setMobileOpen(false)}
                 >
                   {t("login")}
                 </Link>
-                <Link
-                  href="/inscription"
-                  className="btn-primary mt-2 text-center !py-3 !text-base"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  {t("tryFree")}
-                </Link>
               </>
             )}
           </nav>
+          {!user ? (
+            <div className="shrink-0 border-t border-border-soft/80 px-3 py-4 pb-safe">
+              <Link
+                href="/inscription"
+                className="btn-primary flex w-full justify-center !py-3.5 !text-base"
+                onClick={() => setMobileOpen(false)}
+              >
+                {t("tryFree")}
+              </Link>
+            </div>
+          ) : null}
         </div>
       ) : null}
     </>

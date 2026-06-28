@@ -22,9 +22,15 @@
   --brand-hover: #0b3d91;
   --brand-muted: rgba(10, 108, 255, 0.08);
   --ring: rgba(21, 216, 255, 0.35);
-  --header-h: 4.25rem;
+  --header-h: 3.75rem;
   --footer-bg: #061b4e;
   --footer-text: #f8fbff;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --header-h: 4.25rem;
+  }
 }
 
 @theme inline {
@@ -50,6 +56,7 @@
 html {
   scroll-behavior: smooth;
   color-scheme: light;
+  overflow-x: clip;
 }
 
 body {
@@ -57,6 +64,8 @@ body {
   color: var(--foreground);
   font-family: var(--font-body), system-ui, sans-serif;
   font-feature-settings: "rlig" 1, "calt" 1;
+  overflow-x: clip;
+  -webkit-text-size-adjust: 100%;
 }
 
 /* Fond global — toujours clair et doux */
@@ -98,15 +107,15 @@ body {
   }
 
   .card-elevated {
-    @apply rounded-[22px] border border-border-soft bg-white/[0.74] shadow-md shadow-electric/[0.06] backdrop-blur-md transition duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-electric/10;
+    @apply rounded-2xl border border-border-soft bg-white/[0.74] shadow-md shadow-electric/[0.06] backdrop-blur-md transition duration-300 sm:rounded-[22px] md:hover:-translate-y-1 md:hover:shadow-lg md:hover:shadow-electric/10;
   }
 
   .glass-card {
-    @apply rounded-[22px] border border-border-soft bg-white/[0.74] shadow-md shadow-electric/[0.06] backdrop-blur-lg;
+    @apply rounded-2xl border border-border-soft bg-white/[0.74] shadow-md shadow-electric/[0.06] backdrop-blur-lg sm:rounded-[22px];
   }
 
   .brand-card {
-    @apply rounded-[22px] border border-border-soft bg-gradient-to-br from-white/[0.84] via-white/[0.74] to-electric/[0.04] shadow-md shadow-electric/[0.08] backdrop-blur-md;
+    @apply rounded-2xl border border-border-soft bg-gradient-to-br from-white/[0.84] via-white/[0.74] to-electric/[0.04] shadow-md shadow-electric/[0.08] backdrop-blur-md sm:rounded-[22px];
   }
 
   .brand-card-inner {
@@ -114,7 +123,19 @@ body {
   }
 
   .brand-section-title {
-    @apply text-[11px] font-bold uppercase tracking-[0.22em] text-electric;
+    @apply text-[10px] font-bold uppercase tracking-[0.12em] text-electric sm:text-[11px] sm:tracking-[0.22em];
+  }
+
+  .section-stack {
+    @apply mt-12 sm:mt-20;
+  }
+
+  .page-x {
+    @apply px-3 sm:px-4 md:px-6;
+  }
+
+  .pb-safe {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom, 0px));
   }
 
   .brand-section-subtitle {
@@ -131,11 +152,12 @@ body {
 
   .header-glass {
     @apply sticky top-0 z-40 border-b border-border-soft/80 bg-white/55 shadow-sm shadow-electric/[0.04] backdrop-blur-xl;
+    padding-top: env(safe-area-inset-top, 0px);
   }
 
   /** CTA final — card premium claire, sans fond navy */
   .cta-premium-card {
-    @apply relative overflow-hidden rounded-[24px] border border-border-soft bg-white/[0.74] px-6 py-10 text-center shadow-lg shadow-electric/10 backdrop-blur-md sm:px-10 sm:py-12;
+    @apply relative overflow-hidden rounded-2xl border border-border-soft bg-white/[0.74] px-4 py-8 text-center shadow-lg shadow-electric/10 backdrop-blur-md sm:rounded-[24px] sm:px-10 sm:py-12;
   }
 
   .cta-premium-card::before {
