@@ -7,7 +7,10 @@ import { PDFMATH_CATALOG_SEED_QCMS } from "./seed-catalog-pdfmath";
 import { MAXIMATH_X10_QCMS } from "./seed-catalog-maximath-x10";
 import { X10_FILL_LANGUES_QCMS } from "./seed-catalog-x10-fill-langues";
 import { X10_FILL_STEM_QCMS } from "./seed-catalog-x10-fill-stem";
-import { X15_FILL_QCMS } from "./seed-catalog-x15-fill";
+import {
+  capCatalogQcmsAtPerMatiere,
+  countByMatiere,
+} from "./seed-catalog-cap";
 
 const prisma = new PrismaClient();
 
@@ -104,7 +107,7 @@ async function main() {
 
   await prisma.exercise.upsert({
     where: { id: "seed-ex-1" },
-    update: {},
+    update: { published: false },
     create: {
       id: "seed-ex-1",
       title: "QCM — calcul mental",
@@ -142,7 +145,7 @@ async function main() {
     },
   });
 
-  const allCatalogQcms = [
+  const allCatalogQcms = capCatalogQcmsAtPerMatiere([
     ...CATALOG_SEED_QCMS,
     ...STEM_CATALOG_SEED_QCMS,
     ...FILL_CATALOG_SEED_QCMS,
@@ -150,8 +153,9 @@ async function main() {
     ...MAXIMATH_X10_QCMS,
     ...X10_FILL_LANGUES_QCMS,
     ...X10_FILL_STEM_QCMS,
-    ...X15_FILL_QCMS,
-  ];
+  ]);
+
+  const catalogIds = allCatalogQcms.map((q) => q.id);
 
   for (const qcm of allCatalogQcms) {
     const contentJson = JSON.stringify({ questions: qcm.questions });
@@ -179,6 +183,18 @@ async function main() {
       },
     });
   }
+
+  await prisma.exercise.updateMany({
+    where: {
+      type: "QCM",
+      id: { notIn: catalogIds },
+      OR: [
+        { id: { startsWith: "seed-qcm-" } },
+        { id: { startsWith: "seed-fill-" } },
+      ],
+    },
+    data: { published: false },
+  });
 
   await prisma.professeurAffectation.deleteMany({});
   await prisma.scheduleEntry.deleteMany({});
@@ -224,6 +240,7 @@ async function main() {
     eleve: eleve.email,
     course: course.title,
     catalogQcms: allCatalogQcms.length,
+    perMatiere: countByMatiere(allCatalogQcms),
   });
 }
 

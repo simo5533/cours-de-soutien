@@ -1,6 +1,6 @@
 /**
- * Complète chaque langue et matière STEM à 15 QCM minimum.
- * Langues : quiz 11–15 · STEM (Phy/SVT/HG) : quiz 11–15 (+ base déjà à 11).
+ * Complète chaque langue et matière STEM à 15 QCM (fichier archive — non chargé en seed).
+ * Le catalogue public est plafonné à 10 QCM par matière via `seed-catalog-cap.ts`.
  */
 import type { SeedCatalogQcm } from "./seed-catalog-quizzes";
 

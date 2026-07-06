@@ -30,6 +30,9 @@ export const CATALOG_STEM_MATIERES = [
   "Histoire-Géographie",
 ] as const;
 
+/** Nombre de QCM affichés par matière dans le catalogue public. */
+export const CATALOG_QUIZZES_PER_MATIERE = 10;
+
 export type CatalogStemMatiere = (typeof CATALOG_STEM_MATIERES)[number];
 
 /** Clés `CatalogPage.matieres.{key}` — langues */
