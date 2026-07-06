@@ -68,6 +68,14 @@ body {
   -webkit-text-size-adjust: 100%;
 }
 
+[dir="rtl"] body {
+  font-family: var(--font-noto-arabic), var(--font-body), system-ui, sans-serif;
+}
+
+[dir="rtl"] .font-display {
+  font-family: var(--font-noto-arabic), var(--font-display), system-ui, sans-serif;
+}
+
 /* Fond global — toujours clair et doux */
 .site-bg {
   background-color: var(--background);
@@ -151,8 +159,30 @@ body {
   }
 
   .header-glass {
-    @apply sticky top-0 z-40 border-b border-border-soft/80 bg-white/55 shadow-sm shadow-electric/[0.04] backdrop-blur-xl;
+    @apply sticky top-0 z-50 border-b border-border-soft/80 bg-white/80 shadow-sm shadow-electric/[0.06] backdrop-blur-xl;
     padding-top: env(safe-area-inset-top, 0px);
+  }
+
+  html[data-mobile-nav="open"] .header-glass {
+    z-index: 210;
+  }
+
+  .header-brand-link {
+    @apply rounded-xl py-1 pe-1 transition-opacity hover:opacity-90;
+  }
+
+  .header-brand-logo {
+    max-width: min(52vw, 11.5rem);
+    height: auto;
+    max-height: 2.5rem;
+    mix-blend-mode: multiply;
+  }
+
+  @media (min-width: 640px) {
+    .header-brand-logo {
+      max-width: 13rem;
+      max-height: 2.75rem;
+    }
   }
 
   /** CTA final — card premium claire, sans fond navy */

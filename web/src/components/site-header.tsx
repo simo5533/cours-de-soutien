@@ -10,10 +10,10 @@ export async function SiteHeader() {
 
   return (
     <header className="header-glass">
-      <div className="relative mx-auto flex h-[var(--header-h)] max-w-6xl items-center justify-between gap-2 px-3 sm:gap-4 sm:px-6">
+      <div className="relative mx-auto flex h-[var(--header-h)] max-w-6xl items-center justify-between gap-3 px-3 sm:px-6">
         <Link
           href="/"
-          className="group flex min-w-0 max-w-[min(100%,200px)] items-center gap-2 sm:max-w-none sm:gap-3"
+          className="header-brand-link group flex min-w-0 shrink-0 items-center"
         >
           <Image
             src="/brand/correcteurplus-logo.png"
@@ -21,7 +21,7 @@ export async function SiteHeader() {
             width={240}
             height={72}
             priority
-            className="h-8 w-auto max-h-8 shrink-0 object-contain object-left sm:h-10 sm:max-h-10"
+            className="header-brand-logo h-9 w-auto object-contain object-left sm:h-10"
           />
         </Link>
         <SiteHeaderNav
