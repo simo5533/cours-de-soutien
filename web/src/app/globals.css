@@ -25,6 +25,10 @@
   --header-h: 3.75rem;
   --footer-bg: #061b4e;
   --footer-text: #f8fbff;
+  --bg-mobile-menu: url("/bg/mobile-menu.png");
+  --bg-site: url("/bg/site-background.png");
+  --bg-cards: url("/bg/cards.png");
+  --bg-footer: url("/bg/footer.png");
 }
 
 @media (min-width: 640px) {
@@ -86,6 +90,16 @@ body {
   min-height: 100dvh;
 }
 
+@media (max-width: 1023px) {
+  .site-bg {
+    background-color: #e8f4ff;
+    background-image: var(--bg-site);
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+  }
+}
+
 .page-bg {
   background: transparent;
 }
@@ -116,6 +130,19 @@ body {
 
   .card-elevated {
     @apply rounded-2xl border border-border-soft bg-white/[0.74] shadow-md shadow-electric/[0.06] backdrop-blur-md transition duration-300 sm:rounded-[22px] md:hover:-translate-y-1 md:hover:shadow-lg md:hover:shadow-electric/10;
+  }
+
+  @media (max-width: 1023px) {
+    .card-elevated,
+    .brand-card,
+    .glass-card,
+    .cta-premium-card {
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.86)),
+        var(--bg-cards);
+      background-size: cover;
+      background-position: center;
+    }
   }
 
   .glass-card {
@@ -184,8 +211,58 @@ body {
     }
   }
 
-  .footer-brand-logo {
-    max-width: 12.5rem;
+  /** Menu mobile — fond image 1 */
+  .mobile-nav-panel {
+    position: relative;
+    isolation: isolate;
+    background: var(--bg-mobile-menu) center top / cover no-repeat;
+  }
+
+  .mobile-nav-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.94) 0%,
+      rgba(244, 249, 255, 0.9) 55%,
+      rgba(232, 244, 255, 0.88) 100%
+    );
+    pointer-events: none;
+  }
+
+  .mobile-nav-panel > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  /** Footer — fond image 4 */
+  .site-footer {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    border-top: 1px solid rgba(10, 108, 255, 0.12);
+    background: var(--bg-footer) center / cover no-repeat;
+    color: var(--navy);
+  }
+
+  .site-footer::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.82) 0%,
+      rgba(232, 244, 255, 0.78) 100%
+    );
+    pointer-events: none;
+  }
+
+  .site-footer > * {
+    position: relative;
+    z-index: 1;
   }
 
   /** CTA final — card premium claire, sans fond navy */

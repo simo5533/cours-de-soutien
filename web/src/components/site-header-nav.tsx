@@ -158,7 +158,7 @@ export function SiteHeaderNav({ user }: { user: HeaderUser | null }) {
                 aria-label={t("closeMenu")}
                 onClick={() => setMobileOpen(false)}
               />
-              <div className="absolute inset-x-0 bottom-0 top-[var(--header-h)] flex flex-col overflow-hidden border-t border-border-soft bg-white shadow-2xl">
+              <div className="mobile-nav-panel absolute inset-x-0 bottom-0 top-[var(--header-h)] flex flex-col overflow-hidden border-t border-border-soft/80 shadow-2xl">
                 <nav
                   className="flex flex-1 flex-col gap-1.5 overflow-x-hidden overflow-y-auto overscroll-contain px-3 py-4 pb-safe"
                   aria-label="Principal mobile"
