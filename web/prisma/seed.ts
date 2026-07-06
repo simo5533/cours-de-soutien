@@ -7,6 +7,7 @@ import { PDFMATH_CATALOG_SEED_QCMS } from "./seed-catalog-pdfmath";
 import { MAXIMATH_X10_QCMS } from "./seed-catalog-maximath-x10";
 import { X10_FILL_LANGUES_QCMS } from "./seed-catalog-x10-fill-langues";
 import { X10_FILL_STEM_QCMS } from "./seed-catalog-x10-fill-stem";
+import { X15_FILL_QCMS } from "./seed-catalog-x15-fill";
 
 const prisma = new PrismaClient();
 
@@ -149,6 +150,7 @@ async function main() {
     ...MAXIMATH_X10_QCMS,
     ...X10_FILL_LANGUES_QCMS,
     ...X10_FILL_STEM_QCMS,
+    ...X15_FILL_QCMS,
   ];
 
   for (const qcm of allCatalogQcms) {
