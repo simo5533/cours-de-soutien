@@ -1,6 +1,6 @@
 /**
  * Complète chaque langue et matière STEM à 15 QCM minimum.
- * Langues : quiz 11–15 · STEM (Phy/SVT/HG) : quiz 11–14 (+ base déjà à 11).
+ * Langues : quiz 11–15 · STEM (Phy/SVT/HG) : quiz 11–15 (+ base déjà à 11).
  */
 import type { SeedCatalogQcm } from "./seed-catalog-quizzes";
 
@@ -240,7 +240,7 @@ export const X15_FILL_QCMS: SeedCatalogQcm[] = [
     { id: "x15zh15-5", prompt: "Les caractères chinois sont des :", options: ["logogrammes", "lettres latines", "chiffres seuls"], correct: 0 },
   ]),
 
-  // ——— Physique-Chimie 11–14 (11→15) ———
+  // ——— Physique-Chimie 11–15 ———
   quiz("seed-qcm-x15-phy-11", "Physique-Chimie", "Physique — Énergie mécanique", "Lycée", "Conservation · travail", [
     { id: "x15p11-1", prompt: "Énergie cinétique Ec =", options: ["½mv²", "mgh", "Fv"], correct: 0 },
     { id: "x15p11-2", prompt: "Énergie potentielle de pesanteur Ep =", options: ["mgh", "½mv²", "qU"], correct: 0 },
@@ -269,8 +269,15 @@ export const X15_FILL_QCMS: SeedCatalogQcm[] = [
     { id: "x15p14-4", prompt: "H₂O : molécule :", options: ["triatomique", "diatomique", "monoatomique"], correct: 0 },
     { id: "x15p14-5", prompt: "Gaz noble : couche externe souvent :", options: ["saturée (stable)", "vide", "ionisée"], correct: 0 },
   ]),
+  quiz("seed-qcm-x15-phy-15", "Physique-Chimie", "Physique — Optique géométrique", "Lycée", "Réflexion · réfraction", [
+    { id: "x15p15-1", prompt: "Loi de Snell : n₁sinθ₁ =", options: ["n₂sinθ₂", "n₂cosθ₂", "sinθ₂ seul"], correct: 0 },
+    { id: "x15p15-2", prompt: "Angle d’incidence = angle mesuré par rapport à :", options: ["la normale", "la surface", "l’axe horizontal seul"], correct: 0 },
+    { id: "x15p15-3", prompt: "Réflexion totale : lumière passe de milieu plus réfringent vers :", options: ["moins réfringent", "plus dense toujours", "vide seul"], correct: 0 },
+    { id: "x15p15-4", prompt: "Miroir plan : image :", options: ["virtuelle, même taille", "réelle agrandie", "inexistante"], correct: 0 },
+    { id: "x15p15-5", prompt: "Lentille convergente : image réelle d’un objet lointain en :", options: ["foyer image", "centre optique", "infini"], correct: 0 },
+  ]),
 
-  // ——— SVT 11–14 ———
+  // ——— SVT 11–15 ———
   quiz("seed-qcm-x15-svt-11", "SVT", "SVT — Génétique mendélienne", "Lycée", "Allèles · dominance", [
     { id: "x15s11-1", prompt: "Allèle dominant s’exprime en :", options: ["hétérozygote", "jamais", "seulement homozygote récessif"], correct: 0 },
     { id: "x15s11-2", prompt: "Aa × Aa (A dominant) : proportion phénotype dominant ≈", options: ["3/4", "1/4", "1/2 seul"], correct: 0 },
@@ -299,8 +306,15 @@ export const X15_FILL_QCMS: SeedCatalogQcm[] = [
     { id: "x15s14-4", prompt: "Maladie transmissible se propage par :", options: ["agent pathogène", "roches", "vent seul sans agent"], correct: 0 },
     { id: "x15s14-5", prompt: "Quarantaine sert à :", options: ["limiter propagation", "augmenter virus", "remplacer vaccin"], correct: 0 },
   ]),
+  quiz("seed-qcm-x15-svt-15", "SVT", "SVT — Climat et environnement", "Lycée", "Effet de serre · biodiversité", [
+    { id: "x15s15-1", prompt: "Effet de serre : gaz retiennent :", options: ["chaleur infrarouge", "lumière UV seule", "oxygène"], correct: 0 },
+    { id: "x15s15-2", prompt: "CO₂ principal gaz à effet de serre d’origine :", options: ["anthropique (combustion)", "hélium", "azote seul"], correct: 0 },
+    { id: "x15s15-3", prompt: "Réchauffement climatique : enjeu pour :", options: ["écosystèmes / mers", "tectonique seule", "mitose"], correct: 0 },
+    { id: "x15s15-4", prompt: "Déforestation réduit :", options: ["puits de carbone", "population humaine", "gravité"], correct: 0 },
+    { id: "x15s15-5", prompt: "Espèce menacée : risque de :", options: ["extinction", "mutation forcée", "photosynthèse accrue"], correct: 0 },
+  ]),
 
-  // ——— Histoire-Géographie 11–14 ———
+  // ——— Histoire-Géographie 11–15 ———
   quiz("seed-qcm-x15-hg-11", "Histoire-Géographie", "HG — Révolution industrielle", "Lycée", "XVIIIe–XIXe · machines", [
     { id: "x15h11-1", prompt: "Révolution industrielle commence en :", options: ["Grande-Bretagne", "Maroc seul", "Antarctique"], correct: 0 },
     { id: "x15h11-2", prompt: "Machine à vapeur (repère Watt) : impact sur :", options: ["transports / usines", "agriculture seule", "religion seule"], correct: 0 },
@@ -328,5 +342,12 @@ export const X15_FILL_QCMS: SeedCatalogQcm[] = [
     { id: "x15h14-3", prompt: "Légende carte :", options: ["explique symboles", "titre seul", "échelle seule"], correct: 0 },
     { id: "x15h14-4", prompt: "Rose des vents indique :", options: ["orientation", "population", "relief"], correct: 0 },
     { id: "x15h14-5", prompt: "GPS utilise :", options: ["satellites", "boussole seule", "thermomètre"], correct: 0 },
+  ]),
+  quiz("seed-qcm-x15-hg-15", "Histoire-Géographie", "HG — Afrique et Maroc contemporain", "Lycée", "Décolonisation · intégration", [
+    { id: "x15h15-1", prompt: "Décolonisation africaine pic (années) :", options: ["1950–1960", "1850", "2000 seul"], correct: 0 },
+    { id: "x15h15-2", prompt: "Union africaine (UA) siège institutionnel :", options: ["Addis-Abeba", "Paris", "New York"], correct: 0 },
+    { id: "x15h15-3", prompt: "Maroc : roi actuel (repère) Mohammed VI depuis :", options: ["1999", "1956", "2011 seul"], correct: 0 },
+    { id: "x15h15-4", prompt: "Plan Maroc Vert concerne surtout :", options: ["agriculture", "espace", "pétrole seul"], correct: 0 },
+    { id: "x15h15-5", prompt: "Diaspora marocaine : lien économique via :", options: ["transferts / investissements", "volcan", "glace"], correct: 0 },
   ]),
 ];
