@@ -93,8 +93,8 @@ export function PublicQuizCatalog({ groups }: { groups: QuizCatalogGroup[] }) {
 
   return (
     <div className="space-y-10">
-      <div className="flex flex-col gap-3 rounded-2xl border border-border-soft bg-white/[0.74] p-4 backdrop-blur-sm sm:flex-row sm:flex-wrap sm:items-end">
-        <label className="flex min-w-[12rem] flex-1 flex-col gap-1 text-xs font-semibold text-navy dark:text-gold/90">
+      <div className="flex flex-col gap-3 rounded-2xl border border-border-soft bg-white/[0.74] p-4 backdrop-blur-sm md:flex-row md:flex-wrap md:items-end">
+        <label className="flex w-full flex-col gap-1 text-xs font-semibold text-navy md:min-w-0 md:flex-1 dark:text-gold/90">
           {t("filterMatiereLabel")}
           <select
             value={matiereFilter}
@@ -110,7 +110,7 @@ export function PublicQuizCatalog({ groups }: { groups: QuizCatalogGroup[] }) {
             ))}
           </select>
         </label>
-        <label className="flex min-w-[10rem] flex-1 flex-col gap-1 text-xs font-semibold text-navy dark:text-gold/90">
+        <label className="flex w-full flex-col gap-1 text-xs font-semibold text-navy md:min-w-0 md:flex-1 dark:text-gold/90">
           {t("filterNiveauLabel")}
           <select
             value={niveauFilter}
@@ -125,7 +125,7 @@ export function PublicQuizCatalog({ groups }: { groups: QuizCatalogGroup[] }) {
             ))}
           </select>
         </label>
-        <label className="flex min-w-[12rem] flex-1 flex-col gap-1 text-xs font-semibold text-navy dark:text-gold/90">
+        <label className="flex w-full flex-col gap-1 text-xs font-semibold text-navy md:min-w-0 md:flex-1 dark:text-gold/90">
           {t("searchLabel")}
           <input
             value={query}
@@ -134,7 +134,7 @@ export function PublicQuizCatalog({ groups }: { groups: QuizCatalogGroup[] }) {
             className="select-field py-2"
           />
         </label>
-        <p className="text-xs text-slate-500 dark:text-slate-400 sm:ms-auto sm:pb-2">
+        <p className="text-xs text-slate-500 dark:text-slate-400 md:ms-auto md:pb-2">
           {t("count", { filtered: filteredCount, total: scopeTotal })}
         </p>
       </div>
@@ -197,7 +197,7 @@ export function PublicQuizCatalog({ groups }: { groups: QuizCatalogGroup[] }) {
                               <span className="rounded-full border border-brandblue/25 bg-brandblue/5 px-2.5 py-0.5 text-[11px] font-medium text-navy dark:border-brandblue/30 dark:bg-brandblue/10 dark:text-brandblue">
                                 {niveauBadge(g.label, q.niveau)}
                               </span>
-                              <span className="rounded-full border border-slate-200/90 px-2.5 py-0.5 text-[11px] text-slate-600 dark:border-slate-600 dark:text-slate-400">
+                              <span className="max-w-full break-words rounded-full border border-slate-200/90 px-2.5 py-0.5 text-[11px] text-slate-600 dark:border-slate-600 dark:text-slate-400">
                                 {q.chapitre}
                               </span>
                             </div>

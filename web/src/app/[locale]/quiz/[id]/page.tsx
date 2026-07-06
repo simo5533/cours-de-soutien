@@ -99,15 +99,19 @@ export default async function PublicQuizPage({ params }: PageProps) {
           </Link>
         </nav>
 
-        <div className="card-elevated p-6 sm:p-8">
+        <div className="card-elevated p-4 sm:p-6 md:p-8">
           <p className="text-[11px] font-bold uppercase tracking-wider text-success">
             {t("badge")}
           </p>
-          <h1 className="font-display mt-2 text-xl font-bold text-navy sm:text-2xl">
+          <h1 className="font-display mt-2 text-xl font-bold leading-snug break-words text-navy sm:text-2xl">
             {exercise.title}
           </h1>
-          <p className="mt-1 text-sm text-muted-text">
-            {matiereLabel} · {niveauLabel} · {exercise.chapitre}
+          <p className="mt-2 flex flex-wrap gap-x-1 gap-y-1 text-sm text-muted-text">
+            <span>{matiereLabel}</span>
+            <span aria-hidden>·</span>
+            <span>{niveauLabel}</span>
+            <span aria-hidden>·</span>
+            <span className="break-words">{exercise.chapitre}</span>
           </p>
           <p className="mt-4 text-xs text-muted-text">
             {t("noteBody")}

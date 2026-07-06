@@ -25,14 +25,14 @@ export async function HomeHeroMockup() {
         aria-hidden
       />
       <div className="glass-card relative overflow-hidden p-4 sm:p-5">
-        <div className="absolute end-4 top-4 flex items-center gap-1.5 rounded-full border border-cyan-ai/30 bg-cyan-ai/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-premium">
+        <div className="absolute end-4 top-12 flex items-center gap-1.5 rounded-full border border-cyan-ai/30 bg-cyan-ai/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-premium sm:top-4">
           <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-cyan-ai" />
-          Analyse IA
+          {t("mockupBadgeAi")}
         </div>
 
         <div className="relative mt-6 rounded-2xl border border-border-soft bg-gradient-to-br from-white/90 to-background-secondary/80 p-4 shadow-inner">
           <div className="absolute -end-1 -top-1 rotate-3 rounded-lg bg-white px-2 py-0.5 text-[10px] font-medium text-muted-text shadow-sm">
-            Exercice
+            {t("mockupBadgeExercise")}
           </div>
           <div className="space-y-2.5 pt-2">
             <div className="h-2 w-3/4 rounded-full bg-navy/10" />
@@ -125,7 +125,7 @@ export async function HomeHelpTypeCards() {
           {t("helpTitle")}
         </h2>
       </div>
-      <div className="mt-10 grid gap-6 lg:grid-cols-3">
+      <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {cards.map((c) => (
           <div key={c.key} className="card-elevated flex flex-col overflow-hidden">
             <div className={`h-1.5 bg-gradient-to-r ${c.accent}`} />

@@ -29,11 +29,11 @@ export function CtaPremiumSection({
           {subtitle}
         </p>
         <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:justify-center">
-          <Link href={primaryHref} className="btn-primary inline-flex justify-center px-8 py-3.5 text-base">
+          <Link href={primaryHref} className="btn-primary inline-flex w-full justify-center px-8 py-3.5 text-base sm:w-auto">
             {primaryLabel}
           </Link>
           {secondaryHref && secondaryLabel ? (
-            <Link href={secondaryHref} className="btn-secondary inline-flex justify-center px-8 py-3.5 text-base">
+            <Link href={secondaryHref} className="btn-secondary inline-flex w-full justify-center px-8 py-3.5 text-base sm:w-auto">
               {secondaryLabel}
             </Link>
           ) : null}

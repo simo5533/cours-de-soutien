@@ -80,22 +80,27 @@ export function PublicQcmRunner({
   return (
     <form onSubmit={onSubmit} className="space-y-6">
       {content.questions.map((q) => (
-        <fieldset key={q.id} className="space-y-2">
-          <legend className="font-medium">{q.prompt}</legend>
+        <fieldset
+          key={q.id}
+          className="space-y-3 rounded-xl border border-border-soft bg-white/50 p-4"
+        >
+          <legend className="text-base font-medium leading-snug break-words text-navy">
+            {q.prompt}
+          </legend>
           <div className="flex flex-col gap-2">
             {q.options.map((opt, idx) => (
               <label
                 key={opt}
-                className="flex cursor-pointer items-center gap-2 text-sm"
+                className="flex cursor-pointer items-start gap-3 rounded-lg border border-transparent px-2 py-2 text-sm transition hover:border-border-soft hover:bg-white/80"
               >
                 <input
                   type="radio"
                   name={q.id}
                   value={idx}
                   required
-                  className="accent-brandblue"
+                  className="mt-0.5 shrink-0 accent-brandblue"
                 />
-                {opt}
+                <span className="min-w-0 flex-1 break-words leading-snug">{opt}</span>
               </label>
             ))}
           </div>
@@ -132,7 +137,7 @@ export function PublicQcmRunner({
       <button
         type="submit"
         disabled={pending}
-        className="btn-primary disabled:opacity-60"
+        className="btn-primary w-full sm:w-auto disabled:opacity-60"
       >
         {pending ? t("submitting") : t("submit")}
       </button>

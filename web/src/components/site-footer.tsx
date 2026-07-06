@@ -38,7 +38,7 @@ export async function SiteFooter() {
             </Link>
           </div>
           <nav
-            className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm sm:grid-cols-3 sm:gap-x-8 sm:gap-y-3"
+            className="grid grid-cols-1 gap-x-4 gap-y-1 text-sm sm:grid-cols-2 md:grid-cols-3 sm:gap-x-8 sm:gap-y-3"
             aria-label={t("navLabel")}
           >
             {links.map((l) => (

@@ -56,7 +56,7 @@ export default async function CoursPublicPage({ params }: PageProps) {
   return (
     <PublicPageShell>
         {/* Hero */}
-        <section className="relative overflow-hidden rounded-[24px] border border-border-soft bg-white/50 px-6 py-10 shadow-md shadow-electric/[0.06] backdrop-blur-md sm:px-10 sm:py-12">
+        <section className="relative overflow-hidden rounded-2xl border border-border-soft bg-white/50 px-4 py-8 shadow-md shadow-electric/[0.06] backdrop-blur-md sm:rounded-[24px] sm:px-8 sm:py-12">
           <div
             className="pointer-events-none absolute -end-20 -top-20 h-64 w-64 rounded-full bg-cyan-ai/15 blur-3xl"
             aria-hidden
@@ -69,7 +69,7 @@ export default async function CoursPublicPage({ params }: PageProps) {
             <p className="brand-section-title inline-flex items-center rounded-full border border-border-soft bg-white/70 px-3 py-1">
               {t("heroBadge")}
             </p>
-            <h1 className="font-display mt-5 text-3xl font-extrabold tracking-tight text-navy sm:text-4xl sm:leading-tight">
+            <h1 className="font-display mt-4 text-2xl font-extrabold tracking-tight text-navy sm:mt-5 sm:text-3xl sm:leading-tight md:text-4xl">
               {t("heroTitle")}
             </h1>
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-text">
@@ -81,8 +81,8 @@ export default async function CoursPublicPage({ params }: PageProps) {
                 ),
               })}
             </p>
-            <div className="mt-6 flex flex-wrap items-center gap-4 text-sm">
-              <span className="inline-flex items-center gap-2 rounded-full border border-border-soft bg-white/70 px-4 py-2 font-medium text-navy backdrop-blur-sm">
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
+              <span className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-border-soft bg-white/70 px-4 py-2 text-sm font-medium text-navy backdrop-blur-sm sm:w-auto sm:justify-start">
                 <span
                   className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-electric to-cyan-ai text-sm font-bold text-white"
                   aria-hidden
@@ -91,7 +91,7 @@ export default async function CoursPublicPage({ params }: PageProps) {
                 </span>
                 {t("qcmPublished")}
               </span>
-              <Link href="/cours" className="btn-primary !py-2.5">
+              <Link href="/cours" className="btn-primary w-full justify-center !py-2.5 sm:w-auto">
                 {t("startFreeQuiz")}
               </Link>
             </div>
@@ -100,7 +100,7 @@ export default async function CoursPublicPage({ params }: PageProps) {
 
         {/* Langues — article partie gratuite */}
         <section
-          className="relative mt-14 overflow-hidden rounded-[24px] border border-border-soft bg-white/[0.74] px-6 py-8 shadow-md backdrop-blur-md sm:px-8"
+          className="relative mt-14 overflow-hidden rounded-2xl border border-border-soft bg-white/[0.74] px-4 py-8 shadow-md backdrop-blur-md sm:rounded-[24px] sm:px-8"
           aria-labelledby="langues-gratuit-heading"
         >
           <div
@@ -298,7 +298,7 @@ export default async function CoursPublicPage({ params }: PageProps) {
                     className="card-elevated flex h-full flex-col rounded-2xl p-5 transition hover:-translate-y-0.5 hover:shadow-lg"
                   >
                     <span className="text-xs font-bold uppercase tracking-wide text-brandblue">QCM</span>
-                    <h3 className="mt-2 font-bold text-navy">{q.title}</h3>
+                    <h3 className="mt-2 font-bold leading-snug break-words text-navy">{q.title}</h3>
                     <p className="mt-2 text-xs text-muted-text">
                       {q.matiere} · {q.niveau}
                     </p>

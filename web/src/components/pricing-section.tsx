@@ -23,13 +23,13 @@ function PlanCard({ plan }: { plan: PricingPlan }) {
     <div
       className={`relative flex flex-col rounded-2xl border p-5 transition duration-300 sm:rounded-[22px] sm:p-6 md:hover:-translate-y-1 ${
         plan.highlighted
-          ? "z-10 border-electric/40 bg-gradient-to-b from-electric/10 to-white/80 shadow-xl shadow-electric/15 ring-2 ring-cyan-ai/30 sm:scale-[1.02] sm:p-7"
+          ? "z-10 border-electric/40 bg-gradient-to-b from-electric/10 to-white/80 shadow-xl shadow-electric/15 ring-2 ring-cyan-ai/30 lg:scale-[1.02] sm:p-7"
           : "card-elevated border-border-soft bg-white/70"
       }`}
     >
       {plan.badge ? (
         <span
-          className={`absolute -top-3 start-1/2 w-max max-w-[90%] -translate-x-1/2 rounded-full px-3 py-1 text-center text-xs font-bold text-white shadow-md ${
+          className={`absolute -top-3 start-1/2 w-max max-w-[90%] -translate-x-1/2 rounded-full px-3 py-1 text-center text-xs font-bold text-white shadow-md rtl:translate-x-1/2 ${
             plan.highlighted ? "bg-gradient-to-r from-electric to-cyan-ai" : "bg-premium"
           }`}
         >

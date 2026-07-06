@@ -55,7 +55,7 @@ export default async function Home({ params }: PageProps) {
             {badges.map((b) => (
               <span
                 key={b}
-                className="rounded-full border border-border-soft bg-white/80 px-2.5 py-0.5 text-[10px] font-semibold leading-snug text-navy shadow-sm backdrop-blur-sm sm:px-3 sm:py-1 sm:text-xs"
+                className="rounded-full border border-border-soft bg-white/80 px-2.5 py-0.5 text-[11px] font-semibold leading-snug text-navy shadow-sm backdrop-blur-sm sm:px-3 sm:py-1 sm:text-xs"
               >
                 {b}
               </span>

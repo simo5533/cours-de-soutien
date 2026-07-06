@@ -6,6 +6,11 @@ import { NextResponse } from "next/server";
 
 const intlMiddleware = createMiddleware(routing);
 
+function withPathnameHeader(response: NextResponse, pathname: string) {
+  response.headers.set("x-pathname", pathname);
+  return response;
+}
+
 function homeForRole(role: string | undefined) {
   switch (role) {
     case "ELEVE":
@@ -32,6 +37,13 @@ const protectedPrefixes = [
 export default auth(async function middleware(request: NextAuthRequest) {
   const pathname = request.nextUrl.pathname;
 
+  /** Route motion export — hors i18n et auth */
+  if (
+    pathname.startsWith("/video-botoschool-motion")
+  ) {
+    return withPathnameHeader(NextResponse.next(), pathname);
+  }
+
   /** Routes App Router sous `[locale]` : sans `/fr|ar/` → 404 */
   const hasLocalePrefix = /^\/(fr|ar)(\/|$)/.test(pathname);
   if (
@@ -48,7 +60,7 @@ export default auth(async function middleware(request: NextAuthRequest) {
 
   const intlResponse = intlMiddleware(request);
   if (intlResponse.status >= 300 && intlResponse.status < 400) {
-    return intlResponse;
+    return withPathnameHeader(intlResponse, pathname);
   }
 
   const session = request.auth;
@@ -92,7 +104,7 @@ export default auth(async function middleware(request: NextAuthRequest) {
     }
   }
 
-  return intlResponse;
+  return withPathnameHeader(intlResponse, pathname);
 });
 
 export const config = {
