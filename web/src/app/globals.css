@@ -211,11 +211,15 @@ body {
     }
   }
 
-  /** Menu mobile — fond image 1 */
+  /** Menu mobile — fond image 1 (1ère photo) */
   .mobile-nav-panel {
     position: relative;
     isolation: isolate;
-    background: var(--bg-mobile-menu) center top / cover no-repeat;
+    background-color: #dceeff;
+    background-image: var(--bg-mobile-menu);
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
   }
 
   .mobile-nav-panel::before {
@@ -225,9 +229,9 @@ body {
     z-index: 0;
     background: linear-gradient(
       180deg,
-      rgba(255, 255, 255, 0.94) 0%,
-      rgba(244, 249, 255, 0.9) 55%,
-      rgba(232, 244, 255, 0.88) 100%
+      rgba(255, 255, 255, 0.35) 0%,
+      rgba(244, 249, 255, 0.28) 45%,
+      rgba(220, 238, 255, 0.22) 100%
     );
     pointer-events: none;
   }

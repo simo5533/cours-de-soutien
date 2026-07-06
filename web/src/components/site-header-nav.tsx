@@ -19,7 +19,7 @@ function navLinkClass(activeMobile?: boolean, mobile?: boolean) {
       ? "bg-electric/10 text-navy"
       : "text-navy/80 hover:bg-background-secondary hover:text-navy");
   if (mobile) {
-    return `${base} flex min-h-[48px] items-center rounded-2xl px-4 py-3 text-base`;
+    return `${base} flex min-h-[48px] items-center rounded-2xl border border-white/70 bg-white/80 px-4 py-3 text-base shadow-sm backdrop-blur-md`;
   }
   return `${base} px-3 py-2 text-sm`;
 }
@@ -231,7 +231,7 @@ export function SiteHeaderNav({ user }: { user: HeaderUser | null }) {
                   )}
                 </nav>
                 {!user ? (
-                  <div className="shrink-0 border-t border-border-soft bg-white px-3 py-4 pb-safe">
+                  <div className="shrink-0 border-t border-white/60 bg-white/75 px-3 py-4 pb-safe backdrop-blur-md">
                     <Link
                       href="/inscription"
                       className="btn-primary flex w-full justify-center !py-3.5 !text-base"
