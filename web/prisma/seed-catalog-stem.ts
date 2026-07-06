@@ -1,6 +1,6 @@
 /**
  * QCM catalogue public — matières du tronc commun (hors langues vivantes du bloc dédié).
- * Libellés de matière = ceux du programme (`course-taxonomy` / seed Methodix).
+ * Libellés de matière = ceux du programme (`course-taxonomy` / seed CorrecteurPlus).
  */
 import type { SeedCatalogQcm } from "./seed-catalog-quizzes";
 

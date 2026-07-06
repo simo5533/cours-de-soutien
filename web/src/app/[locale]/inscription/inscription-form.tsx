@@ -10,7 +10,7 @@ import {
   PRICING_PLANS,
   legacyPlanFromPricingId,
   type PricingPlanId,
-} from "@/config/methodix-pricing";
+} from "@/config/correcteurplus-pricing";
 
 const roleOptions = [
   { value: "ELEVE", labelKey: "roleStudent" as const },

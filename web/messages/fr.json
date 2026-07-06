@@ -98,7 +98,7 @@
     "planFamilyF3": "Tableau de bord parent",
     "planCta": "Choisir ce pack",
     "spacesEyebrow": "Espaces plateforme",
-    "spacesSectionTitle": "Plateforme de correction d'exercices Methodix",
+    "spacesSectionTitle": "Plateforme de correction d'exercices CorrecteurPlus",
     "spacesSectionSubtitle": "Élèves, professeurs et administration : corrections, quiz et suivi dans un espace sécurisé.",
     "finalCtaTitle": "Commence à corriger tes exercices dès aujourd'hui",
     "finalCtaSubtitle": "Inscription gratuite — 3 corrections IA offertes, quiz illimités, puis pack au choix.",
@@ -114,7 +114,7 @@
     "languagesSectionTitle": "Français, espagnol, anglais, anglais américain, allemand et chinois",
     "languagesSectionIntro": "Nous vous invitons à rejoindre nos ateliers de langues : objectifs clairs (scolarité, examens, conversation ou voyage), petits groupes et pédagogie progressive. Choisissez la langue qui vous correspond et progressez à votre rythme.",
     "languagesSeparateNote": "Offre à part des matières du bac présentées ci-dessus : ici il s'agit d'ateliers de langues pour tous les publics, sans être limité au programme de lycée.",
-    "languagesWhoTitle": "Qui peut étudier les langues chez Methodix ?",
+    "languagesWhoTitle": "Qui peut étudier les langues chez CorrecteurPlus ?",
     "languagesWhoBody": "Tout le monde : écoliers, collégiens, lycéens, étudiants, adultes en activité, en reconversion, en recherche d'emploi ou à la retraite. Aucun diplôme préalable n'est exigé pour commencer un niveau débutant.",
     "languagesAgeTitle": "À partir de quel âge ?",
     "languagesAgeBody": "En pratique, nous proposons des groupes enfants à partir d'environ 8 à 12 ans (selon la langue et la session), des groupes ados 13–17 ans, et des créneaux adultes dès 18 ans. Il n'y a pas d'âge maximum : les seniors sont les bienvenus. Pour les moins de 8 ans, une courte évaluation permet de vérifier que le groupe convient.",
@@ -229,12 +229,12 @@
     "error": "E-mail ou mot de passe incorrect.",
     "noAccount": "Pas encore de compte ?",
     "register": "Inscription",
-    "demoPrompt": "Vous souhaitez tester Methodix ? Demandez une démonstration.",
+    "demoPrompt": "Vous souhaitez tester CorrecteurPlus ? Demandez une démonstration.",
     "demoCta": "Demander une démo"
   },
   "PricingPage": {
-    "metaTitle": "Tarifs Methodix | Correction IA, Professeur et Packs Bac",
-    "metaDescription": "Choisissez votre pack Methodix : corrections IA, crédits professeur, quiz gratuits, préparation Bac et offres famille adaptées aux élèves marocains.",
+    "metaTitle": "Tarifs CorrecteurPlus | Correction IA, Professeur et Packs Bac",
+    "metaDescription": "Choisissez votre pack CorrecteurPlus : corrections IA, crédits professeur, quiz gratuits, préparation Bac et offres famille adaptées aux élèves marocains.",
     "eyebrow": "Tarifs",
     "title": "Packs de correction d'exercices",
     "lead": "Commence gratuitement avec 3 corrections IA, puis choisis le pack qui correspond à ton besoin — IA seule, IA + professeur, Bac ou famille.",
@@ -255,7 +255,7 @@
     "trust7": "Correction par IA ou professeur",
     "planLabel": "Pack de correction",
     "studentPaymentNote": "Après validation, le paiement s’ouvre sur cette page (fenêtre sécurisée). Le compte élève est activé après paiement réussi.",
-    "overlayPaymentHint": "Finalisez votre paiement dans la fenêtre sécurisée. Vous restez sur Methodix — fermez la fenêtre pour modifier vos informations ou réessayer.",
+    "overlayPaymentHint": "Finalisez votre paiement dans la fenêtre sécurisée. Vous restez sur CorrecteurPlus — fermez la fenêtre pour modifier vos informations ou réessayer.",
     "nameLabel": "Nom affiché",
     "emailLabel": "E-mail",
     "passwordLabel": "Mot de passe",
@@ -319,7 +319,7 @@
     "home": "Accueil"
   },
   "Blog": {
-    "metaTitle": "Blog — conseils et methodologie | Methodix",
+    "metaTitle": "Blog — conseils et methodologie | CorrecteurPlus",
     "metaDescription": "Articles sur le soutien scolaire, l'accompagnement des parents et les langues vivantes au Maroc.",
     "badge": "Ressources",
     "indexTitle": "Conseils pour reussir a l'ecole",
@@ -331,11 +331,11 @@
     "ctaButton": "S'inscrire"
   },
   "FreeLangCourses": {
-    "metaTitle": "Cours gratuits — langues et matières | Methodix",
+    "metaTitle": "Cours gratuits — langues et matières | CorrecteurPlus",
     "metaDescription": "Ce qui est offert sans engagement pour les six langues vivantes et pour les matières du tronc commun (mathématiques, physique-chimie, SVT, histoire-géographie) : séances découverte, fiches et aperçu du programme, comme un article web.",
     "kicker": "Guide — pas de pièce jointe",
     "title": "Langues et matières : la partie gratuite de chaque programme",
-    "lead": "Pour chaque langue et pour chaque matière du programme marocain présentée ici, vous trouvez ce qui est offert sans engagement, puis un fil conducteur pédagogique (niveaux, objectifs, thèmes). Le détail des brochures PDF et l’inscription complète se font avec l’équipe Methodix.",
+    "lead": "Pour chaque langue et pour chaque matière du programme marocain présentée ici, vous trouvez ce qui est offert sans engagement, puis un fil conducteur pédagogique (niveaux, objectifs, thèmes). Le détail des brochures PDF et l’inscription complète se font avec l’équipe CorrecteurPlus.",
     "freeSectionTitle": "Qu'est-ce qui est inclus gratuitement ?",
     "freeSectionBody": "Pour les six langues et pour les matières du tronc commun ci-dessous, le principe est le même : une séance de découverte sans facturation, l’accès à des fiches « premier contact » et à un extrait du premier module sur la plateforme lorsque l’offre Gratuite / Starter est active, ainsi qu’un court positionnement pour choisir le bon niveau. Les détails peuvent varier selon la session et le créneau.",
     "footnote": "Les programmes détaillés au format PDF restent disponibles sur demande auprès de nos coordinateurs ; cette page les résume volontairement pour une lecture rapide sur mobile et ordinateur.",
@@ -569,7 +569,7 @@
     }
   },
   "QuizPublicPage": {
-    "metaTitle": "Quiz — mode gratuit | Methodix",
+    "metaTitle": "Quiz — mode gratuit | CorrecteurPlus",
     "metaDescription": "Réponse aux QCM sans compte ; score affiché, non enregistré.",
     "backToQuizzes": "Retour aux quiz",
     "badge": "Quiz gratuit — sans connexion",

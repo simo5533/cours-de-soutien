@@ -47,7 +47,7 @@ export async function submitCoursEnLigneDemandeAction(
   const phoneDigits = parsed.data.phone.replace(/\D/g, "");
   const email =
     parsed.data.email?.trim().toLowerCase() ||
-    `wa-${phoneDigits}@demande.methodix`;
+    `wa-${phoneDigits}@demande.CorrecteurPlus`;
 
   const existingUser = await prisma.user.findUnique({ where: { email } });
   if (existingUser?.role === "ELEVE") {

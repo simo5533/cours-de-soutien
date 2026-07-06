@@ -218,7 +218,7 @@ export function ConnexionForm() {
         </Link>
       </p>
       <p className="mt-8 border-t border-slate-200 pt-6 text-center text-sm text-slate-600 dark:border-slate-700 dark:text-slate-400">
-        Vous souhaitez tester Methodix ?{" "}
+        Vous souhaitez tester CorrecteurPlus ?{" "}
         <Link
           href="/inscription"
           className="font-semibold text-navy underline-offset-4 hover:underline dark:text-brandblue"

@@ -69,7 +69,7 @@ export async function startEleveStripeCheckout(
           price_data: {
             currency: "mad",
             product_data: {
-              name: "Inscription élève Methodix",
+              name: "Inscription élève CorrecteurPlus",
               description: "Frais d'inscription — accès plateforme",
             },
             unit_amount: getEleveInscriptionUnitAmount(),

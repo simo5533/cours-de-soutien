@@ -27,7 +27,7 @@ export const BLOG_POSTS: BlogPost[] = [
       fr: [
         "Beaucoup d’élèves attendent la dernière ligne droite avant les examens pour « rattraper » le programme. Or les lacunes s’installent souvent plus tôt : un chapitre mal compris devient un obstacle sur les suivants.",
         "Un soutien régulier permet de stabiliser les bases, de poser des questions sans attendre, et d’adopter une méthode de travail adaptée (prise de notes, exercices ciblés, relecture). Ce n’est pas seulement du « rattrapage » : c’est un investissement sur la confiance et l’autonomie.",
-        "Chez Methodix, l’objectif est double : clarifier les notions et rendre l’élève acteur de sa progression, avec un suivi cohérent entre les séances et les ressources en ligne.",
+        "Chez CorrecteurPlus, l’objectif est double : clarifier les notions et rendre l’élève acteur de sa progression, avec un suivi cohérent entre les séances et les ressources en ligne.",
       ],
       ar: [
         "كثير من التلاميذ يؤجلون المراجعة إلى آخر لحظة قبل الامتحانات. لكن الفجوات غالباً ما تتشكل مبكراً: فصل غير مفهوم يصبح عائقاً للفصول التالية.",
@@ -75,7 +75,7 @@ export const BLOG_POSTS: BlogPost[] = [
       fr: [
         "Les langues se consolident par la fréquence plus que par de rares « gros blocs » de révision. Quelques minutes quotidiennes d’écoute ou de vocabulaire valent souvent une longue séance occasionnelle.",
         "Alterner grammaire, compréhension et expression orale évite l’ennui et ancre les acquis. Un enseignant ou tuteur aide à corriger les erreurs tôt, avant qu’elles ne se fossilisent.",
-        "Methodix propose des parcours structurés et des ressources pour les langues vivantes, avec une logique progressive adaptée aux objectifs scolaires et personnels.",
+        "CorrecteurPlus propose des parcours structurés et des ressources pour les langues vivantes, avec une logique progressive adaptée aux objectifs scolaires et personnels.",
       ],
       ar: [
         "اللغات تتعزز بالتكرار أكثر من جلسات المراجعة الطويلة النادرة. دقائق يومية من الاستماع أو المفردات تساوي غالباً حصة طويلة متقطعة.",
@@ -99,7 +99,7 @@ export const BLOG_POSTS: BlogPost[] = [
       fr: [
         "Les outils d’IA peuvent expliquer un exercice, proposer un plan de rédaction ou reformuler une définition. Ils gagnent en pertinence lorsque l’élève a déjà tenté le problème et peut dire où il bloque.",
         "Le risque est de copier une réponse sans comprendre : le vrai critère reste la capacité à refaire seul, en classe ou à l’examen. L’humain (professeur, tuteur) reste indispensable pour le cadre, le suivi et la motivation.",
-        "Sur Methodix, l’IA est pensée comme une aide ciblée — par exemple sur des fichiers ou des questions précises — au service d’un parcours encadré, pas comme un substitut au travail personnel.",
+        "Sur CorrecteurPlus, l’IA est pensée comme une aide ciblée — par exemple sur des fichiers ou des questions précises — au service d’un parcours encadré, pas comme un substitut au travail personnel.",
       ],
       ar: [
         "يمكن لأدوات الذكاء الاصطناعي شرح تمرير، اقتراح مخطط لكتابة، أو إعادة صياغة تعريف. تكون أدق عندما يحاول التلميذ أولاً ويحدد نقطة الانسداد.",

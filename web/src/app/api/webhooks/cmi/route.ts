@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
  * Attendu : vérification de signature HMAC, idempotence, mise à jour du plan utilisateur
  * (Prisma : champ futur `subscriptionPlan` / `cmiOrderId`, etc.).
  *
- * @see `src/config/methodix-plans.v2.ts` — IMPORTANT_CMI_NOTE
+ * @see `src/config/correcteurplus-plans.v2.ts` — IMPORTANT_CMI_NOTE
  */
 export async function POST(request: Request) {
   const secret = process.env.CMI_WEBHOOK_SECRET?.trim();
@@ -46,7 +46,7 @@ export async function POST(request: Request) {
 /** Certains fournisseurs vérifient l’URL en GET. */
 export async function GET() {
   return NextResponse.json({
-    service: "Methodix CMI webhook",
+    service: "CorrecteurPlus CMI webhook",
     status: "configure POST + CMI_WEBHOOK_SECRET",
   });
 }

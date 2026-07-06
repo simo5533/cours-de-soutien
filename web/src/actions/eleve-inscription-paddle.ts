@@ -188,13 +188,13 @@ export async function startElevePaddleCheckout(
             {
               quantity: 1,
               price: {
-                description: "Frais d'inscription — accès plateforme Methodix",
+                description: "Frais d'inscription — accès plateforme CorrecteurPlus",
                 unitPrice: {
                   amount: String(minor),
                   currencyCode,
                 },
                 product: {
-                  name: "Inscription élève Methodix",
+                  name: "Inscription élève CorrecteurPlus",
                   taxCategory: "training-services",
                   description: "Inscription et accès élève",
                 },

@@ -7,7 +7,7 @@ import {
   HomeTrustSection,
 } from "@/components/home-landing-sections";
 import { PublicPageShell } from "@/components/public-page-shell";
-import { getMethodixHomeSeo } from "@/content/methodix-home-seo";
+import { getCorrecteurPlusHomeSeo } from "@/content/correcteurplus-home-seo";
 import { Link } from "@/i18n/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
@@ -34,7 +34,7 @@ export default async function Home({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("HomePage");
-  const seo = getMethodixHomeSeo(locale);
+  const seo = getCorrecteurPlusHomeSeo(locale);
 
   const badges = [t("badgeFree"), t("badgeNoCard"), t("badgeMorocco"), t("badgeAiProf")] as const;
 

@@ -5,7 +5,7 @@ import {
   TEACHER_CREDIT_ROWS,
   VALUE_PROPOSITION,
   type PricingPlan,
-} from "@/config/methodix-pricing";
+} from "@/config/correcteurplus-pricing";
 import { Link } from "@/i18n/navigation";
 
 function formatPrice(plan: PricingPlan): string {
