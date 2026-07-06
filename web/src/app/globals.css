@@ -175,7 +175,6 @@ body {
     max-width: min(52vw, 11.5rem);
     height: auto;
     max-height: 2.5rem;
-    mix-blend-mode: multiply;
   }
 
   @media (min-width: 640px) {
@@ -183,6 +182,10 @@ body {
       max-width: 13rem;
       max-height: 2.75rem;
     }
+  }
+
+  .footer-brand-logo {
+    max-width: 12.5rem;
   }
 
   /** CTA final — card premium claire, sans fond navy */

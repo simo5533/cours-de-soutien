@@ -25,7 +25,7 @@ export async function SiteFooter() {
               alt="CorrecteurPlus"
               width={200}
               height={56}
-              className="h-9 w-auto object-contain object-left sm:h-10"
+              className="footer-brand-logo h-9 w-auto object-contain object-left sm:h-10"
             />
             <p className="mt-3 text-sm leading-relaxed text-[#F8FBFF]/75">
               {t("tagline")}
