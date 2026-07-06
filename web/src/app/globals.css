@@ -129,28 +129,43 @@ body {
   }
 
   .card-elevated {
-    @apply rounded-2xl border border-border-soft bg-white/[0.74] shadow-md shadow-electric/[0.06] backdrop-blur-md transition duration-300 sm:rounded-[22px] md:hover:-translate-y-1 md:hover:shadow-lg md:hover:shadow-electric/10;
-  }
-
-  @media (max-width: 1023px) {
-    .card-elevated,
-    .brand-card,
-    .glass-card,
-    .cta-premium-card {
-      background-image:
-        linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.86)),
-        var(--bg-cards);
-      background-size: cover;
-      background-position: center;
-    }
+    @apply rounded-2xl border border-border-soft shadow-md shadow-electric/[0.06] backdrop-blur-md transition duration-300 sm:rounded-[22px] md:hover:-translate-y-1 md:hover:shadow-lg md:hover:shadow-electric/10;
   }
 
   .glass-card {
-    @apply rounded-2xl border border-border-soft bg-white/[0.74] shadow-md shadow-electric/[0.06] backdrop-blur-lg sm:rounded-[22px];
+    @apply rounded-2xl border border-border-soft shadow-md shadow-electric/[0.06] backdrop-blur-lg sm:rounded-[22px];
   }
 
   .brand-card {
-    @apply rounded-2xl border border-border-soft bg-gradient-to-br from-white/[0.84] via-white/[0.74] to-electric/[0.04] shadow-md shadow-electric/[0.08] backdrop-blur-md sm:rounded-[22px];
+    @apply rounded-2xl border border-border-soft shadow-md shadow-electric/[0.08] backdrop-blur-md sm:rounded-[22px];
+  }
+
+  /* 3ème photo — fond de toutes les cartes du site */
+  .site-card-bg,
+  .card-elevated,
+  .brand-card,
+  .glass-card,
+  .cta-premium-card,
+  .plan-card,
+  .brand-list-item,
+  .pricing-value-prop,
+  .pricing-one-shot-box,
+  .pricing-offer-chip {
+    background-color: #edf6ff;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.68), rgba(255, 255, 255, 0.58)),
+      var(--bg-cards);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .plan-card-highlight {
+    @apply ring-2 ring-cyan-ai/30 shadow-xl shadow-electric/15;
+    border-color: rgba(10, 108, 255, 0.35);
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.62), rgba(232, 246, 255, 0.55)),
+      var(--bg-cards);
   }
 
   .brand-card-inner {
@@ -178,7 +193,7 @@ body {
   }
 
   .brand-list-item {
-    @apply rounded-2xl border border-border-soft bg-white/[0.74] px-4 py-3 shadow-sm backdrop-blur-sm transition hover:border-electric/25 hover:shadow-md hover:shadow-electric/5;
+    @apply rounded-2xl border border-border-soft px-4 py-3 shadow-sm backdrop-blur-sm transition hover:border-electric/25 hover:shadow-md hover:shadow-electric/5;
   }
 
   .select-field {
@@ -271,7 +286,7 @@ body {
 
   /** CTA final — card premium claire, sans fond navy */
   .cta-premium-card {
-    @apply relative overflow-hidden rounded-2xl border border-border-soft bg-white/[0.74] px-4 py-8 text-center shadow-lg shadow-electric/10 backdrop-blur-md sm:rounded-[24px] sm:px-10 sm:py-12;
+    @apply relative overflow-hidden rounded-2xl border border-border-soft px-4 py-8 text-center shadow-lg shadow-electric/10 backdrop-blur-md sm:rounded-[24px] sm:px-10 sm:py-12;
   }
 
   .cta-premium-card::before {

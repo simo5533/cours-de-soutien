@@ -146,7 +146,7 @@ export default async function CoursGratuitsLanguesPage({ params }: PageProps) {
   return (
     <PublicPageFrame mainClassName="page-bg page-x mx-auto flex w-full max-w-3xl flex-1 flex-col pb-12 pb-safe pt-6 sm:pb-16 sm:pt-12">
         <article
-          className="relative overflow-hidden rounded-[24px] border border-border-soft bg-white/[0.74] px-6 py-10 shadow-md backdrop-blur-md sm:px-10 sm:py-12"
+          className="site-card-bg relative overflow-hidden rounded-[24px] border border-border-soft px-6 py-10 shadow-md backdrop-blur-md sm:px-10 sm:py-12"
           itemScope
           itemType="https://schema.org/Article"
         >

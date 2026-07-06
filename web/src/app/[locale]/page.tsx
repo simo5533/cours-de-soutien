@@ -41,7 +41,7 @@ export default async function Home({ params }: PageProps) {
   return (
     <PublicPageShell>
       {/* Hero */}
-      <section className="relative overflow-hidden rounded-2xl border border-border-soft bg-white/50 px-4 py-8 shadow-md shadow-electric/[0.06] backdrop-blur-md sm:rounded-[24px] sm:px-10 sm:py-16 lg:pe-[24rem] xl:pe-[26rem]">
+      <section className="site-card-bg relative overflow-hidden rounded-2xl border border-border-soft px-4 py-8 shadow-md shadow-electric/[0.06] backdrop-blur-md sm:rounded-[24px] sm:px-10 sm:py-16 lg:pe-[24rem] xl:pe-[26rem]">
         <div
           className="pointer-events-none absolute -start-20 -top-20 h-64 w-64 rounded-full bg-cyan-ai/15 blur-3xl"
           aria-hidden
@@ -117,7 +117,7 @@ export default async function Home({ params }: PageProps) {
         <h2 id="faq-heading" className="font-display text-center text-xl font-bold text-navy sm:text-2xl md:text-3xl">
           {seo.faqTitle}
         </h2>
-        <div className="mx-auto mt-6 max-w-3xl divide-y divide-border-soft rounded-2xl border border-border-soft bg-white/60 backdrop-blur-md sm:mt-10 sm:rounded-[22px]">
+        <div className="site-card-bg mx-auto mt-6 max-w-3xl divide-y divide-border-soft rounded-2xl border border-border-soft backdrop-blur-md sm:mt-10 sm:rounded-[22px]">
           {seo.faq.slice(0, 5).map((item) => (
             <details key={item.q} className="group px-3 py-1 first:pt-3 last:pb-3 sm:px-6 sm:first:pt-4 sm:last:pb-4">
               <summary className="cursor-pointer list-none py-3 text-start text-sm font-semibold text-navy marker:content-none sm:text-base [&::-webkit-details-marker]:hidden">

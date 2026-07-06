@@ -53,7 +53,7 @@ export function PublicCatalogGrid({ courses }: { courses: PublicCourseItem[] }) 
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col gap-3 rounded-2xl border border-border-soft bg-white/[0.74] p-4 backdrop-blur-sm sm:flex-row sm:flex-wrap sm:items-end">
+      <div className="site-card-bg flex flex-col gap-3 rounded-2xl border border-border-soft p-4 backdrop-blur-sm sm:flex-row sm:flex-wrap sm:items-end">
         <label className="flex min-w-[12rem] flex-1 flex-col gap-1 text-xs font-semibold text-navy dark:text-gold/90">
           Rechercher
           <input

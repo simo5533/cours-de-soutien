@@ -30,7 +30,7 @@ export default async function BlogIndexPage({ params }: Props) {
 
   return (
     <PublicPageFrame>
-        <header className="relative overflow-hidden rounded-[24px] border border-border-soft bg-white/[0.74] px-6 py-10 shadow-md backdrop-blur-md sm:px-10 sm:py-12">
+        <header className="site-card-bg relative overflow-hidden rounded-[24px] border border-border-soft px-6 py-10 shadow-md backdrop-blur-md sm:px-10 sm:py-12">
           <div
             className="pointer-events-none absolute -end-20 -top-20 h-64 w-64 rounded-full bg-cyan-ai/15 blur-3xl"
             aria-hidden

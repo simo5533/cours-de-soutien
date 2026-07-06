@@ -21,10 +21,10 @@ function PlanCard({ plan }: { plan: PricingPlan }) {
 
   return (
     <div
-      className={`relative flex flex-col rounded-2xl border p-5 transition duration-300 sm:rounded-[22px] sm:p-6 md:hover:-translate-y-1 ${
+      className={`plan-card relative flex flex-col rounded-2xl border p-5 transition duration-300 sm:rounded-[22px] sm:p-6 md:hover:-translate-y-1 ${
         plan.highlighted
-          ? "z-10 border-electric/40 bg-gradient-to-b from-electric/10 to-white/80 shadow-xl shadow-electric/15 ring-2 ring-cyan-ai/30 lg:scale-[1.02] sm:p-7"
-          : "card-elevated border-border-soft bg-white/70"
+          ? "plan-card-highlight z-10 lg:scale-[1.02] sm:p-7"
+          : "border-border-soft"
       }`}
     >
       {plan.badge ? (
@@ -114,7 +114,7 @@ export function PricingSection({
         </h2>
         <p className="mx-auto mt-3 max-w-2xl text-muted-text">{subtitle}</p>
         {showValueProp ? (
-          <p className="mx-auto mt-6 max-w-3xl rounded-[22px] border border-border-soft bg-white/60 px-5 py-4 text-base font-medium leading-relaxed text-navy backdrop-blur-sm">
+          <p className="pricing-value-prop mx-auto mt-6 max-w-3xl rounded-[22px] border border-border-soft px-5 py-4 text-base font-medium leading-relaxed text-navy backdrop-blur-sm">
             {VALUE_PROPOSITION}
           </p>
         ) : null}
@@ -175,7 +175,7 @@ export function PricingSection({
       ) : null}
 
       {showOneShot ? (
-        <div className="mt-12 rounded-[22px] border border-dashed border-cyan-ai/40 bg-cyan-ai/5 p-6 sm:p-8">
+        <div className="pricing-one-shot-box mt-12 rounded-[22px] border border-dashed border-cyan-ai/40 p-6 sm:p-8">
           <h3 className="text-lg font-bold text-navy">
             Besoin d&apos;une correction sans abonnement ?
           </h3>
@@ -183,7 +183,7 @@ export function PricingSection({
             {ONE_SHOT_OFFERS.map((offer) => (
               <li
                 key={offer.id}
-                className="flex items-center justify-between rounded-xl border border-border-soft bg-white/70 px-4 py-3 text-sm backdrop-blur-sm"
+                className="pricing-offer-chip flex items-center justify-between rounded-xl border border-border-soft px-4 py-3 text-sm backdrop-blur-sm"
               >
                 <span className="font-medium text-navy">{offer.name}</span>
                 <span className="font-bold text-electric">{offer.price} MAD</span>

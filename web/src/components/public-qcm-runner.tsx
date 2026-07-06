@@ -82,7 +82,7 @@ export function PublicQcmRunner({
       {content.questions.map((q) => (
         <fieldset
           key={q.id}
-          className="space-y-3 rounded-xl border border-border-soft bg-white/50 p-4"
+          className="site-card-bg space-y-3 rounded-xl border border-border-soft p-4"
         >
           <legend className="text-base font-medium leading-snug break-words text-navy">
             {q.prompt}
@@ -107,7 +107,7 @@ export function PublicQcmRunner({
         </fieldset>
       ))}
       {message ? (
-        <div className="space-y-4 rounded-xl border border-border-soft bg-white/[0.74] px-4 py-4 backdrop-blur-sm">
+        <div className="site-card-bg space-y-4 rounded-xl border border-border-soft px-4 py-4 backdrop-blur-sm">
           <p className="text-sm font-medium text-navy">{message}</p>
           <p className="text-xs text-muted-text">{t("freeNote")}</p>
           {result && result.errorCount > 0 ? (

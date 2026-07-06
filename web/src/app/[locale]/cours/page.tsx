@@ -56,7 +56,7 @@ export default async function CoursPublicPage({ params }: PageProps) {
   return (
     <PublicPageShell>
         {/* Hero */}
-        <section className="relative overflow-hidden rounded-2xl border border-border-soft bg-white/50 px-4 py-8 shadow-md shadow-electric/[0.06] backdrop-blur-md sm:rounded-[24px] sm:px-8 sm:py-12">
+        <section className="site-card-bg relative overflow-hidden rounded-2xl border border-border-soft px-4 py-8 shadow-md shadow-electric/[0.06] backdrop-blur-md sm:rounded-[24px] sm:px-8 sm:py-12">
           <div
             className="pointer-events-none absolute -end-20 -top-20 h-64 w-64 rounded-full bg-cyan-ai/15 blur-3xl"
             aria-hidden
@@ -100,7 +100,7 @@ export default async function CoursPublicPage({ params }: PageProps) {
 
         {/* Langues — article partie gratuite */}
         <section
-          className="relative mt-14 overflow-hidden rounded-2xl border border-border-soft bg-white/[0.74] px-4 py-8 shadow-md backdrop-blur-md sm:rounded-[24px] sm:px-8"
+          className="site-card-bg relative mt-14 overflow-hidden rounded-2xl border border-border-soft px-4 py-8 shadow-md backdrop-blur-md sm:rounded-[24px] sm:px-8"
           aria-labelledby="langues-gratuit-heading"
         >
           <div
