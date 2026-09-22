@@ -1,49 +1,76 @@
-/* CorrecteurPlus PWA — service worker minimal (installabilité + cache assets statiques) */
-const CACHE = "correcteurplus-v1";
+/* CorrecteurPlus PWA — service worker (installabilité + cache assets) */
+/* v2 — fix syntaxe évaluation */
+const CACHE = "correcteurplus-v2";
 const PRECACHE = [
   "/icons/icon-192.png",
   "/icons/icon-512.png",
-  "/brand/correcteurplus-logo.png",
+  "/icons/apple-touch-icon.png",
 ];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE).then((cache) => cache.addAll(PRECACHE)).then(() => self.skipWaiting()),
+    caches
+      .open(CACHE)
+      .then((cache) =>
+        Promise.all(
+          PRECACHE.map((url) =>
+            cache.add(url).catch(function () {
+              /* un asset manquant ne doit pas bloquer l'install SW */
+            }),
+          ),
+        ),
+      )
+      .then(function () {
+        return self.skipWaiting();
+      }),
   );
 });
 
 self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k))),
-    ).then(() => self.clients.claim()),
+    caches
+      .keys()
+      .then(function (keys) {
+        return Promise.all(
+          keys
+            .filter(function (k) {
+              return k !== CACHE;
+            })
+            .map(function (k) {
+              return caches.delete(k);
+            }),
+        );
+      })
+      .then(function () {
+        return self.clients.claim();
+      }),
   );
 });
 
 self.addEventListener("fetch", (event) => {
-  const { request } = event;
+  var request = event.request;
   if (request.method !== "GET") return;
 
-  const url = new URL(request.url);
+  var url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
+  if (url.pathname.indexOf("/api/") === 0) return;
 
-  // Ne pas intercepter API / auth (données sensibles, sessions)
-  if (url.pathname.startsWith("/api/")) return;
+  var isStatic =
+    url.pathname.indexOf("/icons/") === 0 ||
+    url.pathname.indexOf("/brand/") === 0 ||
+    url.pathname.indexOf("/bg/") === 0 ||
+    /\.(png|jpg|jpeg|webp|svg|ico|woff2?)$/i.test(url.pathname);
 
-  // Assets statiques : cache-first
-  if (
-    url.pathname.startsWith("/icons/") ||
-    url.pathname.startsWith("/brand/") ||
-    url.pathname.startsWith("/bg/") ||
-    url.pathname.match(/\.(png|jpg|jpeg|webp|svg|ico|woff2?)$/i)
-  ) {
+  if (isStatic) {
     event.respondWith(
-      caches.match(request).then((cached) => {
+      caches.match(request).then(function (cached) {
         if (cached) return cached;
-        return fetch(request).then((res) => {
-          if (res.ok) {
-            const copy = res.clone();
-            caches.open(CACHE).then((c) => c.put(request, copy));
+        return fetch(request).then(function (res) {
+          if (res && res.ok) {
+            var copy = res.clone();
+            caches.open(CACHE).then(function (c) {
+              c.put(request, copy);
+            });
           }
           return res;
         });
@@ -52,20 +79,24 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // Pages HTML : network-first, fallback cache si offline
-  if (request.headers.get("accept")?.includes("text/html")) {
+  var accept = request.headers.get("accept") || "";
+  if (accept.indexOf("text/html") !== -1) {
     event.respondWith(
       fetch(request)
-        .then((res) => {
-          if (res.ok) {
-            const copy = res.clone();
-            caches.open(CACHE).then((c) => c.put(request, copy));
+        .then(function (res) {
+          if (res && res.ok) {
+            var copy = res.clone();
+            caches.open(CACHE).then(function (c) {
+              c.put(request, copy);
+            });
           }
           return res;
         })
-        .catch(() =>
-          caches.match(request).then((cached) => cached || caches.match("/fr")),
-        ),
+        .catch(function () {
+          return caches.match(request).then(function (cached) {
+            return cached || caches.match("/fr");
+          });
+        }),
     );
   }
-};
+});
