@@ -123,7 +123,7 @@ const fr: CorrecteurPlusHomeBlock = {
     },
     {
       q: "Le correcteur d'exercices IA est-il gratuit sur CorrecteurPlus ?",
-      a: "CorrecteurPlus offre 3 corrections d'exercices gratuites à l'inscription, sans carte bancaire requise. Au-delà de ces 3 corrections gratuites, l'accès illimité au correcteur d'exercices par IA est inclus dans l'abonnement CorrecteurPlus à partir de 99 MAD par mois.",
+      a: "CorrecteurPlus offre 3 corrections d'exercices gratuites à l'inscription, sans carte bancaire requise. Au-delà, l'accès au correcteur IA est inclus dans les formules Essentiel IA (100 corrections / 39 MAD par mois) et IA Plus (250 corrections / 69 MAD par mois).",
     },
     {
       q: "Quelles matières sont disponibles sur CorrecteurPlus pour le bac marocain ?",
@@ -139,7 +139,7 @@ const fr: CorrecteurPlusHomeBlock = {
     },
     {
       q: "Quelle est la différence entre CorrecteurPlus et un professeur particulier au Maroc ?",
-      a: "Un professeur particulier au Maroc coûte entre 100 et 400 MAD par séance, est disponible quelques heures par semaine et ne couvre généralement qu'une seule matière. CorrecteurPlus est disponible 24h/24 tous les jours, couvre toutes les matières du programme marocain, intègre un correcteur par intelligence artificielle, et son abonnement commence à 99 MAD par mois — soit le coût d'une seule heure de cours particulier.",
+      a: "Un professeur particulier au Maroc coûte entre 100 et 400 MAD par séance, est disponible quelques heures par semaine et ne couvre généralement qu'une seule matière. CorrecteurPlus est disponible 24h/24 tous les jours, couvre toutes les matières du programme marocain avec un correcteur par intelligence artificielle, et ses formules commencent à 39 MAD par mois — avec des quotas clairs (100 ou 250 corrections).",
     },
     {
       q: "Comment s'inscrire sur CorrecteurPlus et commencer le soutien scolaire en ligne ?",

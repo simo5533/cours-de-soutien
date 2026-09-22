@@ -1,6 +1,6 @@
 const API_BASE = "https://api.lemonsqueezy.com/v1";
 
-export type EleveLemonPlan = "essential" | "bacplus" | "family";
+export type EleveLemonPlan = "essential" | "ai_plus" | "bacplus" | "family";
 
 function getApiKey(): string | null {
   const key = process.env.LEMONSQUEEZY_API_KEY?.trim();
@@ -34,12 +34,12 @@ export function getLemonSqueezyStoreId(): string | null {
 }
 
 export function getLemonVariantIdForElevePlan(plan: EleveLemonPlan): string | null {
+  const normalized = plan === "bacplus" || plan === "family" ? "ai_plus" : plan;
   const raw =
-    plan === "essential"
+    normalized === "essential"
       ? process.env.LEMONSQUEEZY_VARIANT_ID_ELEVE_ESSENTIAL
-      : plan === "bacplus"
-        ? process.env.LEMONSQUEEZY_VARIANT_ID_ELEVE_BAC_PLUS
-        : process.env.LEMONSQUEEZY_VARIANT_ID_ELEVE_FAMILY;
+      : process.env.LEMONSQUEEZY_VARIANT_ID_ELEVE_AI_PLUS?.trim() ||
+        process.env.LEMONSQUEEZY_VARIANT_ID_ELEVE_BAC_PLUS;
   const specific = sanitizeLemonNumericId(raw, "variants");
   if (specific) return specific;
   return sanitizeLemonNumericId(

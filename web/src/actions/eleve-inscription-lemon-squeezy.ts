@@ -60,6 +60,7 @@ export async function startEleveLemonSqueezyCheckout(
         name: input.name.trim(),
         groupe: input.groupe.trim(),
         anneeScolaire: input.anneeScolaire.trim(),
+        checkoutPlan: plan === "bacplus" || plan === "family" ? "ai_plus" : plan,
       },
     });
 

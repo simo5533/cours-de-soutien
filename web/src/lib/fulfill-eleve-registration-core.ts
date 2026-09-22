@@ -1,4 +1,9 @@
 import { prisma } from "@/lib/prisma";
+import {
+  checkoutPlanToSubscription,
+  normalizeCheckoutPlan,
+  type SubscriptionPlanId,
+} from "@/lib/plans";
 
 export type FulfillCoreParams = {
   pendingId: string;
@@ -39,6 +44,12 @@ export async function fulfillEleveRegistrationCore(
         return;
       }
 
+      const checkout = normalizeCheckoutPlan(pending.checkoutPlan ?? "essential");
+      const planId: SubscriptionPlanId = checkoutPlanToSubscription(checkout);
+      const now = new Date();
+      const periodEnd = new Date(now);
+      periodEnd.setMonth(periodEnd.getMonth() + 1);
+
       const user = await tx.user.create({
         data: {
           name: pending.name,
@@ -48,6 +59,11 @@ export async function fulfillEleveRegistrationCore(
           groupe: pending.groupe,
           anneeScolaire: pending.anneeScolaire,
           enrolledAt: new Date(),
+          subscriptionPlan: planId,
+          subscriptionStatus: "active",
+          currentPeriodStart: now,
+          currentPeriodEnd: periodEnd,
+          aiCorrectionsUsedInPeriod: 0,
         },
       });
 
@@ -79,7 +95,7 @@ export async function fulfillEleveRegistrationCore(
     console.error("[fulfillEleveRegistrationCore]", e);
     return {
       ok: false,
-      error: "Erreur lors de la création du compte. Contactez le support.",
+      error: e instanceof Error ? e.message : "Erreur fulfillment",
     };
   }
 }

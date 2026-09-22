@@ -1,23 +1,20 @@
 import {
-  MAIN_PRICING_PLANS,
-  ONE_SHOT_OFFERS,
-  SECONDARY_PRICING_PLANS,
-  TEACHER_CREDIT_ROWS,
+  PUBLIC_PAID_PLANS,
   VALUE_PROPOSITION,
-  type PricingPlan,
-} from "@/config/correcteurplus-pricing";
+  type PlanDefinition,
+} from "@/lib/plans";
 import { Link } from "@/i18n/navigation";
 
-function formatPrice(plan: PricingPlan): string {
-  if (plan.price === 0) return "0 MAD";
-  return `${plan.price} MAD/mois`;
+function formatPrice(plan: PlanDefinition): string {
+  if (plan.priceMAD === 0) return "0 MAD";
+  return `${plan.priceMAD} MAD/mois`;
 }
 
-function PlanCard({ plan }: { plan: PricingPlan }) {
+function PlanCard({ plan }: { plan: PlanDefinition }) {
   const inscriptionHref =
-    plan.legacyElevePlan === "free"
+    plan.checkoutPlan === "free"
       ? "/inscription?plan=free"
-      : `/inscription?plan=${plan.id}`;
+      : `/inscription?plan=${plan.pricingId}`;
 
   return (
     <div
@@ -37,11 +34,14 @@ function PlanCard({ plan }: { plan: PricingPlan }) {
         </span>
       ) : null}
       <h3 className="text-lg font-bold text-navy">{plan.name}</h3>
-      <p className="mt-1 text-2xl font-extrabold text-electric">
+      <p className="mt-1 text-3xl font-extrabold tracking-tight text-electric">
         {formatPrice(plan)}
       </p>
-      <p className="mt-2 text-sm text-muted-text">{plan.forWho}</p>
-      <ul className="mt-5 flex flex-1 flex-col gap-2.5 text-sm text-muted-text">
+      <p className="mt-2 text-sm font-semibold text-navy">
+        {plan.monthlyCorrections} corrections IA / mois
+      </p>
+      <p className="mt-2 text-sm text-muted-text">{plan.description}</p>
+      <ul className="mt-5 flex flex-1 flex-col gap-2 text-sm text-muted-text">
         {plan.features.map((f) => (
           <li key={f} className="flex gap-2">
             <CheckIcon />
@@ -49,19 +49,10 @@ function PlanCard({ plan }: { plan: PricingPlan }) {
           </li>
         ))}
       </ul>
-      {plan.limits.length > 0 ? (
-        <ul className="mt-4 flex flex-col gap-1.5 border-t border-border-soft pt-4 text-xs text-muted-text">
-          {plan.limits.map((l) => (
-            <li key={l}>— {l}</li>
-          ))}
-        </ul>
-      ) : null}
       <Link
         href={inscriptionHref}
-        className={`mt-8 block w-full rounded-full py-3.5 text-center text-sm font-semibold transition ${
-          plan.highlighted
-            ? "btn-primary !w-full"
-            : "btn-secondary !w-full"
+        className={`mt-6 block w-full rounded-full py-3.5 text-center text-sm font-semibold transition ${
+          plan.highlighted ? "btn-primary !w-full" : "btn-secondary !w-full"
         }`}
       >
         {plan.cta}
@@ -88,8 +79,11 @@ type PricingSectionProps = {
   title: string;
   subtitle: string;
   showValueProp?: boolean;
+  /** @deprecated — offres professeur / Bac / Famille retirées */
   showSecondary?: boolean;
+  /** @deprecated */
   showCredits?: boolean;
+  /** @deprecated */
   showOneShot?: boolean;
   id?: string;
 };
@@ -98,9 +92,6 @@ export function PricingSection({
   title,
   subtitle,
   showValueProp = true,
-  showSecondary = true,
-  showCredits = true,
-  showOneShot = true,
   id = "formules",
 }: PricingSectionProps) {
   return (
@@ -120,83 +111,19 @@ export function PricingSection({
         ) : null}
       </div>
 
-      <div className="mt-8 grid gap-6 sm:mt-10 sm:gap-8 md:grid-cols-2 xl:grid-cols-3">
-        {MAIN_PRICING_PLANS.map((plan) => (
+      <div className="mx-auto mt-8 grid max-w-4xl gap-6 sm:mt-10 sm:gap-8 md:grid-cols-2">
+        {PUBLIC_PAID_PLANS.map((plan) => (
           <PlanCard key={plan.id} plan={plan} />
         ))}
       </div>
 
-      {showSecondary && SECONDARY_PRICING_PLANS.length > 0 ? (
-        <div className="mt-16">
-          <h3 className="text-center text-base font-semibold text-navy sm:text-lg">
-            Besoin d&apos;un accompagnement plus avancé ?
-          </h3>
-          <div className="mt-8 grid gap-6 md:grid-cols-2">
-            {SECONDARY_PRICING_PLANS.map((plan) => (
-              <PlanCard key={plan.id} plan={plan} />
-            ))}
-          </div>
-        </div>
-      ) : null}
-
-      {showCredits ? (
-        <div className="mt-16 card-elevated p-6 sm:p-8">
-          <h3 className="text-lg font-bold text-navy">
-            Comment fonctionnent les crédits professeur ?
-          </h3>
-          <p className="mt-3 text-sm leading-relaxed text-muted-text">
-            Les crédits professeur permettent de demander une correction humaine détaillée. Un
-            exercice simple consomme peu de crédits, tandis qu&apos;un devoir long ou un sujet
-            complet peut consommer plusieurs crédits.
-          </p>
-          <div className="mt-6 overflow-x-auto">
-            <table className="w-full min-w-[280px] text-left text-sm">
-              <thead>
-                <tr className="border-b border-border-soft">
-                  <th className="pb-3 font-semibold text-navy">Type</th>
-                  <th className="pb-3 font-semibold text-navy">Crédits</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border-soft">
-                {TEACHER_CREDIT_ROWS.map((row) => (
-                  <tr key={row.label}>
-                    <td className="py-2.5 text-muted-text">{row.label}</td>
-                    <td className="py-2.5 font-medium text-electric">{row.credits}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <p className="mt-4 text-xs text-muted-text">
-            Un crédit professeur correspond à la correction détaillée d&apos;un exercice standard.
-            Les devoirs longs ou sujets complets peuvent consommer plusieurs crédits.
-          </p>
-        </div>
-      ) : null}
-
-      {showOneShot ? (
-        <div className="pricing-one-shot-box mt-12 rounded-[22px] border border-dashed border-cyan-ai/40 p-6 sm:p-8">
-          <h3 className="text-lg font-bold text-navy">
-            Besoin d&apos;une correction sans abonnement ?
-          </h3>
-          <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {ONE_SHOT_OFFERS.map((offer) => (
-              <li
-                key={offer.id}
-                className="pricing-offer-chip flex items-center justify-between rounded-xl border border-border-soft px-4 py-3 text-sm backdrop-blur-sm"
-              >
-                <span className="font-medium text-navy">{offer.name}</span>
-                <span className="font-bold text-electric">{offer.price} MAD</span>
-              </li>
-            ))}
-          </ul>
-          <div className="mt-6 text-center">
-            <Link href="/inscription" className="btn-secondary inline-flex px-6 py-3">
-              Acheter une correction
-            </Link>
-          </div>
-        </div>
-      ) : null}
+      <p className="mx-auto mt-8 max-w-xl text-center text-sm text-muted-text">
+        Nouveau ?{" "}
+        <Link href="/inscription?plan=free" className="font-semibold text-electric underline-offset-2 hover:underline">
+          3 corrections IA offertes
+        </Link>{" "}
+        à l&apos;inscription — sans carte bancaire.
+      </p>
     </section>
   );
 }

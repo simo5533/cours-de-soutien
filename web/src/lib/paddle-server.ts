@@ -54,16 +54,16 @@ export function getPaddlePriceIdEleve(): string | null {
   return id || null;
 }
 
-export type ElevePaddlePlan = "essential" | "bacplus" | "family";
+export type ElevePaddlePlan = "essential" | "ai_plus" | "bacplus" | "family";
 
 /** `pri_…` pour la formule choisie, sinon repli sur `PADDLE_PRICE_ID_ELEVE_INSCRIPTION`. */
 export function getPaddlePriceIdForElevePlan(plan: ElevePaddlePlan): string | null {
+  const normalized = plan === "bacplus" || plan === "family" ? "ai_plus" : plan;
   const specific =
-    plan === "essential"
+    normalized === "essential"
       ? process.env.PADDLE_PRICE_ID_ELEVE_ESSENTIAL?.trim()
-      : plan === "bacplus"
-        ? process.env.PADDLE_PRICE_ID_ELEVE_BAC_PLUS?.trim()
-        : process.env.PADDLE_PRICE_ID_ELEVE_FAMILY?.trim();
+      : process.env.PADDLE_PRICE_ID_ELEVE_AI_PLUS?.trim() ||
+        process.env.PADDLE_PRICE_ID_ELEVE_BAC_PLUS?.trim();
   if (specific) return specific;
   return getPaddlePriceIdEleve();
 }

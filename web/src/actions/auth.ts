@@ -85,6 +85,9 @@ export async function registerAction(
           email: parsed.data.email,
           passwordHash: await bcrypt.hash(parsed.data.password, 10),
           role: "ELEVE",
+          subscriptionPlan: "FREE",
+          subscriptionStatus: "free",
+          aiCorrectionsUsedInPeriod: 0,
           ...eleveDefaults,
         },
       });
@@ -94,6 +97,11 @@ export async function registerAction(
     const locale = String(formData.get("locale") || "fr");
     const rawPlan = formData.get("elevePlan");
 
+    const elevePlan: ElevePaddlePlan =
+      rawPlan === "ai_plus" || rawPlan === "bacplus" || rawPlan === "family"
+        ? "ai_plus"
+        : "essential";
+
     if (rawPlan === "free") {
       await prisma.user.create({
         data: {
@@ -101,18 +109,14 @@ export async function registerAction(
           email: parsed.data.email,
           passwordHash: await bcrypt.hash(parsed.data.password, 10),
           role: "ELEVE",
+          subscriptionPlan: "FREE",
+          subscriptionStatus: "free",
+          aiCorrectionsUsedInPeriod: 0,
           ...eleveDefaults,
         },
       });
       return { ok: true, redirectTo: "/eleve/aide-scolaire" };
     }
-
-    const elevePlan: ElevePaddlePlan =
-      rawPlan === "bacplus"
-        ? "bacplus"
-        : rawPlan === "family"
-          ? "family"
-          : "essential";
 
     if (provider === "lemonsqueezy") {
       if (!isLemonSqueezyConfigured()) {

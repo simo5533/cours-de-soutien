@@ -37,9 +37,6 @@ export default async function TarifsPage({ params }: PageProps) {
           title={t("sectionTitle")}
           subtitle={t("sectionSubtitle")}
           showValueProp
-          showSecondary
-          showCredits
-          showOneShot
         />
       </div>
 

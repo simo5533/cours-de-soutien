@@ -72,6 +72,16 @@ model User {
   enrollmentTotal         Float?
   /// Date d’inscription de l’élève
   enrolledAt               DateTime?
+
+  /// Abonnement IA : FREE | ESSENTIAL_AI | AI_PLUS
+  subscriptionPlan            String?
+  /// free | active | expired | cancelled
+  subscriptionStatus          String?
+  currentPeriodStart          DateTime?
+  currentPeriodEnd            DateTime?
+  /// Corrections IA consommées dans le cycle courant (ou lifetime si FREE)
+  aiCorrectionsUsedInPeriod   Int      @default(0)
+
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
@@ -92,6 +102,34 @@ model User {
   lessonsAsTeacher     OnlineLessonBooking[] @relation("TeacherLessons")
   coursEnLigneDemandeReviews CoursEnLigneDemande[] @relation("DemandeReviewer")
   coursEnLigneDemandeAssigned  CoursEnLigneDemande[] @relation("DemandeAssignedTeacher")
+  aiUsages                   AiUsage[]
+}
+
+/// Consommation OpenAI par correction (1 ligne = 1 tentative / correction)
+model AiUsage {
+  id                 String    @id @default(cuid())
+  userId             String
+  user               User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  /// Clé anti double-soumission (header ou hash fichier)
+  idempotencyKey     String    @unique
+  /// PENDING | SUCCESS | FAILED
+  status             String
+  planAtTime         String?
+  model              String?
+  inputTokens        Int?
+  outputTokens       Int?
+  totalTokens        Int?
+  cachedInputTokens  Int?
+  /// Coût estimé USD (null si tarifs modèle non configurés ou tokens absents)
+  estimatedCostUsd   Float?
+  replyPreview       String?
+  errorMessage       String?
+  createdAt          DateTime  @default(now())
+  completedAt        DateTime?
+
+  @@index([userId, createdAt])
+  @@index([createdAt])
+  @@index([status])
 }
 
 model Group {
@@ -148,6 +186,8 @@ model EleveRegistrationPending {
   name                String
   groupe              String
   anneeScolaire       String
+  /// essential | ai_plus (checkout)
+  checkoutPlan        String?
   stripeSessionId     String?   @unique
   /// ID transaction Paddle Billing (txn_…)
   paddleTransactionId String?   @unique

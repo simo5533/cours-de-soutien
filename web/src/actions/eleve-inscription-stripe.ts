@@ -55,6 +55,10 @@ export async function startEleveStripeCheckout(
       name: input.name.trim(),
       groupe: input.groupe.trim(),
       anneeScolaire: input.anneeScolaire.trim(),
+      checkoutPlan:
+        input.stripePlan === "bacplus" || input.stripePlan === "family"
+          ? "ai_plus"
+          : input.stripePlan ?? "essential",
     },
   });
 

@@ -7,16 +7,19 @@ import { useSearchParams } from "next/navigation";
 import { registerAction, type RegisterState } from "@/actions/auth";
 import { LemonSqueezyCheckoutOverlay } from "@/components/lemon-squeezy-checkout-overlay";
 import {
-  PRICING_PLANS,
-  legacyPlanFromPricingId,
+  PLANS,
+  getPlanByPricingId,
+  pricingIdToCheckout,
   type PricingPlanId,
-} from "@/config/correcteurplus-pricing";
+} from "@/lib/plans";
 
 const roleOptions = [
   { value: "ELEVE", labelKey: "roleStudent" as const },
   { value: "ELEVE", labelKey: "roleParent" as const, parent: true },
   { value: "PROFESSEUR", labelKey: "roleTeacher" as const },
 ] as const;
+
+const PRICING_IDS = Object.values(PLANS).map((p) => p.pricingId);
 
 export function InscriptionForm({
   paymentProvider = "lemonsqueezy",
@@ -28,8 +31,7 @@ export function InscriptionForm({
   const payCancel = useSearchParams().get("pay") === "cancel";
   const planParam = useSearchParams().get("plan");
   const defaultPricingId = useMemo((): PricingPlanId => {
-    const ids = PRICING_PLANS.map((p) => p.id);
-    if (planParam && ids.includes(planParam as PricingPlanId)) {
+    if (planParam && PRICING_IDS.includes(planParam as PricingPlanId)) {
       return planParam as PricingPlanId;
     }
     return "free";
@@ -164,7 +166,7 @@ export function InscriptionForm({
         ) : null}
         <form className="mt-8 flex flex-col gap-5" action={formAction}>
           <input type="hidden" name="locale" value={locale} />
-          <input type="hidden" name="elevePlan" value={legacyPlanFromPricingId(selectedPlanId)} />
+          <input type="hidden" name="elevePlan" value={pricingIdToCheckout(selectedPlanId)} />
           {state && "error" in state && state.error ? (
             <p
               role="alert"
@@ -217,7 +219,7 @@ export function InscriptionForm({
           </label>
           {role === "ELEVE" && isPaidPlan ? (
             <p className="rounded-lg bg-slate-50 px-3 py-2 text-xs text-slate-600 dark:bg-slate-800/50 dark:text-slate-400">
-              Pack : {PRICING_PLANS.find((p) => p.id === selectedPlanId)?.name}
+              Pack : {getPlanByPricingId(selectedPlanId)?.name}
               {" — "}
               <Link href="/tarifs" className="font-semibold text-brandblue underline-offset-2 hover:underline">
                 Changer

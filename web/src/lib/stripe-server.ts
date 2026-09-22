@@ -23,16 +23,16 @@ export function getStripePriceIdEleve(): string | null {
   return id || null;
 }
 
-export type EleveStripePlan = "essential" | "bacplus" | "family";
+export type EleveStripePlan = "essential" | "ai_plus" | "bacplus" | "family";
 
 /** `price_…` pour la formule ; repli sur `STRIPE_PRICE_ID_ELEVE_INSCRIPTION`. */
 export function getStripePriceIdForElevePlan(plan: EleveStripePlan): string | null {
+  const normalized = plan === "bacplus" || plan === "family" ? "ai_plus" : plan;
   const fromPlan =
-    plan === "essential"
+    normalized === "essential"
       ? process.env.STRIPE_PRICE_ID_ELEVE_ESSENTIAL?.trim()
-      : plan === "bacplus"
-        ? process.env.STRIPE_PRICE_ID_ELEVE_BAC_PLUS?.trim()
-        : process.env.STRIPE_PRICE_ID_ELEVE_FAMILY?.trim();
+      : process.env.STRIPE_PRICE_ID_ELEVE_AI_PLUS?.trim() ||
+        process.env.STRIPE_PRICE_ID_ELEVE_BAC_PLUS?.trim();
   if (fromPlan) return fromPlan;
   return getStripePriceIdEleve();
 }

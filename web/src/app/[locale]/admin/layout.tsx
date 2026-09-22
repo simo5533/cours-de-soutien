@@ -13,6 +13,7 @@ const nav = [
   { href: "/admin/cours-en-ligne", label: "Sessions live" },
   { href: "/admin/exercices", label: "Exercices" },
   { href: "/admin/statistiques", label: "Statistiques" },
+  { href: "/admin/consommation-ia", label: "Consommation IA" },
 ];
 
 export default function AdminLayout({

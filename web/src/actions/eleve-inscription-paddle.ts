@@ -152,6 +152,7 @@ export async function startElevePaddleCheckout(
 
     const passwordHash = await bcrypt.hash(input.password, 10);
 
+    const plan = input.paddlePlan ?? "essential";
     const pending = await prisma.eleveRegistrationPending.create({
       data: {
         email: input.email.trim(),
@@ -159,6 +160,7 @@ export async function startElevePaddleCheckout(
         name: input.name.trim(),
         groupe: input.groupe.trim(),
         anneeScolaire: input.anneeScolaire.trim(),
+        checkoutPlan: plan === "bacplus" || plan === "family" ? "ai_plus" : plan,
       },
     });
 
@@ -166,7 +168,6 @@ export async function startElevePaddleCheckout(
     const loc = locale === "ar" ? "ar" : "fr";
     const successUrl = `${base}/${loc}/inscription/succes`;
 
-    const plan = input.paddlePlan ?? "essential";
     const priceId = getPaddlePriceIdForElevePlan(plan);
     const currencyCode = getPaddleCheckoutCurrency();
 
