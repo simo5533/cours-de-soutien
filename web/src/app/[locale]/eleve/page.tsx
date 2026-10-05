@@ -158,7 +158,7 @@ export default async function EleveDashboardPage() {
               accent="teal"
               href="/eleve/exercices"
               title="Exercices & QCM"
-              description="Entraînement et corrections par vos professeurs."
+              description="Entraînement et corrections détaillées."
               icon={icons.clipboard}
             />
           </li>

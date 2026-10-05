@@ -74,7 +74,7 @@ export const BLOG_POSTS: BlogPost[] = [
     paragraphs: {
       fr: [
         "Les langues se consolident par la fréquence plus que par de rares « gros blocs » de révision. Quelques minutes quotidiennes d’écoute ou de vocabulaire valent souvent une longue séance occasionnelle.",
-        "Alterner grammaire, compréhension et expression orale évite l’ennui et ancre les acquis. Un enseignant ou tuteur aide à corriger les erreurs tôt, avant qu’elles ne se fossilisent.",
+        "Alterner grammaire, compréhension et expression orale évite l’ennui et ancre les acquis. Une correction régulière aide à repérer les erreurs tôt, avant qu’elles ne se fossilisent.",
         "CorrecteurPlus propose des parcours structurés et des ressources pour les langues vivantes, avec une logique progressive adaptée aux objectifs scolaires et personnels.",
       ],
       ar: [
@@ -98,7 +98,7 @@ export const BLOG_POSTS: BlogPost[] = [
     paragraphs: {
       fr: [
         "Les outils d’IA peuvent expliquer un exercice, proposer un plan de rédaction ou reformuler une définition. Ils gagnent en pertinence lorsque l’élève a déjà tenté le problème et peut dire où il bloque.",
-        "Le risque est de copier une réponse sans comprendre : le vrai critère reste la capacité à refaire seul, en classe ou à l’examen. L’humain (professeur, tuteur) reste indispensable pour le cadre, le suivi et la motivation.",
+        "Le risque est de copier une réponse sans comprendre : le vrai critère reste la capacité à refaire seul, en classe ou à l’examen. Un entraînement régulier et un suivi de ses progrès restent indispensables pour la motivation.",
         "Sur CorrecteurPlus, l’IA est pensée comme une aide ciblée — par exemple sur des fichiers ou des questions précises — au service d’un parcours encadré, pas comme un substitut au travail personnel.",
       ],
       ar: [

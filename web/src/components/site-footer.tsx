@@ -6,7 +6,6 @@ export async function SiteFooter() {
 
   const links = [
     { href: "/inscription", label: t("correctionAi") },
-    { href: "/cours-en-ligne", label: t("teacherLive") },
     { href: "/cours", label: t("quizFree") },
     { href: "/tarifs", label: t("pricing") },
     { href: "/blog", label: t("blog") },

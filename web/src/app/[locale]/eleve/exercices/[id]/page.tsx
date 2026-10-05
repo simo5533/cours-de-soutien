@@ -91,7 +91,7 @@ export default async function EleveExerciceDetailPage({
             latestAttempt.status === "EN_ATTENTE" ? (
               <p className="mt-2 text-sm text-zinc-700 dark:text-zinc-300">
                 Votre copie a été envoyée avant la date limite. Elle est en
-                attente de correction par le professeur.
+                attente de correction.
               </p>
             ) : (
               <div className="mt-2 space-y-2 text-sm text-zinc-700 dark:text-zinc-300">

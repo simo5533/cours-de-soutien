@@ -40,7 +40,7 @@ export default async function EleveEmploiDuTempsPage() {
           entries={entries}
           getMeta={(e) =>
             [
-              e.professeur?.name ? `Prof. ${e.professeur.name}` : null,
+              e.professeur?.name ?? null,
               e.matiere,
               e.niveau,
               e.room,

@@ -64,9 +64,6 @@ export function SiteHeaderNav({ user }: { user: HeaderUser | null }) {
       <Link href="/inscription" className={navLinkClass()}>
         {t("correctionAi")}
       </Link>
-      <Link href="/cours-en-ligne" className={navLinkClass()}>
-        {t("teacherLive")}
-      </Link>
       <Link href="/cours" className={navLinkClass()}>
         {t("quizFree")}
       </Link>
@@ -169,13 +166,6 @@ export function SiteHeaderNav({ user }: { user: HeaderUser | null }) {
                     onClick={() => setMobileOpen(false)}
                   >
                     {t("correctionAi")}
-                  </Link>
-                  <Link
-                    href="/cours-en-ligne"
-                    className={navLinkClass(true, true)}
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    {t("teacherLive")}
                   </Link>
                   <Link
                     href="/cours"

@@ -33,7 +33,7 @@ export default async function ImprimerAgendaGroupePage({ searchParams }: Props) 
               dayLabelStyle="long"
               entries={entries}
               getMeta={(e) =>
-                [e.matiere, e.professeur?.name ? `Prof. ${e.professeur.name}` : null, e.room]
+                [e.matiere, e.professeur?.name ?? null, e.room]
                   .filter(Boolean)
                   .join(" · ") || null
               }

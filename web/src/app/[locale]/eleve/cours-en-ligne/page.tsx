@@ -7,7 +7,7 @@ export default function EleveCoursEnLignePage() {
       <p className="text-sm text-zinc-600 dark:text-zinc-400">
         Pour demander un cours à distance, utilisez la page publique (sans être
         obligé de vous connecter d&apos;abord). L&apos;administration valide votre
-        créneau, puis votre professeur reçoit le rendez-vous.
+        créneau, puis vous recevez la confirmation du rendez-vous.
       </p>
       <Link
         href="/cours-en-ligne"

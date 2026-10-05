@@ -60,7 +60,7 @@ export default async function EleveMesRdvPage() {
                   <div>
                     <p className="font-medium">{b.matiere}</p>
                     <p className="text-sm text-zinc-600 dark:text-zinc-400">
-                      Prof. {b.teacher.name} —{" "}
+                      {b.teacher.name} —{" "}
                       {b.startsAt.toLocaleString("fr-FR", {
                         dateStyle: "full",
                         timeStyle: "short",
@@ -95,7 +95,7 @@ export default async function EleveMesRdvPage() {
                 <span className="font-medium">{b.matiere}</span>
                 <span className="text-zinc-500">
                   {" "}
-                  — {b.startsAt.toLocaleDateString("fr-FR")} — Prof.{" "}
+                  — {b.startsAt.toLocaleDateString("fr-FR")} —{" "}
                   {b.teacher.name} — {LESSON_STATUS_LABEL[b.status]}
                 </span>
                 {b.teacherNotes ? (

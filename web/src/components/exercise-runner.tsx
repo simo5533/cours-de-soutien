@@ -72,7 +72,7 @@ export function ExerciseRunner({
       return;
     }
     if (res && "pending" in res && res.pending) {
-      setMessage("Réponse envoyée. En attente de correction par le professeur.");
+      setMessage("Réponse envoyée. En attente de correction.");
     }
   }
 

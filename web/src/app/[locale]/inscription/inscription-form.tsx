@@ -16,7 +16,6 @@ import {
 const roleOptions = [
   { value: "ELEVE", labelKey: "roleStudent" as const },
   { value: "ELEVE", labelKey: "roleParent" as const, parent: true },
-  { value: "PROFESSEUR", labelKey: "roleTeacher" as const },
 ] as const;
 
 const PRICING_IDS = Object.values(PLANS).map((p) => p.pricingId);

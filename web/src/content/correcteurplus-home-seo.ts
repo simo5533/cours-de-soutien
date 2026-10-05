@@ -28,21 +28,21 @@ const fr: CorrecteurPlusHomeBlock = {
   badge: "Correction d'exercices en ligne au Maroc",
   heroTitle: "Corrige tes exercices en ligne avec l'IA",
   heroSubtitle:
-    "Envoie une photo de ton exercice. CorrecteurPlus t'explique la correction étape par étape, avec l'aide d'un professeur si besoin.",
+    "Envoie une photo de ton exercice. CorrecteurPlus t'explique la correction étape par étape, avec l'explication de chaque erreur.",
   heroNote:
     "3 corrections gratuites — sans carte bancaire. Quiz gratuits illimités.",
   trust: [
     "Quiz gratuits et corrections IA instantanées",
     "Programme officiel marocain (MEN)",
-    "Correction par IA, professeur, ou les deux",
+    "Correction détaillée par intelligence artificielle",
   ],
   valueProposition:
     "Chez CorrecteurPlus, tu ne paies pas seulement pour regarder des cours. Tu paies pour comprendre tes erreurs et progresser exercice après exercice.",
   whyTitle: "Pourquoi choisir CorrecteurPlus pour corriger tes exercices ?",
   whyP1:
-    "CorrecteurPlus est une plateforme spécialisée dans la correction d'exercices : tu envoies ton devoir, tu reçois une explication détaillée de tes erreurs, et tu progresses exercice après exercice — avec l'IA, un professeur, ou les deux.",
+    "CorrecteurPlus est une plateforme spécialisée dans la correction d'exercices : tu envoies ton devoir, tu reçois une explication détaillée de tes erreurs, et tu progresses exercice après exercice grâce à l'intelligence artificielle.",
   whyP2:
-    "Que tu prépares le bac marocain ou que tu veuilles simplement comprendre un exercice difficile en maths, physique ou français, CorrecteurPlus s'adapte à ton niveau avec des quiz gratuits, des corrections IA et l'aide de vrais professeurs.",
+    "Que tu prépares le bac marocain ou que tu veuilles simplement comprendre un exercice difficile en maths, physique ou français, CorrecteurPlus s'adapte à ton niveau avec des quiz gratuits et des corrections IA détaillées.",
   subjectsTitle: "Correction d'exercices : toutes les matières du programme marocain",
   subjects: [
     {
@@ -81,7 +81,7 @@ const fr: CorrecteurPlusHomeBlock = {
   serviceEyebrow: "Nos services",
   servicesTitle: "Corrige, comprends, progresse",
   servicesSubtitle:
-    "Du quiz gratuit à la session live avec professeur : choisis le format qui t'aide vraiment à avancer.",
+    "Du quiz gratuit à la correction IA détaillée : choisis le format qui t'aide vraiment à avancer.",
   services: [
     {
       title: "Quiz gratuits",
@@ -91,18 +91,6 @@ const fr: CorrecteurPlusHomeBlock = {
       title: "Correction IA instantanée",
       desc: "Envoie ton exercice et reçois une correction détaillée étape par étape avec explication des erreurs.",
     },
-    {
-      title: "Correction professeur",
-      desc: "Un vrai professeur corrige ton exercice, t'explique tes erreurs et te donne des conseils personnalisés.",
-    },
-    {
-      title: "Correction IA + Professeur",
-      desc: "L'IA prépare une première correction, puis un professeur vérifie, améliore et valide la réponse.",
-    },
-    {
-      title: "Session correction live",
-      desc: "Réserve une courte session avec un professeur pour comprendre un exercice difficile en direct.",
-    },
   ],
   aiTitle: "Notre correcteur d'exercices par intelligence artificielle : une première au Maroc",
   aiP1:
@@ -110,7 +98,7 @@ const fr: CorrecteurPlusHomeBlock = {
   aiP2:
     "Cette fonctionnalité exclusive est disponible pour les abonnés CorrecteurPlus. Elle couvre toutes les matières du programme officiel marocain : mathématiques, physique-chimie, SVT, français, philosophie, histoire-géographie, arabe, anglais et autres enseignements du lycée.",
   aiP3:
-    "Nos élèves abonnés bénéficient d'un accès illimité au correcteur IA, leur permettant de soumettre autant d'exercices qu'ils le souhaitent et de progresser à leur rythme.",
+    "Nos élèves abonnés disposent de 100 ou 250 corrections IA par mois selon leur formule, pour progresser à leur rythme.",
   faqTitle: "Questions fréquentes sur la correction d'exercices en ligne au Maroc",
   faq: [
     {
@@ -138,8 +126,8 @@ const fr: CorrecteurPlusHomeBlock = {
       a: "Oui. CorrecteurPlus est entièrement optimisé pour les appareils mobiles — téléphone et tablette. Vous pouvez accéder à tous les cours de soutien, soumettre vos exercices au correcteur IA et consulter votre historique de corrections depuis n'importe quel appareil connecté, depuis n'importe quelle ville du Maroc.",
     },
     {
-      q: "Quelle est la différence entre CorrecteurPlus et un professeur particulier au Maroc ?",
-      a: "Un professeur particulier au Maroc coûte entre 100 et 400 MAD par séance, est disponible quelques heures par semaine et ne couvre généralement qu'une seule matière. CorrecteurPlus est disponible 24h/24 tous les jours, couvre toutes les matières du programme marocain avec un correcteur par intelligence artificielle, et ses formules commencent à 39 MAD par mois — avec des quotas clairs (100 ou 250 corrections).",
+      q: "Quelle est la différence entre CorrecteurPlus et des cours particuliers au Maroc ?",
+      a: "Les cours particuliers au Maroc coûtent entre 100 et 400 MAD par séance, sont disponibles quelques heures par semaine et ne couvrent généralement qu'une seule matière. CorrecteurPlus est disponible 24h/24 tous les jours, couvre toutes les matières du programme marocain avec un correcteur par intelligence artificielle, et ses formules commencent à 39 MAD par mois — avec des quotas clairs (100 ou 250 corrections).",
     },
     {
       q: "Comment s'inscrire sur CorrecteurPlus et commencer le soutien scolaire en ligne ?",
@@ -147,7 +135,7 @@ const fr: CorrecteurPlusHomeBlock = {
     },
     {
       q: "CorrecteurPlus propose-t-il une préparation spécifique aux examens nationaux du baccalauréat marocain ?",
-      a: "Oui. CorrecteurPlus propose des parcours de révision intensifs dédiés à la préparation du baccalauréat marocain, incluant des exercices de type examen national, des annales corrigées et un accès au correcteur IA illimité pour les abonnés. Les chapitres les plus fréquemment évalués lors des examens nationaux sont mis en avant dans chaque matière.",
+      a: "Oui. CorrecteurPlus propose des parcours de révision intensifs dédiés à la préparation du baccalauréat marocain, incluant des exercices de type examen national, des annales corrigées et l'accès au correcteur IA pour les abonnés. Les chapitres les plus fréquemment évalués lors des examens nationaux sont mis en avant dans chaque matière.",
     },
     {
       q: "Le soutien scolaire en ligne CorrecteurPlus est-il efficace pour les élèves en difficulté ?",
@@ -168,19 +156,19 @@ const ar: CorrecteurPlusHomeBlock = {
   badge: "تصحيح التمارين أونلاين في المغرب",
   heroTitle: "صحّح تمارينك أونلاين بالذكاء الاصطناعي",
   heroSubtitle:
-    "أرسل صورة تمرينك. CorrecteurPlus يقدّم تصحيحًا مفصّلًا خطوة بخطوة، مع إمكانية طلب مساعدة أستاذ.",
+    "أرسل صورة تمرينك. CorrecteurPlus يقدّم تصحيحًا مفصّلًا خطوة بخطوة، مع شرح كل خطأ.",
   heroNote:
     "3 تصحيحات مجانية — بدون بطاقة بنكية. اختبارات مجانية بلا حدود.",
   trust: [
     "اختبارات مجانية وتصحيح فوري بالذكاء الاصطناعي",
     "منهاج وزاري مغربي رسمي",
-    "تصحيح بالذكاء الاصطناعي أو الأستاذ أو كلاهما",
+    "تصحيح مفصّل بالذكاء الاصطناعي",
   ],
   valueProposition:
-    "في ميثوديكس، لا تدفع فقط لمشاهدة الدروس. تدفع لفهم أخطائك والتقدم تمريناً بعد تمرين.",
-  whyTitle: "لماذا تختار ميثوديكس لدعمك المدرسي في المغرب؟",
+    "في CorrecteurPlus، لا تدفع فقط لمشاهدة الدروس. تدفع لفهم أخطائك والتقدم تمريناً بعد تمرين.",
+  whyTitle: "لماذا تختار CorrecteurPlus لدعمك المدرسي في المغرب؟",
   whyP1:
-    "ميثوديكس من أوائل المنصات في المغرب التي تدمج الذكاء الاصطناعي في تصحيح التمارين: تحليل الواجب، توضيح الأخطاء وشرح التصحيح في ثوانٍ، في أي وقت.",
+    "CorrecteurPlus من أوائل المنصات في المغرب التي تدمج الذكاء الاصطناعي في تصحيح التمارين: تحليل الواجب، توضيح الأخطاء وشرح التصحيح في ثوانٍ، في أي وقت.",
   whyP2:
     "سواء كنت تستعد لبكالوريا المغرب أو تبحث عن مراجعة في الرياضيات أو الفيزياء أو علوم الحياة والأرض، تتكيف المنصة مع مستواك ووتيرتك.",
   subjectsTitle: "جميع المواد وفق المنهاج المغربي الرسمي",
@@ -220,7 +208,7 @@ const ar: CorrecteurPlusHomeBlock = {
   ],
   serviceEyebrow: "خدماتنا",
   servicesTitle: "صحّح، افهم، تقدّم",
-  servicesSubtitle: "من الاختبار المجاني إلى الجلسة المباشرة مع الأستاذ.",
+  servicesSubtitle: "من الاختبار المجاني إلى التصحيح المفصّل بالذكاء الاصطناعي.",
   services: [
     {
       title: "اختبارات مجانية",
@@ -230,18 +218,6 @@ const ar: CorrecteurPlusHomeBlock = {
       title: "تصحيح فوري بالذكاء الاصطناعي",
       desc: "أرسل تمرينك واحصل على تصحيح مفصل خطوة بخطوة مع شرح الأخطاء.",
     },
-    {
-      title: "تصحيح من الأستاذ",
-      desc: "أستاذ حقيقي يصحح تمرينك ويشرح أخطاءك ويعطيك نصائح شخصية.",
-    },
-    {
-      title: "ذكاء اصطناعي + أستاذ",
-      desc: "الذكاء الاصطناعي يجهز تصحيحاً أولياً ثم الأستاذ يتحقق ويحسّنه.",
-    },
-    {
-      title: "جلسة تصحيح مباشرة",
-      desc: "احجز جلسة قصيرة مع أستاذ لفهم تمرين صعب مباشرة.",
-    },
   ],
   aiTitle: "مصحح التمارين بالذكاء الاصطناعي — ميزة رائدة في المغرب",
   aiP1:
@@ -249,11 +225,11 @@ const ar: CorrecteurPlusHomeBlock = {
   aiP2:
     "الميزة متاحة للمشتركين وتغطي جميع مواد المنهاج الرسمي المغربي: الرياضيات، الفيزياء-الكيمياء، علوم الحياة والأرض، الفرنسية، الفلسفة، التاريخ-الجغرافيا، العربية، الإنجليزية ومواد أخرى للثانوي.",
   aiP3:
-    "المشتركون يستفيدون من تصحيحات غير محدودة بالذكاء الاصطناعي ليتقدموا بوتيرتهم.",
+    "يستفيد المشتركون من 100 أو 250 تصحيحاً بالذكاء الاصطناعي شهرياً حسب الصيغة، ليتقدموا بوتيرتهم.",
   faqTitle: "أسئلة شائعة حول الدعم المدرسي أونلاين في المغرب",
   faq: [
     {
-      q: "ما هي ميثوديكس ولمن توجه؟",
+      q: "ما هي CorrecteurPlus ولمن توجه؟",
       a: "منصة دعم مدرسي أونلاين في المغرب مع مصحح تمارين بالذكاء الاصطناعي للمستويات من المشترك إلى البكالوريا بجميع الشعب.",
     },
     {
@@ -262,7 +238,7 @@ const ar: CorrecteurPlusHomeBlock = {
     },
     {
       q: "هل المصحح مجاني؟",
-      a: "ثلاث تصحيحات مجانية عند التسجيل دون بطاقة. بعدها الاشتراك من 99 درهم شهرياً للوصول غير المحدود.",
+      a: "ثلاث تصحيحات مجانية عند التسجيل دون بطاقة. بعدها صيغة Essentiel IA (100 تصحيح / 39 درهم شهرياً) أو IA Plus (250 تصحيحاً / 69 درهم شهرياً).",
     },
     {
       q: "ما المواد المتوفرة؟",
@@ -277,8 +253,8 @@ const ar: CorrecteurPlusHomeBlock = {
       a: "نعم، المنصة مُحسّنة للهواتف والألواح في جميع أنحاء المغرب.",
     },
     {
-      q: "الفرق عن الأستاذ الخصوصي؟",
-      a: "الأستاذ الخصوصي غالباً باهظ وبساعات محدودة؛ ميثوديكس متاح 24/7 ويغطي عدة مواد بسعر اشتراك يبدأ من 99 درهم شهرياً.",
+      q: "الفرق عن الدروس الخصوصية؟",
+      a: "الدروس الخصوصية غالباً باهظة وبساعات محدودة؛ CorrecteurPlus متاح 24/7 ويغطي عدة مواد بسعر اشتراك يبدأ من 39 درهم شهرياً.",
     },
     {
       q: "كيف أبدأ؟",

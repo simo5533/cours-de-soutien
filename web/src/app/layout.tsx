@@ -15,9 +15,9 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Correction d'exercices en ligne au Maroc | IA & Professeurs - CorrecteurPlus",
+  title: "Correction d'exercices en ligne au Maroc par IA - CorrecteurPlus",
   description:
-    "CorrecteurPlus aide les élèves à corriger leurs exercices en ligne avec l'IA et des professeurs. Quiz gratuits, corrections détaillées, préparation Bac et programme marocain.",
+    "CorrecteurPlus aide les élèves à corriger leurs exercices en ligne grâce à l'intelligence artificielle. Quiz gratuits, corrections détaillées, préparation Bac et programme marocain.",
   applicationName: "CorrecteurPlus",
   appleWebApp: {
     capable: true,

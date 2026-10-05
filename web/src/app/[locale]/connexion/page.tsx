@@ -12,7 +12,7 @@ export default function ConnexionPage() {
             Connexion
           </h1>
           <p className="mt-2 text-sm leading-relaxed text-muted-text">
-            Accédez à votre espace (élève, professeur ou administrateur).
+            Accédez à votre espace personnel.
           </p>
           <Suspense fallback={<p className="mt-8 text-sm text-slate-500">Chargement…</p>}>
             <ConnexionForm />

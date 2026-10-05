@@ -44,7 +44,7 @@ export function BookLessonForm({
       <input type="hidden" name="startsAtIso" value={startsAtIso} />
       <input type="hidden" name="durationMinutes" value={durationMinutes} />
       <label className="flex flex-col gap-1 text-sm">
-        <span className="text-zinc-600 dark:text-zinc-400">Message au professeur (optionnel)</span>
+        <span className="text-zinc-600 dark:text-zinc-400">Message (optionnel)</span>
         <textarea
           name="studentComment"
           rows={2}

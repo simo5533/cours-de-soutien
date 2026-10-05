@@ -72,7 +72,7 @@ export async function HomeHeroMockup() {
 
 export async function HomeHowItWorks() {
   const t = await getTranslations("HomePage");
-  const steps = ["step1", "step2", "step3", "step4"] as const;
+  const steps = ["step1", "step2", "step3"] as const;
   const icons = [
     <svg key="1" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>,
     <svg key="2" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>,
@@ -89,7 +89,7 @@ export async function HomeHowItWorks() {
           {t("howTitle")}
         </h2>
       </div>
-      <div className="mt-8 grid gap-4 sm:mt-10 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
+      <div className="mt-8 grid gap-4 sm:mt-10 sm:grid-cols-3 sm:gap-5">
         {steps.map((key, i) => (
           <div key={key} className="card-elevated flex flex-col p-5 sm:p-6">
             <StepIcon variant={variants[i]}>{icons[i]}</StepIcon>
@@ -113,7 +113,6 @@ export async function HomeHelpTypeCards() {
   const t = await getTranslations("HomePage");
   const cards = [
     { key: "ai" as const, href: "/inscription", accent: "from-electric to-cyan-ai", icon: "ai" },
-    { key: "teacher" as const, href: "/cours-en-ligne", accent: "from-premium to-electric", icon: "teacher" },
     { key: "quiz" as const, href: "/cours", accent: "from-success to-cyan-ai", icon: "quiz" },
   ];
 
@@ -125,7 +124,7 @@ export async function HomeHelpTypeCards() {
           {t("helpTitle")}
         </h2>
       </div>
-      <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mx-auto mt-10 grid max-w-4xl gap-6 sm:grid-cols-2">
         {cards.map((c) => (
           <div key={c.key} className="card-elevated flex flex-col overflow-hidden">
             <div className={`h-1.5 bg-gradient-to-r ${c.accent}`} />
