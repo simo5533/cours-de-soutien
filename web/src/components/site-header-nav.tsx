@@ -61,10 +61,10 @@ export function SiteHeaderNav({ user }: { user: HeaderUser | null }) {
 
   const navItems = (
     <>
-      <Link href="/inscription" className={navLinkClass()}>
+      <Link href="/eleve/correcteur" className={navLinkClass()}>
         {t("correctionAi")}
       </Link>
-      <Link href="/cours" className={navLinkClass()}>
+      <Link href="/quiz" className={navLinkClass()}>
         {t("quizFree")}
       </Link>
       <Link href="/tarifs" className={navLinkClass()}>
@@ -161,14 +161,14 @@ export function SiteHeaderNav({ user }: { user: HeaderUser | null }) {
                   aria-label="Principal mobile"
                 >
                   <Link
-                    href="/inscription"
+                    href="/eleve/correcteur"
                     className={navLinkClass(true, true)}
                     onClick={() => setMobileOpen(false)}
                   >
                     {t("correctionAi")}
                   </Link>
                   <Link
-                    href="/cours"
+                    href="/quiz"
                     className={navLinkClass(true, true)}
                     onClick={() => setMobileOpen(false)}
                   >

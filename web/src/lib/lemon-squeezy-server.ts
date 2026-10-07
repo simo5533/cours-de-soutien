@@ -1,6 +1,8 @@
+import { getPlanByCheckout, type CheckoutElevePlan } from "@/lib/plans";
+
 const API_BASE = "https://api.lemonsqueezy.com/v1";
 
-export type EleveLemonPlan = "essential" | "ai_plus" | "bacplus" | "family";
+export type EleveLemonPlan = CheckoutElevePlan;
 
 function getApiKey(): string | null {
   const key = process.env.LEMONSQUEEZY_API_KEY?.trim();
@@ -34,18 +36,11 @@ export function getLemonSqueezyStoreId(): string | null {
 }
 
 export function getLemonVariantIdForElevePlan(plan: EleveLemonPlan): string | null {
-  const normalized = plan === "bacplus" || plan === "family" ? "ai_plus" : plan;
-  const raw =
-    normalized === "essential"
-      ? process.env.LEMONSQUEEZY_VARIANT_ID_ELEVE_ESSENTIAL
-      : process.env.LEMONSQUEEZY_VARIANT_ID_ELEVE_AI_PLUS?.trim() ||
-        process.env.LEMONSQUEEZY_VARIANT_ID_ELEVE_BAC_PLUS;
-  const specific = sanitizeLemonNumericId(raw, "variants");
-  if (specific) return specific;
-  return sanitizeLemonNumericId(
-    process.env.LEMONSQUEEZY_VARIANT_ID_ELEVE_INSCRIPTION,
-    "variants",
-  );
+  for (const key of getPlanByCheckout(plan).lemonVariantEnvKeys) {
+    const id = sanitizeLemonNumericId(process.env[key], "variants");
+    if (id) return id;
+  }
+  return null;
 }
 
 /** Montant affiché si l’API ne renvoie pas le total (plus petite unité → unité principale). */

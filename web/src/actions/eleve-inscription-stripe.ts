@@ -1,6 +1,7 @@
 "use server";
 
 import bcrypt from "bcryptjs";
+import { normalizeCheckoutPlan } from "@/lib/plans";
 import { prisma } from "@/lib/prisma";
 import {
   getAppBaseUrl,
@@ -21,6 +22,8 @@ type EleveRegisterInput = {
   groupe: string;
   anneeScolaire: string;
   stripePlan?: EleveStripePlan;
+  accountType?: string;
+  centreName?: string;
 };
 
 export async function startEleveStripeCheckout(
@@ -55,17 +58,16 @@ export async function startEleveStripeCheckout(
       name: input.name.trim(),
       groupe: input.groupe.trim(),
       anneeScolaire: input.anneeScolaire.trim(),
-      checkoutPlan:
-        input.stripePlan === "bacplus" || input.stripePlan === "family"
-          ? "ai_plus"
-          : input.stripePlan ?? "essential",
+      checkoutPlan: normalizeCheckoutPlan(input.stripePlan ?? "ai_plus"),
+      accountType: input.accountType ?? null,
+      centreName: input.centreName?.trim() || null,
     },
   });
 
   const base = getAppBaseUrl();
   const loc = locale === "ar" ? "ar" : "fr";
 
-  const priceId = getStripePriceIdForElevePlan(input.stripePlan ?? "essential");
+  const priceId = getStripePriceIdForElevePlan(input.stripePlan ?? "ai_plus");
   const lineItems = priceId
     ? [{ price: priceId, quantity: 1 as const }]
     : [

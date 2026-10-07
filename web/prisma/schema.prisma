@@ -73,14 +73,16 @@ model User {
   /// Date d’inscription de l’élève
   enrolledAt               DateTime?
 
-  /// Abonnement IA : FREE | ESSENTIAL_AI | AI_PLUS
+  /// Abonnement IA : FREE | AI_PLUS (Particulier) | PROF | CENTRE | ESSENTIAL_AI (ancien)
   subscriptionPlan            String?
   /// free | active | expired | cancelled
   subscriptionStatus          String?
   currentPeriodStart          DateTime?
   currentPeriodEnd            DateTime?
-  /// Corrections IA consommées dans le cycle courant (ou lifetime si FREE)
+  /// Crédits d'analyse consommés dans le cycle courant (ou à vie si FREE)
   aiCorrectionsUsedInPeriod   Int      @default(0)
+  /// Profil déclaré à l'inscription : PARENT | ELEVE | PROF | CENTRE
+  accountType                 String?
 
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
@@ -103,9 +105,12 @@ model User {
   coursEnLigneDemandeReviews CoursEnLigneDemande[] @relation("DemandeReviewer")
   coursEnLigneDemandeAssigned  CoursEnLigneDemande[] @relation("DemandeAssignedTeacher")
   aiUsages                   AiUsage[]
+  centresOwned               Centre[]       @relation("CentreOwner")
+  centreMembership           CentreMember?
+  corrections                Correction[]
 }
 
-/// Consommation OpenAI par correction (1 ligne = 1 tentative / correction)
+/// Consommation OpenAI (1 ligne = 1 appel IA, ou 1 réservation de crédits)
 model AiUsage {
   id                 String    @id @default(cuid())
   userId             String
@@ -115,6 +120,13 @@ model AiUsage {
   /// PENDING | SUCCESS | FAILED
   status             String
   planAtTime         String?
+  /// Centre dont le quota a été utilisé (null = quota personnel)
+  centreId           String?
+  /// correction | correction_escalation | detailed_explanation | assistant | similar_exercise | quiz
+  actionType         String?
+  /// Crédits d'analyse consommés (0 pour l'assistant)
+  creditsConsumed    Int       @default(0)
+  correctionId       String?
   model              String?
   inputTokens        Int?
   outputTokens       Int?
@@ -122,6 +134,7 @@ model AiUsage {
   cachedInputTokens  Int?
   /// Coût estimé USD (null si tarifs modèle non configurés ou tokens absents)
   estimatedCostUsd   Float?
+  durationMs         Int?
   replyPreview       String?
   errorMessage       String?
   createdAt          DateTime  @default(now())
@@ -130,6 +143,86 @@ model AiUsage {
   @@index([userId, createdAt])
   @@index([createdAt])
   @@index([status])
+  @@index([centreId, createdAt])
+}
+
+/// Centre de soutien : un seul abonnement, quota d'analyses mutualisé entre ses membres
+model Centre {
+  id                  String         @id @default(cuid())
+  name                String
+  ownerId             String
+  owner               User           @relation("CentreOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+  /// Nombre de comptes autorisés (null = valeur de l'offre Centre)
+  seatLimit           Int?
+  /// active | cancelled | expired
+  subscriptionStatus  String         @default("active")
+  currentPeriodStart  DateTime?
+  currentPeriodEnd    DateTime?
+  creditsUsedInPeriod Int            @default(0)
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
+  members             CentreMember[]
+
+  @@index([ownerId])
+}
+
+model CentreMember {
+  id        String   @id @default(cuid())
+  centreId  String
+  centre    Centre   @relation(fields: [centreId], references: [id], onDelete: Cascade)
+  /// Un compte appartient à un seul centre
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  /// OWNER | MEMBER
+  role      String   @default("MEMBER")
+  createdAt DateTime @default(now())
+
+  @@index([centreId])
+}
+
+/// Correction sauvegardée — réaffichée depuis l'historique sans nouvel appel IA
+model Correction {
+  id           String              @id @default(cuid())
+  userId       String
+  user         User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  centreId     String?
+  /// image | pdf | docx
+  sourceType   String
+  fileName     String?
+  /// SHA-256 du ou des fichiers (réutilisation sans recalcul)
+  fileHash     String
+  pages        Int
+  creditsUsed  Int
+  subject      String?
+  notion       String?
+  title        String?
+  /// Texte extrait (PDF / Word), tronqué — sert de contexte à l'assistant
+  sourceText   String?
+  /// Résultat structuré (JSON)
+  resultJson   String
+  /// Erreurs détectées (JSON [{ notion, erreur, explication }])
+  errorsJson   String?
+  model        String?
+  createdAt    DateTime            @default(now())
+  messages     CorrectionMessage[]
+
+  @@index([userId, createdAt])
+  @@index([userId, fileHash])
+  @@index([centreId, createdAt])
+}
+
+model CorrectionMessage {
+  id           String     @id @default(cuid())
+  correctionId String
+  correction   Correction @relation(fields: [correctionId], references: [id], onDelete: Cascade)
+  /// user | assistant
+  role         String
+  /// explain_differently | simpler | why_wrong | example | similar_exercise | quiz | arabic | darija | detailed | question
+  action       String?
+  content      String
+  createdAt    DateTime   @default(now())
+
+  @@index([correctionId, createdAt])
 }
 
 model Group {
@@ -186,8 +279,12 @@ model EleveRegistrationPending {
   name                String
   groupe              String
   anneeScolaire       String
-  /// essential | ai_plus (checkout)
+  /// essential | ai_plus | prof | centre (checkout)
   checkoutPlan        String?
+  /// PARENT | ELEVE | PROF | CENTRE
+  accountType         String?
+  /// Nom du centre (offre Centre)
+  centreName          String?
   stripeSessionId     String?   @unique
   /// ID transaction Paddle Billing (txn_…)
   paddleTransactionId String?   @unique

@@ -92,7 +92,7 @@ export default async function PublicQuizPage({ params }: PageProps) {
     <PublicPageFrame mainClassName="page-bg page-x mx-auto flex w-full max-w-2xl flex-1 flex-col pb-12 pb-safe pt-6 sm:pb-16 sm:pt-12">
         <nav className="mb-6 text-sm">
           <Link
-            href="/cours"
+            href="/quiz"
             className="font-medium text-electric hover:underline"
           >
             {t("backToQuizzes")}

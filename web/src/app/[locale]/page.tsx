@@ -1,17 +1,29 @@
 import { CtaPremiumSection } from "@/components/cta-premium-section";
 import { PricingSection } from "@/components/pricing-section";
 import {
-  HomeHelpTypeCards,
+  HomeAudienceCards,
   HomeHeroMockup,
   HomeHowItWorks,
   HomeTrustSection,
 } from "@/components/home-landing-sections";
+import { FILE_LIMITS } from "@/lib/ai/config";
 import { PublicPageShell } from "@/components/public-page-shell";
 import { getCorrecteurPlusHomeSeo } from "@/content/correcteurplus-home-seo";
 import { Link } from "@/i18n/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import type { Metadata } from "next";
 
 type PageProps = { params: Promise<{ locale: string }> };
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    alternates: {
+      canonical: `/${locale}`,
+      languages: { fr: "/fr", ar: "/ar" },
+    },
+  };
+}
 
 function HeroTitle({ title }: { title: string }) {
   const parts = title.split(/(IA|l'IA|الذكاء الاصطناعي)/);
@@ -36,7 +48,7 @@ export default async function Home({ params }: PageProps) {
   const t = await getTranslations("HomePage");
   const seo = getCorrecteurPlusHomeSeo(locale);
 
-  const badges = [t("badgeFree"), t("badgeNoCard"), t("badgeMorocco"), t("badgeAiProf")] as const;
+  const chips = t("heroChips").split("|");
 
   return (
     <PublicPageShell>
@@ -51,31 +63,34 @@ export default async function Home({ params }: PageProps) {
           aria-hidden
         />
         <div className="relative max-w-2xl">
-          <div className="flex flex-wrap gap-1.5 sm:gap-2">
-            {badges.map((b) => (
-              <span
-                key={b}
-                className="rounded-full border border-border-soft bg-white/80 px-2.5 py-0.5 text-[11px] font-semibold leading-snug text-navy shadow-sm backdrop-blur-sm sm:px-3 sm:py-1 sm:text-xs"
-              >
-                {b}
-              </span>
-            ))}
-          </div>
           <HeroTitle title={seo.heroTitle} />
           <p className="mt-4 text-sm leading-relaxed text-muted-text sm:mt-5 sm:text-base md:text-lg">
             {seo.heroSubtitle}
           </p>
+          <ul className="mt-5 flex flex-wrap gap-1.5 sm:gap-2" aria-label={t("badgeAiProf")}>
+            {chips.map((c) => (
+              <li
+                key={c}
+                className="rounded-full border border-border-soft bg-white/80 px-2.5 py-0.5 text-[11px] font-semibold leading-snug text-navy shadow-sm backdrop-blur-sm sm:px-3 sm:py-1 sm:text-xs"
+              >
+                {c}
+              </li>
+            ))}
+          </ul>
           <div className="mt-6 flex w-full flex-col gap-3 sm:mt-8 sm:flex-row sm:items-center">
-            <Link href="/inscription" className="btn-primary inline-flex w-full justify-center px-6 py-3.5 text-sm font-semibold sm:w-auto sm:px-8 sm:text-base">
-              {t("ctaFreeCorrections")}
+            <Link href="/inscription?plan=free" className="btn-primary inline-flex w-full justify-center px-6 py-3.5 text-sm font-semibold sm:w-auto sm:px-8 sm:text-base">
+              {t("ctaCorrect")}
             </Link>
-            <a
-              href="#comment-ca-marche"
+            <Link
+              href="/quiz"
               className="btn-secondary inline-flex w-full justify-center px-6 py-3.5 text-sm font-semibold sm:w-auto sm:px-8 sm:text-base"
             >
-              {t("ctaHowItWorks")}
-            </a>
+              {t("ctaDiscoverQuiz")}
+            </Link>
           </div>
+          <p className="mt-4 text-xs font-medium text-muted-text sm:text-sm">
+            {t("heroLimitLine", { pages: FILE_LIMITS.maxPdfPages })}
+          </p>
         </div>
         <HomeHeroMockup />
       </section>
@@ -84,7 +99,7 @@ export default async function Home({ params }: PageProps) {
         <HomeHowItWorks />
       </div>
 
-      <HomeHelpTypeCards />
+      <HomeAudienceCards />
 
       <HomeTrustSection />
 
@@ -93,9 +108,6 @@ export default async function Home({ params }: PageProps) {
           title={t("pricingTitle")}
           subtitle={t("pricingSubtitle")}
           showValueProp={false}
-          showSecondary={false}
-          showCredits={false}
-          showOneShot={false}
         />
         <p className="mx-auto mt-6 max-w-3xl text-center text-sm text-muted-text">
           <Link href="/tarifs" className="font-semibold text-electric underline-offset-4 hover:underline">
@@ -118,7 +130,7 @@ export default async function Home({ params }: PageProps) {
           {seo.faqTitle}
         </h2>
         <div className="site-card-bg mx-auto mt-6 max-w-3xl divide-y divide-border-soft rounded-2xl border border-border-soft backdrop-blur-md sm:mt-10 sm:rounded-[22px]">
-          {seo.faq.slice(0, 5).map((item) => (
+          {seo.faq.map((item) => (
             <details key={item.q} className="group px-3 py-1 first:pt-3 last:pb-3 sm:px-6 sm:first:pt-4 sm:last:pb-4">
               <summary className="cursor-pointer list-none py-3 text-start text-sm font-semibold text-navy marker:content-none sm:text-base [&::-webkit-details-marker]:hidden">
                 <span className="flex items-start justify-between gap-3">

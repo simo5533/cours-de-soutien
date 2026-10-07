@@ -48,8 +48,28 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/:locale/eleve/aide-maths",
-        destination: "/:locale/eleve/aide-scolaire",
+        destination: "/:locale/eleve/correcteur",
         permanent: true,
+      },
+      {
+        source: "/:locale/eleve/aide-scolaire",
+        destination: "/:locale/eleve/correcteur",
+        permanent: true,
+      },
+      {
+        source: "/:locale(fr|ar)/cours",
+        destination: "/:locale/quiz",
+        permanent: true,
+      },
+      {
+        source: "/:locale(fr|ar)/cours-en-ligne",
+        destination: "/:locale/tarifs",
+        permanent: false,
+      },
+      {
+        source: "/:locale(fr|ar)/eleve/cours-en-ligne/:path*",
+        destination: "/:locale/eleve/correcteur",
+        permanent: false,
       },
     ];
   },

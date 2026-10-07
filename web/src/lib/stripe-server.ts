@@ -1,4 +1,5 @@
 import Stripe from "stripe";
+import { getPlanByCheckout, resolvePriceEnv, type CheckoutElevePlan } from "@/lib/plans";
 
 let stripe: Stripe | null | undefined;
 
@@ -23,18 +24,11 @@ export function getStripePriceIdEleve(): string | null {
   return id || null;
 }
 
-export type EleveStripePlan = "essential" | "ai_plus" | "bacplus" | "family";
+export type EleveStripePlan = CheckoutElevePlan;
 
-/** `price_…` pour la formule ; repli sur `STRIPE_PRICE_ID_ELEVE_INSCRIPTION`. */
+/** `price_…` de la formule (clés d'environnement définies dans `lib/plans.ts`). */
 export function getStripePriceIdForElevePlan(plan: EleveStripePlan): string | null {
-  const normalized = plan === "bacplus" || plan === "family" ? "ai_plus" : plan;
-  const fromPlan =
-    normalized === "essential"
-      ? process.env.STRIPE_PRICE_ID_ELEVE_ESSENTIAL?.trim()
-      : process.env.STRIPE_PRICE_ID_ELEVE_AI_PLUS?.trim() ||
-        process.env.STRIPE_PRICE_ID_ELEVE_BAC_PLUS?.trim();
-  if (fromPlan) return fromPlan;
-  return getStripePriceIdEleve();
+  return resolvePriceEnv(getPlanByCheckout(plan).stripePriceEnvKeys);
 }
 
 export function getAppBaseUrl(): string {

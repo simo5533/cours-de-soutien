@@ -3,11 +3,7 @@ import type { QuotaSnapshot } from "@/lib/ai/quota";
 
 function formatDate(d: Date | null): string | null {
   if (!d) return null;
-  return d.toLocaleDateString("fr-MA", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  });
+  return d.toLocaleDateString("fr-MA", { day: "2-digit", month: "2-digit", year: "numeric" });
 }
 
 export function AiQuotaMeter({ quota }: { quota: QuotaSnapshot }) {
@@ -18,15 +14,19 @@ export function AiQuotaMeter({ quota }: { quota: QuotaSnapshot }) {
     <div className="card-elevated space-y-3 p-4 sm:p-5">
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div>
-          <p className="text-sm font-semibold text-navy">Corrections IA</p>
-          <p className="text-xs text-muted-text">Formule {quota.planName}</p>
+          <p className="text-sm font-semibold text-navy">Crédits d&apos;analyse</p>
+          <p className="text-xs text-muted-text">
+            {quota.scope === "centre" && quota.centreName
+              ? `Quota partagé — ${quota.centreName}`
+              : `Formule ${quota.planName}`}
+          </p>
         </div>
-        {quota.canUpgradeToAiPlus ? (
+        {quota.upgradeHref && pct >= 60 ? (
           <Link
-            href="/inscription?plan=ai_plus"
+            href={quota.upgradeHref}
             className="rounded-full bg-gradient-to-r from-electric to-cyan-ai px-3 py-1.5 text-xs font-bold text-white shadow-sm"
           >
-            Passer à IA Plus
+            Voir les formules
           </Link>
         ) : null}
       </div>
@@ -37,7 +37,7 @@ export function AiQuotaMeter({ quota }: { quota: QuotaSnapshot }) {
         aria-valuenow={quota.used}
         aria-valuemin={0}
         aria-valuemax={quota.limit}
-        aria-label="Corrections IA utilisées"
+        aria-label="Crédits d'analyse utilisés"
       >
         <div
           className={`h-full rounded-full transition-all ${
@@ -49,36 +49,30 @@ export function AiQuotaMeter({ quota }: { quota: QuotaSnapshot }) {
 
       <div className="flex flex-wrap items-baseline justify-between gap-2 text-sm">
         <p className="font-medium text-navy">
-          {quota.used} / {quota.limit} corrections utilisées
+          {quota.remaining} crédit{quota.remaining === 1 ? "" : "s"} restant
+          {quota.remaining === 1 ? "" : "s"}
         </p>
         <p className="text-muted-text">
-          {quota.remaining} correction{quota.remaining === 1 ? "" : "s"} restante
-          {quota.remaining === 1 ? "" : "s"}
+          {quota.used} / {quota.limit} utilisés
         </p>
       </div>
 
-      {renewLabel && quota.planId !== "FREE" ? (
-        <p className="text-xs text-muted-text">Renouvellement le {renewLabel}</p>
-      ) : null}
+      <p className="text-xs text-muted-text">
+        1 photo = 1 crédit · 1 page de PDF = 1 crédit
+        {renewLabel && quota.planId !== "FREE" ? ` · Renouvellement le ${renewLabel}` : ""}
+      </p>
 
       {quota.remaining <= 0 ? (
         <p className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-950 dark:border-amber-900/40 dark:bg-amber-950/30 dark:text-amber-100">
-          {quota.planId === "AI_PLUS"
-            ? "Votre quota mensuel est épuisé. Il sera renouvelé au prochain cycle."
-            : quota.planId === "ESSENTIAL_AI"
-              ? "Vous avez utilisé toutes vos corrections IA pour ce mois."
-              : "Vous avez utilisé vos corrections IA offertes."}
-          {quota.canUpgradeToAiPlus ? (
+          {quota.scope === "centre"
+            ? "Le quota du centre est épuisé pour ce mois. Il sera renouvelé au prochain cycle."
+            : quota.planId === "FREE"
+              ? "Vos analyses offertes sont utilisées."
+              : "Votre quota est épuisé pour ce mois. Il sera renouvelé au prochain cycle."}
+          {quota.upgradeHref ? (
             <>
               {" "}
-              <Link href="/inscription?plan=ai_plus" className="font-semibold underline">
-                Passer à IA Plus
-              </Link>
-            </>
-          ) : quota.planId === "FREE" ? (
-            <>
-              {" "}
-              <Link href="/tarifs" className="font-semibold underline">
+              <Link href={quota.upgradeHref} className="font-semibold underline">
                 Voir les formules
               </Link>
             </>

@@ -5,8 +5,8 @@ export async function SiteFooter() {
   const t = await getTranslations("SiteFooter");
 
   const links = [
-    { href: "/inscription", label: t("correctionAi") },
-    { href: "/cours", label: t("quizFree") },
+    { href: "/eleve/correcteur", label: t("correctionAi") },
+    { href: "/quiz", label: t("quizFree") },
     { href: "/tarifs", label: t("pricing") },
     { href: "/blog", label: t("blog") },
     { href: "/cours-gratuits-langues", label: t("languages") },

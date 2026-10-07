@@ -64,8 +64,22 @@ export async function fulfillEleveRegistrationCore(
           currentPeriodStart: now,
           currentPeriodEnd: periodEnd,
           aiCorrectionsUsedInPeriod: 0,
+          accountType: pending.accountType ?? (checkout === "centre" ? "CENTRE" : null),
         },
       });
+
+      if (checkout === "centre") {
+        await tx.centre.create({
+          data: {
+            name: pending.centreName?.trim() || pending.name,
+            ownerId: user.id,
+            subscriptionStatus: "active",
+            currentPeriodStart: now,
+            currentPeriodEnd: periodEnd,
+            members: { create: { userId: user.id, role: "OWNER" } },
+          },
+        });
+      }
 
       const last = await tx.payment.findFirst({
         orderBy: { receiptNumber: "desc" },

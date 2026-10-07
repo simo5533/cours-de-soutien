@@ -18,8 +18,8 @@ export type ModelTokenPricing = {
 };
 
 /**
- * Clés = noms de modèles tels que retournés / configurés (OPENAI_MODEL).
- * Le projet utilise par défaut `gpt-4o-mini` (voir maths-ai.ts).
+ * Clés = noms de modèles tels que retournés / configurés (voir lib/ai/config.ts).
+ * Un modèle absent de cette table → coût non estimé (null), jamais inventé.
  */
 export const MODEL_PRICING: Record<string, ModelTokenPricing> = {
   "gpt-4o-mini": {

@@ -2,6 +2,7 @@
 
 import bcrypt from "bcryptjs";
 import type { Transaction } from "@paddle/paddle-node-sdk";
+import { normalizeCheckoutPlan } from "@/lib/plans";
 import { prisma } from "@/lib/prisma";
 import {
   getPaddle,
@@ -119,6 +120,8 @@ type EleveRegisterInput = {
   anneeScolaire: string;
   /** Formule Paddle (trois `pri_` distincts dans l’env ou un seul `PADDLE_PRICE_ID_ELEVE_INSCRIPTION`). */
   paddlePlan?: ElevePaddlePlan;
+  accountType?: string;
+  centreName?: string;
 };
 
 function truncateTech(msg: string, max = 380): string {
@@ -152,7 +155,7 @@ export async function startElevePaddleCheckout(
 
     const passwordHash = await bcrypt.hash(input.password, 10);
 
-    const plan = input.paddlePlan ?? "essential";
+    const plan = input.paddlePlan ?? "ai_plus";
     const pending = await prisma.eleveRegistrationPending.create({
       data: {
         email: input.email.trim(),
@@ -160,7 +163,9 @@ export async function startElevePaddleCheckout(
         name: input.name.trim(),
         groupe: input.groupe.trim(),
         anneeScolaire: input.anneeScolaire.trim(),
-        checkoutPlan: plan === "bacplus" || plan === "family" ? "ai_plus" : plan,
+        checkoutPlan: normalizeCheckoutPlan(plan),
+        accountType: input.accountType ?? null,
+        centreName: input.centreName?.trim() || null,
       },
     });
 

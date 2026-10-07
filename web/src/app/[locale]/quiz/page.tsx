@@ -16,6 +16,7 @@ import { prisma } from "@/lib/prisma";
 import { ExerciseType } from "@prisma/client";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
+import type { Metadata } from "next";
 
 type PageProps = { params: Promise<{ locale: string }> };
 
@@ -23,7 +24,17 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-export default async function CoursPublicPage({ params }: PageProps) {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "CatalogPage" });
+  return {
+    title: t("metaTitle"),
+    description: t("metaDescription"),
+    alternates: { canonical: `/${locale}/quiz` },
+  };
+}
+
+export default async function QuizCatalogPage({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
   const ta = await getTranslations("FreeLangCourses");
@@ -91,9 +102,9 @@ export default async function CoursPublicPage({ params }: PageProps) {
                 </span>
                 {t("qcmPublished")}
               </span>
-              <Link href="/cours" className="btn-primary w-full justify-center !py-2.5 sm:w-auto">
+              <a href="#liste-qcm-heading" className="btn-primary w-full justify-center !py-2.5 sm:w-auto">
                 {t("startFreeQuiz")}
-              </Link>
+              </a>
             </div>
           </div>
         </section>

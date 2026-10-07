@@ -6,16 +6,13 @@ import { useActionState, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { registerAction, type RegisterState } from "@/actions/auth";
 import { LemonSqueezyCheckoutOverlay } from "@/components/lemon-squeezy-checkout-overlay";
-import {
-  PLANS,
-  getPlanByPricingId,
-  pricingIdToCheckout,
-  type PricingPlanId,
-} from "@/lib/plans";
+import { PLANS, PUBLIC_PLANS, pricingIdToCheckout, type PricingPlanId } from "@/lib/plans";
 
-const roleOptions = [
-  { value: "ELEVE", labelKey: "roleStudent" as const },
-  { value: "ELEVE", labelKey: "roleParent" as const, parent: true },
+const accountTypeOptions = [
+  { value: "PARENT", labelKey: "roleParent" },
+  { value: "ELEVE", labelKey: "roleStudent" },
+  { value: "PROF", labelKey: "roleProf" },
+  { value: "CENTRE", labelKey: "roleCentre" },
 ] as const;
 
 const PRICING_IDS = Object.values(PLANS).map((p) => p.pricingId);
@@ -37,7 +34,10 @@ export function InscriptionForm({
   }, [planParam]);
   const [selectedPlanId, setSelectedPlanId] = useState<PricingPlanId>(defaultPricingId);
   const isPaidPlan = selectedPlanId !== "free";
-  const [role, setRole] = useState<string>("ELEVE");
+  const [accountType, setAccountType] = useState<string>(
+    defaultPricingId === "centre" ? "CENTRE" : defaultPricingId === "prof" ? "PROF" : "PARENT",
+  );
+  const isCentrePlan = selectedPlanId === "centre";
   const [lemonCheckoutUrl, setLemonCheckoutUrl] = useState<string | null>(null);
   const useLemonOverlay = paymentProvider === "lemonsqueezy";
   const successPath = `/${locale === "ar" ? "ar" : "fr"}/inscription/succes`;
@@ -158,13 +158,12 @@ export function InscriptionForm({
             Paiement annulé. Vous pouvez réessayer quand vous voulez.
           </p>
         ) : null}
-        {role === "ELEVE" ? (
-          <p className="mt-4 rounded-xl border border-brandblue/25 bg-brandblue/5 px-4 py-3 text-sm text-navy dark:border-brandblue/20 dark:bg-brandblue/10 dark:text-brandblue/90">
-            {isPaidPlan ? t("studentPaymentNote") : t("freePlanNote")}
-          </p>
-        ) : null}
+        <p className="mt-4 rounded-xl border border-brandblue/25 bg-brandblue/5 px-4 py-3 text-sm text-navy dark:border-brandblue/20 dark:bg-brandblue/10 dark:text-brandblue/90">
+          {isPaidPlan ? t("studentPaymentNote") : t("freePlanNote")}
+        </p>
         <form className="mt-8 flex flex-col gap-5" action={formAction}>
           <input type="hidden" name="locale" value={locale} />
+          <input type="hidden" name="role" value="ELEVE" />
           <input type="hidden" name="elevePlan" value={pricingIdToCheckout(selectedPlanId)} />
           {state && "error" in state && state.error ? (
             <p
@@ -204,26 +203,45 @@ export function InscriptionForm({
               {t("roleLabel")}
             </span>
             <select
-              name="role"
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
+              name="accountType"
+              value={accountType}
+              onChange={(e) => setAccountType(e.target.value)}
               className="input-field"
             >
-              {roleOptions.map((r, i) => (
-                <option key={`${r.value}-${i}`} value={r.value}>
+              {accountTypeOptions.map((r) => (
+                <option key={r.value} value={r.value}>
                   {t(r.labelKey)}
                 </option>
               ))}
             </select>
           </label>
-          {role === "ELEVE" && isPaidPlan ? (
-            <p className="rounded-lg bg-slate-50 px-3 py-2 text-xs text-slate-600 dark:bg-slate-800/50 dark:text-slate-400">
-              Pack : {getPlanByPricingId(selectedPlanId)?.name}
-              {" — "}
-              <Link href="/tarifs" className="font-semibold text-brandblue underline-offset-2 hover:underline">
-                Changer
-              </Link>
-            </p>
+          <label className="flex flex-col gap-2 text-sm">
+            <span className="font-medium text-slate-700 dark:text-slate-300">{t("planLabel")}</span>
+            <select
+              value={selectedPlanId}
+              onChange={(e) => setSelectedPlanId(e.target.value as PricingPlanId)}
+              className="input-field"
+            >
+              <option value="free">{t("planFree")}</option>
+              {PUBLIC_PLANS.map((p) => (
+                <option key={p.pricingId} value={p.pricingId}>
+                  {p.name} — {p.priceMAD} DH / mois ({p.monthlyCredits} analyses)
+                </option>
+              ))}
+              {!PUBLIC_PLANS.some((p) => p.pricingId === selectedPlanId) && selectedPlanId !== "free" ? (
+                <option value={selectedPlanId}>
+                  {Object.values(PLANS).find((p) => p.pricingId === selectedPlanId)?.name}
+                </option>
+              ) : null}
+            </select>
+          </label>
+          {isCentrePlan ? (
+            <label className="flex flex-col gap-2 text-sm">
+              <span className="font-medium text-slate-700 dark:text-slate-300">
+                {t("centreNameLabel")}
+              </span>
+              <input name="centreName" required minLength={2} maxLength={120} className="input-field" />
+            </label>
           ) : null}
           <button
             type="submit"
@@ -232,7 +250,7 @@ export function InscriptionForm({
           >
             {pending
               ? "Création…"
-              : role === "ELEVE" && isPaidPlan
+              : isPaidPlan
                 ? t("continuePayment")
                 : t("submitFree")}
           </button>

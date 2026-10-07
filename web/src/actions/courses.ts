@@ -145,5 +145,5 @@ export async function duplicateCourseAction(courseId: string) {
 
   revalidatePathAllLocales("/professeur/cours");
   revalidatePathAllLocales("/eleve/cours");
-  revalidatePathAllLocales("/cours");
+  revalidatePathAllLocales("/quiz");
 }

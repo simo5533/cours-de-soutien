@@ -101,43 +101,41 @@ export async function HomeHowItWorks() {
         ))}
       </div>
       <div className="mt-8 text-center sm:mt-10">
-        <Link href="/inscription" className="btn-primary inline-flex w-full justify-center px-6 py-3 text-sm sm:w-auto sm:px-8 sm:text-base">
-          {t("ctaFreeCorrections")}
+        <Link href="/inscription?plan=free" className="btn-primary inline-flex w-full justify-center px-6 py-3 text-sm sm:w-auto sm:px-8 sm:text-base">
+          {t("ctaCorrect")}
         </Link>
       </div>
     </section>
   );
 }
 
-export async function HomeHelpTypeCards() {
+export async function HomeAudienceCards() {
   const t = await getTranslations("HomePage");
   const cards = [
-    { key: "ai" as const, href: "/inscription", accent: "from-electric to-cyan-ai", icon: "ai" },
-    { key: "quiz" as const, href: "/cours", accent: "from-success to-cyan-ai", icon: "quiz" },
+    { key: "Prof" as const, href: "/inscription?plan=prof", accent: "from-electric to-cyan-ai" },
+    { key: "Centre" as const, href: "/inscription?plan=centre", accent: "from-premium to-electric" },
+    { key: "Parent" as const, href: "/inscription?plan=particulier", accent: "from-success to-cyan-ai" },
   ];
 
   return (
-    <section className="section-stack" aria-labelledby="help-heading">
+    <section className="section-stack" aria-labelledby="audience-heading">
       <div className="text-center">
-        <p className="brand-section-title">{t("helpEyebrow")}</p>
-        <h2 id="help-heading" className="font-display mt-2 text-2xl font-bold text-navy sm:text-3xl">
-          {t("helpTitle")}
+        <p className="brand-section-title">{t("audienceEyebrow")}</p>
+        <h2 id="audience-heading" className="font-display mt-2 text-2xl font-bold text-navy sm:text-3xl">
+          {t("audienceTitle")}
         </h2>
       </div>
-      <div className="mx-auto mt-10 grid max-w-4xl gap-6 sm:grid-cols-2">
+      <div className="mx-auto mt-8 grid max-w-5xl gap-4 sm:mt-10 sm:gap-6 md:grid-cols-3">
         {cards.map((c) => (
           <div key={c.key} className="card-elevated flex flex-col overflow-hidden">
             <div className={`h-1.5 bg-gradient-to-r ${c.accent}`} />
-            <div className="flex flex-1 flex-col p-6 sm:p-7">
-              <h3 className="text-lg font-bold text-navy">{t(`help${c.key}Title`)}</h3>
+            <div className="flex flex-1 flex-col p-5 sm:p-6">
+              <h3 className="text-lg font-bold text-navy">{t(`audience${c.key}Title`)}</h3>
               <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-text">
-                {t(`help${c.key}Desc`)}
+                {t(`audience${c.key}Desc`)}
               </p>
-              <Link
-                href={c.href}
-                className="btn-primary mt-6 inline-flex w-full justify-center !py-3"
-              >
-                {t(`help${c.key}Cta`)}
+              <Link href={c.href} className="btn-secondary mt-5 inline-flex w-full justify-center !py-3">
+                {t(`audience${c.key}Cta`)}
               </Link>
             </div>
           </div>

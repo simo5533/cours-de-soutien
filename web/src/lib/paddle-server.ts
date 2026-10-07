@@ -1,5 +1,6 @@
 import { Environment, Paddle } from "@paddle/paddle-node-sdk";
 import type { CurrencyCode } from "@paddle/paddle-node-sdk";
+import { getPlanByCheckout, resolvePriceEnv, type CheckoutElevePlan } from "@/lib/plans";
 
 let paddle: Paddle | null | undefined;
 
@@ -54,18 +55,11 @@ export function getPaddlePriceIdEleve(): string | null {
   return id || null;
 }
 
-export type ElevePaddlePlan = "essential" | "ai_plus" | "bacplus" | "family";
+export type ElevePaddlePlan = CheckoutElevePlan;
 
-/** `pri_…` pour la formule choisie, sinon repli sur `PADDLE_PRICE_ID_ELEVE_INSCRIPTION`. */
+/** `pri_…` de la formule (clés d'environnement définies dans `lib/plans.ts`). */
 export function getPaddlePriceIdForElevePlan(plan: ElevePaddlePlan): string | null {
-  const normalized = plan === "bacplus" || plan === "family" ? "ai_plus" : plan;
-  const specific =
-    normalized === "essential"
-      ? process.env.PADDLE_PRICE_ID_ELEVE_ESSENTIAL?.trim()
-      : process.env.PADDLE_PRICE_ID_ELEVE_AI_PLUS?.trim() ||
-        process.env.PADDLE_PRICE_ID_ELEVE_BAC_PLUS?.trim();
-  if (specific) return specific;
-  return getPaddlePriceIdEleve();
+  return resolvePriceEnv(getPlanByCheckout(plan).paddlePriceEnvKeys);
 }
 
 /**

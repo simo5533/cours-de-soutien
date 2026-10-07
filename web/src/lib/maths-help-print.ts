@@ -36,7 +36,7 @@ export function buildMathsHelpHtmlDocument(reply: string): string {
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Aide scolaire (IA)</title>
+<title>Correction — CorrecteurPlus</title>
 <style>
   body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1rem; color: #1e293b; }
   h1 { font-size: 1.35rem; margin-bottom: 0.5rem; }
@@ -46,7 +46,7 @@ export function buildMathsHelpHtmlDocument(reply: string): string {
 </style>
 </head>
 <body>
-  <h1>Aide scolaire (IA)</h1>
+  <h1>Correction — CorrecteurPlus</h1>
   <p class="meta">Généré le ${escapeHtml(date)}</p>
   <pre>${body}</pre>
 </body>

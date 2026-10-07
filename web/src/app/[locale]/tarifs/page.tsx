@@ -41,7 +41,7 @@ export default async function TarifsPage({ params }: PageProps) {
       </div>
 
       <div className="mt-12 flex flex-wrap justify-center gap-4">
-        <Link href="/cours" className="btn-secondary">
+        <Link href="/quiz" className="btn-secondary">
           {t("ctaQuiz")}
         </Link>
         <Link href="/inscription" className="btn-primary">

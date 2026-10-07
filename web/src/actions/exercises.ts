@@ -98,7 +98,7 @@ export async function createExerciseAction(formData: FormData) {
 
   revalidatePathAllLocales("/professeur/exercices");
   revalidatePathAllLocales("/eleve/exercices");
-  revalidatePathAllLocales("/cours");
+  revalidatePathAllLocales("/quiz");
   await redirectTo("/professeur/exercices");
 }
 
@@ -127,7 +127,7 @@ export async function toggleExercisePublished(
   revalidatePathAllLocales("/professeur/exercices");
   revalidatePathAllLocales("/eleve/exercices");
   revalidatePathAllLocales("/admin/exercices");
-  revalidatePathAllLocales("/cours");
+  revalidatePathAllLocales("/quiz");
 }
 
 export async function deleteExerciseAction(exerciseId: string) {
@@ -138,5 +138,5 @@ export async function deleteExerciseAction(exerciseId: string) {
   await prisma.exercise.delete({ where: { id: exerciseId } });
   revalidatePathAllLocales("/admin/exercices");
   revalidatePathAllLocales("/eleve/exercices");
-  revalidatePathAllLocales("/cours");
+  revalidatePathAllLocales("/quiz");
 }

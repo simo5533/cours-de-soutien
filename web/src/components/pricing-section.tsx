@@ -1,20 +1,21 @@
-import {
-  PUBLIC_PAID_PLANS,
-  VALUE_PROPOSITION,
-  type PlanDefinition,
-} from "@/lib/plans";
+import { PLANS, PUBLIC_PLANS, VALUE_PROPOSITION, type PlanDefinition } from "@/lib/plans";
+import { FILE_LIMITS } from "@/lib/ai/config";
 import { Link } from "@/i18n/navigation";
 
 function formatPrice(plan: PlanDefinition): string {
-  if (plan.priceMAD === 0) return "0 MAD";
-  return `${plan.priceMAD} MAD/mois`;
+  if (plan.priceMAD === 0) return "0 DH";
+  return `${plan.priceMAD} DH`;
 }
 
-function PlanCard({ plan }: { plan: PlanDefinition }) {
-  const inscriptionHref =
-    plan.checkoutPlan === "free"
-      ? "/inscription?plan=free"
-      : `/inscription?plan=${plan.pricingId}`;
+function PlanCard({ plan, maxPdfPages }: { plan: PlanDefinition; maxPdfPages: number }) {
+  const inscriptionHref = `/inscription?plan=${plan.pricingId}`;
+  const quotaFeatures = [
+    plan.seats > 1
+      ? `${plan.monthlyCredits} analyses / mois pour toute l'équipe`
+      : `${plan.monthlyCredits} analyses / mois`,
+    ...(plan.seats > 1 ? [`Jusqu'à ${plan.seats} comptes`] : []),
+    `Analyse des PDF jusqu'à ${maxPdfPages} pages`,
+  ];
 
   return (
     <div
@@ -33,16 +34,15 @@ function PlanCard({ plan }: { plan: PlanDefinition }) {
           {plan.badge}
         </span>
       ) : null}
-      <h3 className="text-lg font-bold text-navy">{plan.name}</h3>
+      <p className="text-xs font-semibold uppercase tracking-wide text-electric">{plan.tagline}</p>
+      <h3 className="mt-1 text-lg font-bold text-navy">{plan.name}</h3>
       <p className="mt-1 text-3xl font-extrabold tracking-tight text-electric">
         {formatPrice(plan)}
-      </p>
-      <p className="mt-2 text-sm font-semibold text-navy">
-        {plan.monthlyCorrections} corrections IA / mois
+        <span className="text-base font-semibold text-muted-text"> / mois</span>
       </p>
       <p className="mt-2 text-sm text-muted-text">{plan.description}</p>
       <ul className="mt-5 flex flex-1 flex-col gap-2 text-sm text-muted-text">
-        {plan.features.map((f) => (
+        {[...quotaFeatures, ...plan.features].map((f) => (
           <li key={f} className="flex gap-2">
             <CheckIcon />
             <span>{f}</span>
@@ -79,12 +79,6 @@ type PricingSectionProps = {
   title: string;
   subtitle: string;
   showValueProp?: boolean;
-  /** @deprecated — offres professeur / Bac / Famille retirées */
-  showSecondary?: boolean;
-  /** @deprecated */
-  showCredits?: boolean;
-  /** @deprecated */
-  showOneShot?: boolean;
   id?: string;
 };
 
@@ -94,6 +88,7 @@ export function PricingSection({
   showValueProp = true,
   id = "formules",
 }: PricingSectionProps) {
+  const maxPdfPages = FILE_LIMITS.maxPdfPages;
   return (
     <section id={id} className="scroll-mt-[calc(var(--header-h)+1rem)]" aria-labelledby="pricing-heading">
       <div className="text-center">
@@ -111,16 +106,16 @@ export function PricingSection({
         ) : null}
       </div>
 
-      <div className="mx-auto mt-8 grid max-w-4xl gap-6 sm:mt-10 sm:gap-8 md:grid-cols-2">
-        {PUBLIC_PAID_PLANS.map((plan) => (
-          <PlanCard key={plan.id} plan={plan} />
+      <div className="mx-auto mt-8 grid max-w-6xl gap-6 sm:mt-10 sm:gap-8 md:grid-cols-3">
+        {PUBLIC_PLANS.map((plan) => (
+          <PlanCard key={plan.id} plan={plan} maxPdfPages={maxPdfPages} />
         ))}
       </div>
 
       <p className="mx-auto mt-8 max-w-xl text-center text-sm text-muted-text">
-        Nouveau ?{" "}
+        1 photo = 1 analyse · 1 page de PDF = 1 analyse.{" "}
         <Link href="/inscription?plan=free" className="font-semibold text-electric underline-offset-2 hover:underline">
-          3 corrections IA offertes
+          {PLANS.FREE.monthlyCredits} analyses offertes
         </Link>{" "}
         à l&apos;inscription — sans carte bancaire.
       </p>

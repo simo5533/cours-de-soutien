@@ -1,6 +1,7 @@
 "use server";
 
 import bcrypt from "bcryptjs";
+import { normalizeCheckoutPlan } from "@/lib/plans";
 import { prisma } from "@/lib/prisma";
 import {
   createLemonSqueezyCheckout,
@@ -22,6 +23,8 @@ type EleveRegisterInput = {
   groupe: string;
   anneeScolaire: string;
   lemonPlan?: EleveLemonPlan;
+  accountType?: string;
+  centreName?: string;
 };
 
 export async function startEleveLemonSqueezyCheckout(
@@ -29,7 +32,7 @@ export async function startEleveLemonSqueezyCheckout(
   locale: string,
 ): Promise<EleveLemonCheckoutState> {
   const storeId = getLemonSqueezyStoreId();
-  const plan = input.lemonPlan ?? "essential";
+  const plan = input.lemonPlan ?? "ai_plus";
   const variantId = getLemonVariantIdForElevePlan(plan);
 
   if (!storeId || !variantId) {
@@ -60,7 +63,9 @@ export async function startEleveLemonSqueezyCheckout(
         name: input.name.trim(),
         groupe: input.groupe.trim(),
         anneeScolaire: input.anneeScolaire.trim(),
-        checkoutPlan: plan === "bacplus" || plan === "family" ? "ai_plus" : plan,
+        checkoutPlan: normalizeCheckoutPlan(plan),
+        accountType: input.accountType ?? null,
+        centreName: input.centreName?.trim() || null,
       },
     });
 

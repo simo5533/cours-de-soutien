@@ -264,7 +264,7 @@ export default async function CoursGratuitsLanguesPage({ params }: PageProps) {
           subtitle={t("ctaBody")}
           primaryHref="/inscription"
           primaryLabel={t("ctaRegister")}
-          secondaryHref="/cours"
+          secondaryHref="/quiz"
           secondaryLabel={t("ctaCatalog")}
         />
     </PublicPageFrame>

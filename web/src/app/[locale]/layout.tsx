@@ -6,6 +6,7 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { getAppBaseUrl } from "@/lib/stripe-server";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-display",
@@ -46,8 +47,17 @@ export async function generateMetadata({
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "metadata" });
   return {
+    metadataBase: new URL(getAppBaseUrl()),
     title: t("title"),
     description: t("description"),
+    openGraph: {
+      type: "website",
+      siteName: "CorrecteurPlus",
+      title: t("title"),
+      description: t("description"),
+      locale: locale === "ar" ? "ar_MA" : "fr_MA",
+      images: [{ url: "/icons/icon-512.png", width: 512, height: 512, alt: "CorrecteurPlus" }],
+    },
   };
 }
 
