@@ -1,7 +1,12 @@
 "use client";
 
 import { Link, useRouter } from "@/i18n/navigation";
+import { PdfPrepareError, preparePdfForUpload } from "@/lib/pdf-browser";
 import { useRef, useState } from "react";
+
+function isPdf(file: File | undefined): file is File {
+  return !!file && (file.type === "application/pdf" || /\.pdf$/i.test(file.name));
+}
 
 const MAX_IMAGE_SIDE = 1600;
 const JPEG_QUALITY = 0.82;
@@ -45,6 +50,7 @@ export function CorrecteurUpload({ remaining, maxPdfPages, maxImages, upgradeHre
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [cta, setCta] = useState<{ label: string; href: string } | null>(null);
+  const [stage, setStage] = useState<string | null>(null);
   const blocked = remaining <= 0;
 
   function pick(list: FileList | null, kind: "photo" | "doc") {
@@ -75,9 +81,34 @@ export function CorrecteurUpload({ remaining, maxPdfPages, maxImages, upgradeHre
     setError(null);
     setCta(null);
     try {
-      const prepared = isPhotos ? await Promise.all(files.map(compressImage)) : files;
       const fd = new FormData();
-      for (const f of prepared) fd.append("files", f);
+      const doc = files[0];
+      if (isPhotos) {
+        for (const f of await Promise.all(files.map(compressImage))) fd.append("files", f);
+      } else if (isPdf(doc)) {
+        setStage("Lecture du PDF…");
+        let prepared;
+        try {
+          prepared = await preparePdfForUpload(doc, maxPdfPages);
+        } catch (e) {
+          if (e instanceof PdfPrepareError) {
+            setError(e.userMessage);
+            return;
+          }
+          console.error("[correcteur] PDF", e);
+          prepared = null;
+        }
+        if (prepared?.mode === "images") {
+          for (const f of prepared.files) fd.append("files", f);
+          fd.append("origin", "pdf");
+          fd.append("sourceName", doc.name);
+        } else {
+          fd.append("files", doc);
+        }
+        setStage(null);
+      } else {
+        fd.append("files", doc);
+      }
       const key =
         typeof crypto !== "undefined" && "randomUUID" in crypto
           ? crypto.randomUUID()
@@ -103,6 +134,7 @@ export function CorrecteurUpload({ remaining, maxPdfPages, maxImages, upgradeHre
       setError("Connexion impossible. Vérifiez votre réseau et réessayez.");
     } finally {
       setPending(false);
+      setStage(null);
     }
   }
 
@@ -169,11 +201,11 @@ export function CorrecteurUpload({ remaining, maxPdfPages, maxImages, upgradeHre
         disabled={pending || blocked || files.length === 0}
         className="btn-primary w-full justify-center !py-3.5 disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {pending ? "Correction en cours…" : "Corriger cet exercice"}
+        {pending ? stage ?? "Correction en cours…" : "Corriger cet exercice"}
       </button>
       {pending ? (
         <p className="text-center text-xs text-muted-text">
-          L&apos;analyse prend en général 10 à 30 secondes.
+          L&apos;analyse prend en général 10 à 30 secondes, un peu plus pour un long PDF.
         </p>
       ) : null}
 

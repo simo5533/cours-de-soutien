@@ -8,15 +8,22 @@ import { extractText, getDocumentProxy } from "unpdf";
 import { ACCEPTED_IMAGE_MIME, FILE_LIMITS } from "@/lib/ai/config";
 
 export class FileRejectedError extends Error {
-  constructor(public readonly userMessage: string) {
+  constructor(
+    public readonly userMessage: string,
+    public readonly code: string = "FILE_REJECTED",
+  ) {
     super(userMessage);
     this.name = "FileRejectedError";
   }
 }
 
+/** `pdf` : pages d'un PDF converties en images dans le navigateur (PDF scanné ou trop lourd). */
+export type UploadOrigin = "photo" | "pdf";
+
 export type InspectedSource =
   | {
       kind: "images";
+      origin: UploadOrigin;
       dataUrls: string[];
       pages: number;
       credits: number;
@@ -76,7 +83,10 @@ function collapse(s: string): string {
 
 const mb = (n: number) => n * 1024 * 1024;
 
-export async function inspectUploads(files: File[]): Promise<InspectedSource> {
+export async function inspectUploads(
+  files: File[],
+  options: { origin?: UploadOrigin; sourceName?: string } = {},
+): Promise<InspectedSource> {
   if (files.length === 0) {
     throw new FileRejectedError("Ajoutez une photo ou un document PDF.");
   }
@@ -87,7 +97,13 @@ export async function inspectUploads(files: File[]): Promise<InspectedSource> {
 
   const allImages = buffers.every((b) => sniffImageMime(b) !== null);
   if (allImages) {
-    if (files.length > FILE_LIMITS.maxImagesPerAnalysis) {
+    const origin: UploadOrigin = options.origin === "pdf" ? "pdf" : "photo";
+    if (origin === "pdf" && files.length > FILE_LIMITS.maxPdfPages) {
+      throw new FileRejectedError(
+        `Ce document compte ${files.length} pages. L'analyse des PDF se fait jusqu'à ${FILE_LIMITS.maxPdfPages} pages : envoyez uniquement les pages de l'exercice.`,
+      );
+    }
+    if (origin === "photo" && files.length > FILE_LIMITS.maxImagesPerAnalysis) {
       throw new FileRejectedError(
         `Jusqu'à ${FILE_LIMITS.maxImagesPerAnalysis} photos par analyse. Envoyez les autres dans une nouvelle analyse.`,
       );
@@ -105,13 +121,20 @@ export async function inspectUploads(files: File[]): Promise<InspectedSource> {
       const mime = sniffImageMime(b)!;
       dataUrls.push(`data:${mime};base64,${Buffer.from(b).toString("base64")}`);
     }
+    const sourceName = options.sourceName?.trim();
     return {
       kind: "images",
+      origin,
       dataUrls,
       pages: dataUrls.length,
       credits: dataUrls.length,
       hash: hash.digest("hex"),
-      fileName: files.length > 1 ? `${files.length} photos` : files[0].name,
+      fileName:
+        origin === "pdf" && sourceName
+          ? sourceName
+          : files.length > 1
+            ? `${files.length} photos`
+            : files[0].name,
     };
   }
 
@@ -123,6 +146,7 @@ export async function inspectUploads(files: File[]): Promise<InspectedSource> {
   if (first.length > mb(FILE_LIMITS.maxDocumentMb)) {
     throw new FileRejectedError(
       `Document trop lourd : jusqu'à ${FILE_LIMITS.maxDocumentMb} Mo. Compressez le PDF ou envoyez des photos des pages.`,
+      "DOCUMENT_TOO_LARGE",
     );
   }
 
@@ -143,6 +167,7 @@ export async function inspectUploads(files: File[]): Promise<InspectedSource> {
     } catch {
       throw new FileRejectedError(
         "Ce PDF n'a pas pu être ouvert (fichier protégé ou endommagé). Essayez un autre fichier ou envoyez des photos.",
+        "PDF_UNREADABLE",
       );
     }
     if (pages > FILE_LIMITS.maxPdfPages) {
@@ -150,11 +175,17 @@ export async function inspectUploads(files: File[]): Promise<InspectedSource> {
         `Ce document compte ${pages} pages. L'analyse des PDF se fait jusqu'à ${FILE_LIMITS.maxPdfPages} pages : envoyez uniquement les pages de l'exercice.`,
       );
     }
-    const { text } = await extractText(pdf, { mergePages: true });
-    const cleaned = collapse(String(text || ""));
+    let cleaned = "";
+    try {
+      const { text } = await extractText(pdf, { mergePages: true });
+      cleaned = collapse(String(text || ""));
+    } catch (e) {
+      console.error("[documents] extractText", e);
+    }
     if (cleaned.length < 20) {
       throw new FileRejectedError(
         "Ce PDF ne contient pas de texte lisible (document scanné). Envoyez plutôt une photo de chaque page.",
+        "PDF_SCANNED",
       );
     }
     return { kind: "pdf", text: cleaned, pages, credits: pages, hash, fileName: files[0].name };

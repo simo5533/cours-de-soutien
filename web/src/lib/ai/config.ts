@@ -84,11 +84,11 @@ export const AI_MAX_OUTPUT_TOKENS: Record<AiTask, number> = {
 export const FILE_LIMITS = {
   /** Pages maximum par PDF. */
   get maxPdfPages(): number {
-    return envInt("MAX_PDF_PAGES", 10);
+    return envInt("MAX_PDF_PAGES", 20);
   },
-  /** Poids maximum d'un PDF / Word (Mo). */
+  /** Poids maximum d'un PDF / Word envoyé tel quel (Mo) — Vercel refuse les requêtes > 4,5 Mo. */
   get maxDocumentMb(): number {
-    return envInt("MAX_DOCUMENT_MB", 8);
+    return envInt("MAX_DOCUMENT_MB", 4);
   },
   /** Poids maximum d'une photo après compression navigateur (Mo). */
   get maxImageMb(): number {
@@ -104,7 +104,7 @@ export const FILE_LIMITS = {
   },
   /** Caractères de texte extrait transmis au modèle (protection coût). */
   get maxExtractedChars(): number {
-    return envInt("MAX_EXTRACTED_CHARS", 24000);
+    return envInt("MAX_EXTRACTED_CHARS", 60000);
   },
   /** Détail d'analyse des images côté OpenAI : low | high | auto. */
   get imageDetail(): "low" | "high" | "auto" {

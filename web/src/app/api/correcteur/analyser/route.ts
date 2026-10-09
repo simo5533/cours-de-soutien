@@ -24,6 +24,9 @@ import { NextResponse } from "next/server";
 export const runtime = "nodejs";
 export const maxDuration = 120;
 
+/** Au-delà, pas de second appel premium : la durée de la requête resterait trop longue. */
+const MAX_PAGES_FOR_ESCALATION = 5;
+
 function json(body: Record<string, unknown>, status = 200) {
   return NextResponse.json(body, { status });
 }
@@ -60,11 +63,17 @@ export async function POST(request: Request) {
       (f): f is File => f instanceof File && f.size > 0,
     );
 
+    const origin = formData.get("origin") === "pdf" ? "pdf" : "photo";
+    const sourceName = formData.get("sourceName");
+
     let source;
     try {
-      source = await inspectUploads(files);
+      source = await inspectUploads(files, {
+        origin,
+        sourceName: typeof sourceName === "string" ? sourceName : undefined,
+      });
     } catch (e) {
-      if (e instanceof FileRejectedError) return json({ error: e.userMessage, code: "FILE_REJECTED" }, 400);
+      if (e instanceof FileRejectedError) return json({ error: e.userMessage, code: e.code }, 400);
       console.error("[correcteur/analyser] inspection", e);
       return json({ error: "Ce fichier n'a pas pu être lu. Essayez un autre fichier." }, 400);
     }
@@ -137,6 +146,8 @@ export async function POST(request: Request) {
     }
 
     const plan = planForSnapshot(snapshot);
+    const extraPages = Math.max(0, source.pages - 1);
+    const maxTokensFor = (base: number) => Math.min(base + extraPages * 250, 4000);
     const messages = buildCorrectionMessages(
       source.kind === "images"
         ? { kind: "images", dataUrls: source.dataUrls }
@@ -152,7 +163,7 @@ export async function POST(request: Request) {
       const first = await callChat({
         model: decision.model,
         messages,
-        maxTokens: decision.maxTokens,
+        maxTokens: maxTokensFor(decision.maxTokens),
         json: true,
       });
       result = parseCorrection(first.content);
@@ -172,7 +183,11 @@ export async function POST(request: Request) {
 
     let escalation: { usage: OpenaiUsageMetrics; durationMs: number } | null = null;
     let escalationError: string | null = null;
-    if (result.confiance === "faible" && result.etapes.length + result.erreurs.length > 0) {
+    if (
+      result.confiance === "faible" &&
+      result.etapes.length + result.erreurs.length > 0 &&
+      source.pages <= MAX_PAGES_FOR_ESCALATION
+    ) {
       const premiumToday = await premiumCallsToday(userId, AI_MODELS.premium, AI_MODELS.economy);
       if (canEscalateCorrection({ plan, premiumCallsToday: premiumToday })) {
         const decision = routeModel({
@@ -184,7 +199,7 @@ export async function POST(request: Request) {
           const second = await callChat({
             model: decision.model,
             messages,
-            maxTokens: decision.maxTokens,
+            maxTokens: maxTokensFor(decision.maxTokens),
             json: true,
           });
           result = parseCorrection(second.content);
@@ -201,7 +216,7 @@ export async function POST(request: Request) {
       data: {
         userId,
         centreId: snapshot.centreId,
-        sourceType: source.kind === "images" ? "image" : source.kind,
+        sourceType: source.kind === "images" ? (source.origin === "pdf" ? "pdf" : "image") : source.kind,
         fileName: source.fileName.slice(0, 200),
         fileHash: source.hash,
         pages: source.pages,
